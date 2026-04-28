@@ -1,0 +1,3 @@
+res://scenes/battle/main_scene.tscn
+res://scripts/battle/main_controller.gd
+res://autoload/game_manager.gd

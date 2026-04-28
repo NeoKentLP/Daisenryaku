@@ -1,0 +1,19 @@
+[application]
+config/name="大战略"
+config/description="二战战棋游戏"
+run/main_scene="res://scenes/battle/main_scene.tscn"
+config/icon="res://icon.svg"
+config/features=PackedStringArray("4.0", "Forward Plus")
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+
+[autoload]
+GameManager="*res://autoload/game_manager.gd"
+HexUtil="*res://scripts/core/hex_util.gd"
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="expand"
+window/stretch/aspect="keep"
