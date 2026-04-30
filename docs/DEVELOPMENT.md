@@ -33,15 +33,22 @@
 |------|---------|
 | 六边形网格地图 (15×10) | ✅ 完成 |
 | 7种地形 (平地/森林/山地/河流/道路/城市/指挥部) | ✅ 完成 |
-| 7种兵种 (步兵/机械化步兵/坦克/火炮/侦察/防空/运输) | ✅ 完成 |
 | 回合制战斗 (我方→敌方) | ✅ 完成 |
 | 移动→攻击/待机流程 | ✅ 完成 |
 | 基础AI (就近攻击) | ✅ 完成 |
 | 镜头移动 (键盘/拖拽/缩放) | ✅ 完成 |
 | 单位E标识 (行动完成) | ✅ 完成 |
-| 指挥点系统 | ⬜ 计划中 |
-| 增援系统 | ⬜ 计划中 |
-| 关卡系统/战役 | ⬜ 计划中 |
+| 3层战斗系统 (命中→穿透→伤害) | ⬜ 设计完成 |
+| 兵种→部队→成员三层结构 | ⬜ 设计完成 |
+| AP行动点系统 (4AP) | ⬜ 设计完成 |
+| ZOC控制区域 | ⬜ 设计完成 |
+| 士气/状态系统 | ⬜ 设计完成 |
+| 移动类型系统 (步行/轮式/履带等) | ⬜ 设计完成 |
+| 等级系统 (新兵→王牌) | ⬜ 设计完成 |
+| 经济/货币系统 | ⬜ 设计完成 |
+| 关卡系统/战役 | ⬜ 设计完成 |
+
+> 详细设计见 `docs/DESIGN.md`
 
 ---
 
@@ -54,6 +61,9 @@
 - **地图**: 六边形网格 (Hex, Pointy-top)
 - **战斗规模**: 排级 (10-30单位)
 - **战斗模式**: 回合制 (玩家全动 → 敌方全动)
+- **三层结构**: 兵种(模板) → 部队(战场实体) → 成员(个体)
+
+> 完整战斗系统设计见 `docs/DESIGN.md`
 
 ### 2.2 胜利条件
 
@@ -110,9 +120,11 @@
 │   ├── test_minimal.gd / .tscn          # 最小测试
 │   └── test_result.log                  # (运行时生成)
 │
-└── docs/
-    ├── ISSUES.md                        # 问题备忘录
-    └── (本文件)                          # 开发文档
+├── docs/
+│   ├── ISSUES.md                        # 问题备忘录
+│   ├── DESIGN.md                        # 完整设计规格书(24章)
+│   ├── ROADMAP.md                       # 开发路线图(9步)
+│   └── DEVELOPMENT.md                   # 开发文档
 ```
 
 ---
@@ -364,12 +376,21 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 
 ### 9.2 路线图
 
-| 阶段 | 内容 | 状态 |
+完整开发路线见 `docs/ROADMAP.md`（9步分Phase A-E）。
+
+当前状态：
+
+| 步骤 | 内容 | 状态 |
 |------|------|------|
-| Phase 1 | 项目搭建 + Hex地图 + 单位 + 回合 + AI + UI | ✅ 完成 |
-| Phase 2 | 指挥点 + 增援系统 | ⬜ 计划中 |
-| Phase 3 | 关卡系统 + 多关卡战役 + 胜利条件 | ⬜ 计划中 |
-| Phase 4 | 素材替换 + 润色 + 测试 | ⬜ 计划中 |
+| Phase 1 | 项目搭建 + Hex地图 + 基础回合 + 基础AI + UI | ✅ 完成 |
+| Phase A 步1 | 三层结构重构(兵种→部队→成员) | ✅ 完成 |
+| Phase A 步2+3 | AP行动点 + 三层战斗公式 | ✅ 完成 |
+| Phase B 步4+5 | 士气/压制 + ZOC | ⬜ 待开始 |
+| Phase B 步6 | CQB + 工兵 | ⬜ 待开始 |
+| Phase C 步8 | 指挥官系统 | ⬜ 待开始 |
+| Phase C 步7+9 | 装备 + 补给 | ⬜ 待开始 |
+| Phase D 步10+11 | 世界地图 + 部署 | ⬜ 待开始 |
+| Phase D 步12+13 | 空中单位/铁路 + 视野迷雾 | ⬜ 待开始 |
 
 ---
 
@@ -407,6 +428,7 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 | 2026-04-28 | 功能 | 敌方AI逐行动画(0.6s间隔) | ai_controller.gd |
 | 2026-04-28 | 修复 | 移动范围被攻击高亮覆盖 (highlight_hexes清空逻辑) | hex_map.gd, main_controller.gd |
 | 2026-04-28 | 功能 | 胜利提示改为居中大字 (show_victory) | ui_manager.gd, main_controller.gd |
+| 2026-04-28 | 步1 | 三层结构重构: Squad+Member+UnitType，替换旧Unit系统。45+78测试通过 | 新建squad.gd/member.gd/unit_type_data.gd，重写game_manager/main_controller/ui_manager/battle_manager/ai_controller |
 
 ### 变更记录规范
 

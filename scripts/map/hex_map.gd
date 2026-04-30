@@ -1,7 +1,5 @@
 extends Node2D
 
-
-
 @export var hex_size: float = 32.0
 @export var map_width: int = 15
 @export var map_height: int = 10
@@ -9,7 +7,7 @@ extends Node2D
 var terrain_grid: Dictionary = {}  # Vector2i -> terrain_id string
 var tile_nodes: Dictionary = {}    # Vector2i -> Polygon2D
 var highlight_nodes: Dictionary = {}  # Vector2i -> Polygon2D overlay
-var unit_nodes: Dictionary = {}    # Vector2i -> Unit node
+var overlay_nodes: Dictionary = {}    # Vector2i -> Polygon2D (trench/minefield)
 
 var _terrain_db: Dictionary = {}
 var _selected_unit = null
@@ -58,6 +56,12 @@ func _create_tile(hex: Vector2i, terrain_id: String):
 	add_child(poly)
 	tile_nodes[hex] = poly
 
+func set_terrain(hex: Vector2i, terrain_id: String):
+	terrain_grid[hex] = terrain_id
+	if tile_nodes.has(hex):
+		var terrain = _terrain_db.get(terrain_id, _terrain_db["plain"])
+		tile_nodes[hex].color = terrain.color
+
 var highlight_poly: Polygon2D = null
 
 func highlight_hexes(hexes: Array, color: Color):
@@ -69,8 +73,10 @@ func add_highlight(hex: Vector2i, color: Color):
 	_add_highlight(hex, color)
 
 func _add_highlight(hex: Vector2i, color: Color):
+	# 如果已有高亮，移除重建（允许覆盖颜色）
 	if highlight_nodes.has(hex):
-		return
+		highlight_nodes[hex].queue_free()
+		highlight_nodes.erase(hex)
 	var pos = HexUtil.axial_to_pixel(hex.x, hex.y, hex_size)
 	var poly = Polygon2D.new()
 	poly.polygon = HexUtil.hex_corners(Vector2.ZERO, hex_size)
@@ -88,6 +94,35 @@ func _clear_highlights():
 func clear_highlights():
 	_clear_highlights()
 
+func has_overlay(hex: Vector2i) -> bool:
+	return overlay_nodes.has(hex)
+
+func get_overlay(hex: Vector2i):
+	if overlay_nodes.has(hex):
+		var n = overlay_nodes[hex]
+		if n.has_meta("type"): return n.get_meta("type")
+	return null
+
+func set_overlay(hex: Vector2i, type: String, color: Color):
+	_remove_overlay(hex)
+	var pos = HexUtil.axial_to_pixel(hex.x, hex.y, hex_size)
+	var poly = Polygon2D.new()
+	poly.polygon = HexUtil.hex_corners(Vector2.ZERO, hex_size * 0.65)
+	poly.color = color
+	poly.position = pos
+	poly.z_index = 0
+	poly.set_meta("type", type)
+	add_child(poly)
+	overlay_nodes[hex] = poly
+
+func remove_overlay(hex: Vector2i):
+	_remove_overlay(hex)
+
+func _remove_overlay(hex: Vector2i):
+	if overlay_nodes.has(hex):
+		overlay_nodes[hex].queue_free()
+		overlay_nodes.erase(hex)
+
 func get_terrain_at(hex: Vector2i):
 	var tid = terrain_grid.get(hex, "plain")
 	return _terrain_db.get(tid, _terrain_db["plain"])
@@ -95,7 +130,7 @@ func get_terrain_at(hex: Vector2i):
 func is_passable(hex: Vector2i) -> bool:
 	if not terrain_grid.has(hex):
 		return false
-	if GameManager.get_unit_at(hex) != null:
+	if GameManager.get_squad_at(hex) != null:
 		return false
 	var t = get_terrain_at(hex)
 	return t != null and t.is_passable
@@ -124,7 +159,7 @@ func get_reachable_hexes(from: Vector2i, move_range: int) -> Array:
 			var new_cost = cost + mc
 			if new_cost > move_range:
 				continue
-			if GameManager.get_unit_at(nb) != null:
+			if GameManager.get_squad_at(nb) != null:
 				continue
 			visited[nb] = new_cost
 			queue.append(nb)
@@ -137,8 +172,31 @@ func get_attackable_hexes(from: Vector2i, attack_range: int) -> Array:
 			result.append(hex)
 	return result
 
-func find_path(from: Vector2i, to: Vector2i) -> Array:
-	return HexUtil.astar_path(from, to, is_passable, get_movement_cost)
+func find_path(from: Vector2i, to: Vector2i, ignore_squad = null) -> Array:
+	var passable_func = func(hex):
+		if not terrain_grid.has(hex): return false
+		if ignore_squad and GameManager.get_squad_at(hex) == ignore_squad:
+			pass
+		elif GameManager.get_squad_at(hex) != null:
+			return false
+		var t = get_terrain_at(hex)
+		return t and t.is_passable
+
+	return HexUtil.astar_path(from, to, passable_func, get_movement_cost)
+
+func has_enemy_zoc(hex: Vector2i, my_team: int) -> bool:
+	for sq in GameManager.all_squads:
+		if sq.team != my_team and sq.is_alive:
+			if HexUtil.hex_distance(sq.hex_coord, hex) == 1:
+				return true
+	return false
+
+func get_zoc_units_at(hex: Vector2i) -> Array:
+	var result = []
+	for sq in GameManager.all_squads:
+		if sq.is_alive and HexUtil.hex_distance(sq.hex_coord, hex) == 1:
+			result.append(sq)
+	return result
 
 func hex_to_pixel(hex: Vector2i) -> Vector2:
 	return HexUtil.axial_to_pixel(hex.x, hex.y, hex_size)

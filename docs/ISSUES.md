@@ -357,7 +357,13 @@ func hex_distance(a: Vector2i, b: Vector2i) -> int:
 | UTF-8 BOM 处理 | 可能正常 | 报错 |
 | 输出重定向 | 正常 | 需特殊处理 |
 
-### 10.2 建议
+### 10.2 步1常见问题（2026-04-28）
+
+| 问题 | 原因 | 解决方案 |
+|------|------|---------|
+| `get_unit_at` 残留引用导致运行时错误 | hex_map.gd中有一处引用未更新 | 改为`get_squad_at` |
+| 测试文件引用旧`player_units`属性 | GameManager重构为`player_squads` | 测试同步更新 |
+| `assert_eq`调用缺少desc参数 | GDScript不支持可选参数的默认值方式 | 改为`func assert_eq(got, expected, desc: String = "")` | 建议
 
 - 脚本编写时遵循**最保守的 GDScript 语法**
 - 避免使用高级类型特性 (class_name, 类型注解, 静态方法, 类型推导)
@@ -376,7 +382,11 @@ func hex_distance(a: Vector2i, b: Vector2i) -> int:
 │   └── game_manager.gd                  # 全局状态管理 (autoload)
 ├── scripts/
 │   ├── core/
-│   │   └── hex_util.gd                  # 六边形数学工具 (autoload)
+│   │   ├── hex_util.gd                  # 六边形数学工具 (autoload)
+│   │   ├── squad.gd                     # 部队类 (替换旧unit.gd)
+│   │   ├── member.gd                    # 成员类
+│   │   └── unit_type_data.gd            # 兵种模板数据
+│   ├── map/
 │   ├── map/
 │   │   └── hex_map.gd                   # 地图控制器
 │   ├── units/

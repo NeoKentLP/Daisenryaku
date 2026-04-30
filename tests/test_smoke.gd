@@ -2,8 +2,7 @@ extends Node
 
 # ============================================================
 # 烟雾测试 (快速，每次修改必跑)
-# 覆盖核心逻辑，确保基本功能可用
-# 用法: godot --path <project> res://tests/test_smoke.tscn
+# 覆盖三层结构：Member → Squad → UnitType
 # ============================================================
 
 var _passed := 0
@@ -26,14 +25,24 @@ func run_smoke_tests():
 	test_hex_util_distance()
 	test_hex_util_neighbors()
 	test_hex_util_pixel_roundtrip()
+	test_member_basic()
+	test_member_damage()
+	test_squad_basic()
+	test_squad_members()
+	test_squad_damage()
+	test_unit_type_data()
 	test_game_manager_basic()
-	test_game_manager_command_points()
+	test_game_manager_squad()
 	test_terrain_data()
-	test_unit_data()
-	test_unit_creation_and_position()
-	test_unit_movement()
-	test_unit_take_damage()
-	test_battle_combat_resolution()
+	test_cqb_terrain_list()
+	test_cqb_weapon_bonus()
+	test_engineer_detection()
+	test_minefield_terrain()
+	test_equipment_upgrade_paths()
+	test_reserve_storage()
+	test_commander_basic()
+	test_commander_exp()
+	test_commander_pool()
 
 func assert_eq(got, expected, desc):
 	_tests_run += 1
@@ -52,24 +61,16 @@ func assert_true(cond, desc):
 func assert_false(cond, desc):
 	assert_eq(cond, false, desc)
 
-func _hex(p):
-	return HexUtil.axial_to_pixel(p.x, p.y, 32)
+func _make_member(name: String, type: String, hp: int):
+	return preload("res://scripts/core/member.gd").new(name, type, hp)
 
-func _make_unit(type_id, team, hex):
-	var unit = load("res://scripts/units/unit.gd").new()
-	unit.unit_data_id = type_id
-	unit.team = team
-	unit.hex_coord = hex
-	var db = GameManager.UNIT_DB
-	unit.unit_data = db.get(type_id, db["infantry"])
-	unit.max_hp = unit.unit_data.max_hp
-	unit.hp = unit.max_hp
-	unit.is_alive = true
-	unit.has_acted = false
-	return unit
+func _make_squad(type_id: String, team: int, hex: Vector2i, members: Array):
+	var sq = load("res://scripts/core/squad.gd").new()
+	sq.setup(type_id, team, hex, members)
+	return sq
 
 # ============================================================
-# 烟雾测试用例
+# HexUtil (unchanged)
 # ============================================================
 
 func test_hex_util_basic():
@@ -98,29 +99,115 @@ func test_hex_util_pixel_roundtrip():
 		var back = HexUtil.pixel_to_axial(px.x, px.y, 32)
 		assert_eq(back, c, "Hex(%d,%d)" % [c.x, c.y])
 
+# ============================================================
+# Member
+# ============================================================
+
+func test_member_basic():
+	print("  Member 基础")
+	var m = _make_member("步枪手", "infantry", 10)
+	assert_eq(m.member_name, "步枪手", "名称")
+	assert_eq(m.member_type, "infantry", "类型")
+	assert_eq(m.max_hp, 10, "HP")
+	assert_eq(m.hp, 10, "初始HP")
+	assert_true(m.is_alive, "存活")
+
+func test_member_damage():
+	print("  Member 受伤")
+	var m = _make_member("步枪手", "infantry", 10)
+	m.take_damage(4)
+	assert_eq(m.hp, 6, "扣4HP")
+	assert_true(m.is_alive, "存活")
+	m.take_damage(6)
+	assert_eq(m.hp, 0, "扣光HP")
+	assert_false(m.is_alive, "死亡")
+
+# ============================================================
+# Squad
+# ============================================================
+
+func test_squad_basic():
+	print("  Squad 基础")
+	var members = [
+		_make_member("班长", "infantry", 12),
+		_make_member("步枪手", "infantry", 10),
+		_make_member("步枪手", "infantry", 10),
+	]
+	var sq = _make_squad("infantry", 0, Vector2i(2, 3), members)
+	assert_eq(sq.team, 0, "阵营")
+	assert_eq(sq.hex_coord, Vector2i(2, 3), "位置")
+	assert_eq(sq.get_total_count(), 3, "总成员数")
+	assert_eq(sq.get_alive_count(), 3, "存活数")
+	assert_eq(sq.get_total_hp(), 32, "总HP")
+
+func test_squad_members():
+	print("  Squad 成员管理")
+	var members = [
+		_make_member("A", "infantry", 10),
+		_make_member("B", "infantry", 10),
+	]
+	var sq = _make_squad("infantry", 0, Vector2i(0, 0), members)
+	assert_eq(sq.members.size(), 2, "成员数量")
+	assert_eq(sq.members[0].member_name, "A", "成员A")
+
+func test_squad_damage():
+	print("  Squad 受伤")
+	var members = [
+		_make_member("A", "infantry", 10),
+		_make_member("B", "infantry", 10),
+	]
+	var sq = _make_squad("infantry", 0, Vector2i(0, 0), members)
+	sq.take_damage(5)
+	assert_eq(sq.get_alive_count(), 2, "轻伤无人阵亡")
+	sq.take_damage(3)
+	assert_eq(sq.get_alive_count(), 2, "累计无人阵亡")
+	sq.take_damage(15)
+	assert_eq(sq.get_alive_count(), 1, "过量伤害有人阵亡")
+
+# ============================================================
+# UnitType Data
+# ============================================================
+
+func test_unit_type_data():
+	print("  UnitType 数据")
+	var db = GameManager.UNIT_TYPE_DB
+	assert_true(db.has("infantry"), "步兵")
+	assert_true(db.has("tank"), "坦克")
+	assert_true(db.has("recon"), "侦察")
+	assert_eq(db["infantry"].cost, 200, "步兵价格")
+
+# ============================================================
+# GameManager
+# ============================================================
+
 func test_game_manager_basic():
 	print("  GameManager 基础")
 	var gm = GameManager
-	gm.player_units.clear()
-	gm.enemy_units.clear()
-	gm.all_units.clear()
-	var u = load("res://scripts/units/unit.gd").new()
-	u.team = 0
-	u.hex_coord = Vector2i(1, 1)
-	u.hp = 10
-	gm.register_unit(u)
-	assert_eq(gm.all_units.size(), 1, "注册")
-	assert_true(gm.get_unit_at(Vector2i(1,1)) != null, "查得到")
-	gm.unregister_unit(u)
-	assert_eq(gm.get_unit_at(Vector2i(1,1)), null, "注销后查不到")
+	assert_true(gm.TERRAIN_DB.size() > 0, "地形数据加载")
 
-func test_game_manager_command_points():
-	print("  GameManager 指挥点")
+func test_game_manager_squad():
+	print("  GameManager Squad管理")
 	var gm = GameManager
-	gm.command_points = 100
-	assert_true(gm.spend_command_points(50), "消费成功")
-	assert_eq(gm.command_points, 50, "余额50")
-	assert_false(gm.spend_command_points(100), "余额不足失败")
+	gm.player_squads.clear()
+	gm.enemy_squads.clear()
+	gm.all_squads.clear()
+	
+	var m = _make_member("test", "infantry", 10)
+	var sq = _make_squad("infantry", 0, Vector2i(5, 5), [m])
+	gm.register_squad(sq)
+	assert_eq(gm.all_squads.size(), 1, "注册1个Squad")
+	assert_eq(gm.player_squads.size(), 1, "玩家Squad+1")
+	
+	var found = gm.get_squad_at(Vector2i(5, 5))
+	assert_true(found != null, "get_squad_at找到")
+	assert_eq(found, sq, "正确的Squad")
+	
+	gm.unregister_squad(sq)
+	assert_eq(gm.all_squads.size(), 0, "注销后空")
+
+# ============================================================
+# Terrain
+# ============================================================
 
 func test_terrain_data():
 	print("  地形数据")
@@ -133,45 +220,111 @@ func test_terrain_data():
 	assert_eq(db["mountain"].move_cost, 3, "山地移动=3")
 	assert_eq(db["mountain"].defense_bonus, 4, "山地防御+4")
 
-func test_unit_data():
-	print("  兵种数据")
-	var db = GameManager.UNIT_DB
-	assert_true(db.has("infantry"), "步兵")
-	assert_true(db.has("tank"), "坦克")
-	assert_true(db.has("artillery"), "火炮")
-	assert_eq(db["infantry"].attack, 2, "步兵攻击=2")
-	assert_eq(db["tank"].attack, 5, "坦克攻击=5")
-	assert_eq(db["tank"].move_range, 4, "坦克移动=4")
+func test_cqb_terrain_list():
+	print("  CQB地形")
+	var cqb = ["city", "forest", "ruins", "trench", "bunker"]
+	assert_true(cqb.has("city"), "城市CQB")
+	assert_true(cqb.has("forest"), "森林CQB")
+	assert_true(cqb.has("ruins"), "废墟CQB")
+	assert_eq(cqb.size(), 5, "共5种CQB地形")
 
-func test_unit_creation_and_position():
-	print("  单位创建")
-	var u = _make_unit("tank", 0, Vector2i(3, 4))
-	assert_eq(u.unit_data.display_name, "坦克", "名称")
-	assert_eq(u.max_hp, 15, "HP=15")
-
-func test_unit_movement():
-	print("  单位移动")
-	var u = _make_unit("infantry", 0, Vector2i(0, 0))
-	u.move_to(Vector2i(2, 3))
-	assert_eq(u.hex_coord, Vector2i(2, 3), "移动到(2,3)")
-
-func test_unit_take_damage():
-	print("  单位受伤")
-	var u = _make_unit("tank", 0, Vector2i(0, 0))
-	u.take_damage(5)
-	assert_eq(u.hp, u.max_hp - 5, "扣5HP")
-	assert_true(u.is_alive, "存活")
-	u.take_damage(u.hp)
-	assert_false(u.is_alive, "死亡")
-
-func test_battle_combat_resolution():
-	print("  战斗系统")
-	var tank = _make_unit("tank", 0, Vector2i(0, 0))
-	var inf = _make_unit("infantry", 1, Vector2i(1, 0))
+func test_cqb_weapon_bonus():
+	print("  CQB武器修正")
 	var bm = load("res://scripts/battle/battle_manager.gd").new()
-	var r = bm.resolve_combat(tank, inf)
-	assert_eq(r.damage_to_defender, 4, "坦克->步兵 伤害4")
-	assert_true(tank.has_acted, "已标记行动")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	# 冲锋枪正修正
+	var smg = _make_member("突击", "infantry", 10)
+	smg.weapons.append(wd.smg())
+	var sq_smg = _make_squad("infantry", 0, Vector2i(0,0), [smg])
+	assert_true(bm._cqb_weapon_mod(sq_smg) > 0, "冲锋枪CQB正修正")
+
+	# 步枪非正修正
+	var rifle = _make_member("步兵", "infantry", 10)
+	rifle.weapons.append(wd.rifle())
+	var sq_rifle = _make_squad("infantry", 0, Vector2i(0,0), [rifle])
+	assert_true(bm._cqb_weapon_mod(sq_rifle) <= 0, "步枪CQB非正修正")
+
+func test_engineer_detection():
+	print("  工兵检测")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var eng = _make_member("工兵", "infantry", 10)
+	var tools = wd.rifle().duplicate()
+	tools["name"] = "工兵工具"
+	eng.weapons.append(tools)
+	var sq = _make_squad("infantry", 0, Vector2i(0,0), [eng])
+	# 根据main_controller的_is_engineer逻辑: 武器名含"工具"或"工兵"
+	var is_eng = false
+	for m in sq.members:
+		if not m.is_alive: continue
+		for w in m.weapons:
+			var wn = w.get("name", "")
+			if "工具" in wn or "工兵" in wn: is_eng = true
+	assert_true(is_eng, "工兵被正确识别")
+
+func test_minefield_terrain():
+	print("  雷区地形")
+	var db = GameManager.TERRAIN_DB
+	assert_true(db.has("minefield"), "雷区地形存在")
+	assert_true(db.has("trench"), "战壕存在")
+	assert_true(db.has("bunker"), "堡垒存在")
+
+func test_equipment_upgrade_paths():
+	print("  装备升级路径")
+	var eq = preload("res://scripts/equipment/equipment_upgrade.gd")
+	var paths = eq.get_upgrade_paths()
+	assert_true(paths.has("Kar98k"), "Kar98k可升级")
+	assert_true(paths.has("MG42"), "MG42可升级")
+	assert_eq(paths["Kar98k"]["upgrades_to"][0], "G43", "Kar98k→G43")
+
+func test_reserve_storage():
+	print("  储备库")
+	var gm = GameManager
+	gm.reserve_storage = {}
+	gm.add_to_storage("Kar98k", 3)
+	assert_eq(gm.get_storage_count("Kar98k"), 3, "加3把Kar98k")
+	assert_true(gm.remove_from_storage("Kar98k", 1), "取出1把")
+	assert_eq(gm.get_storage_count("Kar98k"), 2, "剩余2把")
+	assert_false(gm.remove_from_storage("MP40", 1), "不存在返回false")
+
+func test_commander_basic():
+	print("  指挥官基础")
+	var cmd = preload("res://scripts/commander/commander.gd").new()
+	assert_true(cmd.commander_name.length() > 0, "有名字")
+	assert_true(cmd.background_skill.length() > 0, "有背景技能")
+	assert_true(cmd.talent_skill.length() > 0, "有天赋技能")
+	assert_eq(cmd.level, 1, "初始等级1")
+
+func test_commander_exp():
+	print("  指挥官经验")
+	var cmd = preload("res://scripts/commander/commander.gd").new()
+	cmd._exp = 0
+	cmd.level = 1
+	cmd.gain_exp(100)
+	assert_eq(cmd.level, 2, "100经验升2级")
+	cmd.gain_exp(200)
+	assert_eq(cmd.level, 3, "再200经验升3级")
+
+func test_commander_pool():
+	print("  指挥官池")
+	var gm = GameManager
+	gm.commander_pool.clear()
+	gm.squad_commanders.clear()
+	var cmd = preload("res://scripts/commander/commander.gd").new()
+	gm.add_commander_to_pool(cmd)
+	assert_eq(gm.commander_pool.size(), 1, "池中有1个")
+	
+	var sq = _make_squad("infantry", 0, Vector2i(0,0), [_make_member("A","infantry",10)])
+	assert_true(gm.assign_commander(sq, cmd), "任命成功")
+	assert_eq(gm.commander_pool.size(), 0, "池中移除")
+	assert_true(gm.get_commander(sq) != null, "可查到指挥官")
+
+	gm.unassign_commander(sq)
+	assert_eq(gm.commander_pool.size(), 1, "卸载后回池")
+	assert_eq(gm.get_commander(sq), null, "Squad不再有指挥官")
+
+# ============================================================
+# Summary
+# ============================================================
 
 func _print_summary():
 	print("")

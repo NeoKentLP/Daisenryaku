@@ -1,19 +1,41 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
+
 config/name="大战略"
 config/description="二战战棋游戏"
 run/main_scene="res://scenes/battle/main_scene.tscn"
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
-config/features=PackedStringArray("4.0", "Forward Plus")
-
-[rendering]
-renderer/rendering_method="gl_compatibility"
 
 [autoload]
+
 GameManager="*res://autoload/game_manager.gd"
 HexUtil="*res://scripts/core/hex_util.gd"
+MCPRuntime="*uid://dq3camkqobpnr"
 
 [display]
+
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="expand"
-window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/auto_reload/plugin.cfg", "res://addons/godot_mcp_editor/plugin.cfg", "res://addons/godot_mcp_runtime/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"

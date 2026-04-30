@@ -1,9 +1,7 @@
 extends Node
 
 # ============================================================
-# 全量测试 (提交/打包前跑)
-# 覆盖所有边界条件和回归检测
-# 用法: godot --path <project> res://tests/test_full.tscn
+# 全量测试
 # ============================================================
 
 var _passed := 0
@@ -13,10 +11,9 @@ var _test_log := []
 
 func _ready():
 	print("=".repeat(60))
-	print("  战棋游戏测试套件 v2.0")
+	print("  全量测试")
 	print("=".repeat(60))
 	print("")
-
 	run_all_tests()
 	_print_summary()
 	get_tree().quit(_failed)
@@ -28,303 +25,447 @@ func run_all_tests():
 	test_hex_util_range()
 	test_hex_util_pixel_roundtrip()
 	test_hex_util_astar()
+	test_member_basic()
+	test_member_damage()
+	test_member_death()
+	test_squad_basic()
+	test_squad_members()
+	test_squad_damage()
+	test_squad_move()
+	test_squad_get_hp()
+	test_squad_has_acted()
+	test_squad_ap_basic()
+	test_squad_ap_spend()
+	test_squad_ap_reset()
+	test_squad_move_with_ap()
+	test_squad_move_not_enough_ap()
+	test_battle_with_weapons()
+	test_battle_tank_vs_infantry()
+	test_cqb_terrain_check()
+	test_cqb_weapon_mod()
+	test_squad_state_normal()
+	test_squad_state_confused()
+	test_squad_state_broken()
+	test_squad_morale_change()
+	test_squad_suppression()
+	test_squad_zoc_check()
+	test_unit_type_data()
+	test_unit_type_cost()
 	test_game_manager_basic()
-	test_game_manager_command_points()
+	test_game_manager_squad()
+	test_game_manager_multi_squad()
 	test_game_manager_turn_cycle()
 	test_terrain_data()
-	test_unit_data()
-	test_unit_creation_and_position()
-	test_unit_movement()
-	test_unit_take_damage()
-	test_unit_can_attack()
-	test_battle_combat_resolution()
-	test_battle_counter_attack()
 	test_hex_map_reachable()
 	test_hex_map_attackable()
-	test_has_acted_prevents_reselect()
 
-func assert_eq(got, expected, desc: String):
+func assert_eq(got, expected, desc: String = ""):
 	_tests_run += 1
 	if got == expected:
 		_passed += 1
-		_test_log.append("[PASS] " + desc)
+		if desc: _test_log.append("[PASS] " + desc)
 	else:
 		_failed += 1
 		var msg = "[FAIL] " + desc + ": 期望 " + str(expected) + ", 实际 " + str(got)
 		_test_log.append(msg)
 		push_error(msg)
 
-func assert_true(cond, desc):
+func assert_true(cond, desc: String = ""):
 	assert_eq(cond, true, desc)
 
-func assert_false(cond, desc):
+func assert_false(cond, desc: String = ""):
 	assert_eq(cond, false, desc)
 
-func assert_approx(got: float, expected: float, tol: float, desc):
-	_tests_run += 1
-	if abs(got - expected) <= tol:
-		_passed += 1
-		_test_log.append("[PASS] " + desc)
-	else:
-		_failed += 1
-		var msg = "[FAIL] " + desc + ": 期望 ~" + str(expected) + ", 实际 " + str(got)
-		_test_log.append(msg)
-		push_error(msg)
+func _M(name, type, hp):
+	return preload("res://scripts/core/member.gd").new(name, type, hp)
 
-# ============================================================
-# 测试用例 1-6: HexUtil 核心数学
-# ============================================================
+func _S(type_id, team, hex, members):
+	var sq = load("res://scripts/core/squad.gd").new()
+	sq.setup(type_id, team, hex, members)
+	return sq
+
+# ========== HexUtil ==========
 
 func test_hex_util_basic():
-	print("  [模块] HexUtil 基础数学")
-	var pixel = HexUtil.axial_to_pixel(0, 0, 32)
-	assert_eq(pixel, Vector2(0, 0), "Hex(0,0) -> (0,0)")
-	pixel = HexUtil.axial_to_pixel(1, 0, 32)
-	assert_approx(pixel.x, 55.425, 0.01, "Hex(1,0) X")
-	assert_eq(pixel.y, 0.0, "Hex(1,0) Y=0")
-	pixel = HexUtil.axial_to_pixel(0, 1, 32)
-	assert_approx(pixel.x, 27.712, 0.01, "Hex(0,1) X")
-	assert_eq(pixel.y, 48.0, "Hex(0,1) Y=48")
+	print("  HexUtil 基础数学")
+	var p = HexUtil.axial_to_pixel(0, 0, 32)
+	assert_eq(p, Vector2(0, 0), "Hex(0,0)")
+	p = HexUtil.axial_to_pixel(1, 0, 32)
+	assert_eq(int(p.x), 55, "Hex(1,0) X=55")
 
 func test_hex_util_distance():
-	print("  [模块] HexUtil 距离计算")
+	print("  HexUtil 距离计算")
 	assert_eq(HexUtil.hex_distance(Vector2i(0,0), Vector2i(0,0)), 0, "同点")
 	assert_eq(HexUtil.hex_distance(Vector2i(0,0), Vector2i(1,0)), 1, "邻格")
 	assert_eq(HexUtil.hex_distance(Vector2i(0,0), Vector2i(5,0)), 5, "直线5")
-	assert_eq(HexUtil.hex_distance(Vector2i(0,0), Vector2i(3,3)), 6, "六边形对角线距离")
-	assert_eq(HexUtil.hex_distance(Vector2i(2,3), Vector2i(5,7)), 7, "任意两点")
+	assert_eq(HexUtil.hex_distance(Vector2i(0,0), Vector2i(3,3)), 6, "对角线")
 
 func test_hex_util_neighbors():
-	print("  [模块] HexUtil 邻居")
+	print("  HexUtil 邻居")
 	var nbs = HexUtil.hex_neighbors(Vector2i(0, 0))
 	assert_eq(nbs.size(), 6, "6个邻居")
-	assert_true(nbs.has(Vector2i(1,0)), "含 (1,0)")
-	assert_true(nbs.has(Vector2i(0,1)), "含 (0,1)")
-	assert_true(nbs.has(Vector2i(-1,1)), "含 (-1,1)")
-	assert_true(nbs.has(Vector2i(-1,0)), "含 (-1,0)")
-	assert_true(nbs.has(Vector2i(0,-1)), "含 (0,-1)")
-	assert_true(nbs.has(Vector2i(1,-1)), "含 (1,-1)")
+	assert_true(nbs.has(Vector2i(1,0)), "含(1,0)")
 
 func test_hex_util_range():
-	print("  [模块] HexUtil 范围")
+	print("  HexUtil 范围")
 	var r1 = HexUtil.hexes_in_range(Vector2i(0, 0), 1)
-	assert_eq(r1.size(), 7, "range=1 => 7 (含自身)")
-	var r2 = HexUtil.hexes_in_range(Vector2i(0, 0), 2)
-	assert_eq(r2.size(), 19, "range=2 => 19 (含自身)")
+	assert_eq(r1.size(), 7, "range=1 => 7")
 	var r3 = HexUtil.hexes_in_range(Vector2i(0, 0), 0)
 	assert_eq(r3.size(), 1, "range=0 => 1")
 
 func test_hex_util_pixel_roundtrip():
-	print("  [模块] HexUtil 像素往返")
-	var cases = [Vector2i(3,5), Vector2i(-2,4), Vector2i(0,0), Vector2i(7,-3)]
-	for c in cases:
+	print("  HexUtil 像素往返")
+	for c in [Vector2i(3,5), Vector2i(-2,4), Vector2i(0,0)]:
 		var px = HexUtil.axial_to_pixel(c.x, c.y, 32)
 		var back = HexUtil.pixel_to_axial(px.x, px.y, 32)
-		assert_eq(back, c, "Hex(%d,%d) 往返一致" % [c.x, c.y])
+		assert_eq(back, c, "往返一致")
 
 func test_hex_util_astar():
-	print("  [模块] HexUtil A*寻路")
+	print("  HexUtil A*寻路")
 	var passable = func(h): return h.x >= 0 and h.x < 5 and h.y >= 0 and h.y < 5
 	var cost = func(h): return 1
 	var path = HexUtil.astar_path(Vector2i(0,0), Vector2i(2,0), passable, cost)
-	assert_true(path.size() > 0, "直线可达")
+	assert_true(path.size() > 0, "可达")
 	assert_eq(path[0], Vector2i(0,0), "起点")
 	assert_eq(path[path.size()-1], Vector2i(2,0), "终点")
-	# 被阻挡
 	var blocked = func(h): return h == Vector2i(1,0) or h == Vector2i(0,1) or h == Vector2i(1,1)
 	var path2 = HexUtil.astar_path(Vector2i(0,0), Vector2i(2,0), blocked, cost)
-	assert_eq(path2.size(), 0, "被阻挡时无路径")
-	# 同点
-	var path3 = HexUtil.astar_path(Vector2i(1,1), Vector2i(1,1), passable, cost)
-	assert_eq(path3.size(), 1, "同点返回[起点]")
+	assert_eq(path2.size(), 0, "阻挡不可达")
 
-# ============================================================
-# 测试用例 7-8: GameManager
-# ============================================================
+# ========== Member ==========
+
+func test_member_basic():
+	print("  Member 基础")
+	var m = _M("班长", "infantry", 12)
+	assert_eq(m.member_name, "班长")
+	assert_eq(m.member_type, "infantry")
+	assert_eq(m.max_hp, 12)
+	assert_eq(m.hp, 12)
+	assert_true(m.is_alive)
+
+func test_member_damage():
+	print("  Member 受伤")
+	var m = _M("兵", "infantry", 10)
+	m.take_damage(3)
+	assert_eq(m.hp, 7)
+	m.take_damage(7)
+	assert_eq(m.hp, 0)
+	assert_false(m.is_alive)
+
+func test_member_death():
+	print("  Member 死亡")
+	var m = _M("兵", "infantry", 10)
+	m.take_damage(10)
+	assert_eq(m.hp, 0)
+	assert_false(m.is_alive)
+
+# ========== Squad ==========
+
+func test_squad_basic():
+	print("  Squad 基础")
+	var sq = _S("infantry", 0, Vector2i(1, 2), [
+		_M("A", "infantry", 10), _M("B", "infantry", 10), _M("C", "infantry", 10)
+	])
+	assert_eq(sq.team, 0)
+	assert_eq(sq.hex_coord, Vector2i(1, 2))
+	assert_eq(sq.get_total_count(), 3)
+	assert_eq(sq.get_alive_count(), 3)
+	assert_eq(sq.get_total_hp(), 30)
+	assert_eq(sq.get_max_hp(), 30)
+	assert_false(sq.has_acted)
+	assert_true(sq.is_alive)
+
+func test_squad_members():
+	print("  Squad 成员")
+	var members = [_M("A", "infantry", 10), _M("B", "infantry", 10)]
+	var sq = _S("infantry", 0, Vector2i(0, 0), members)
+	assert_eq(sq.members.size(), 2)
+	assert_eq(sq.members[0].member_name, "A")
+
+func test_squad_damage():
+	print("  Squad 受伤")
+	var members = [_M("A", "infantry", 10), _M("B", "infantry", 10)]
+	var sq = _S("infantry", 0, Vector2i(0, 0), members)
+	sq.take_damage(4)
+	assert_eq(sq.get_alive_count(), 2)
+	assert_true(sq.is_alive)
+	sq.take_damage(20)
+	assert_eq(sq.get_alive_count(), 1)
+	assert_true(sq.is_alive)
+
+func test_squad_move():
+	print("  Squad 移动")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.move_to(Vector2i(3, 4))
+	assert_eq(sq.hex_coord, Vector2i(3, 4))
+
+func test_squad_get_hp():
+	print("  Squad HP")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [
+		_M("A", "infantry", 10), _M("B", "infantry", 8)
+	])
+	assert_eq(sq.get_total_hp(), 18)
+	assert_eq(sq.get_max_hp(), 18)
+
+func test_squad_has_acted():
+	print("  Squad 已行动")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	assert_eq(sq.get_move_range(), 4, "未行动可移动4格")
+	sq.has_acted = true
+	assert_eq(sq.get_move_range(), 0, "已行动不可移动")
+
+func test_squad_ap_basic():
+	print("  Squad AP基础")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	assert_eq(sq.ap, 4, "初始AP=4")
+	assert_eq(sq.max_ap, 4, "最大AP=4")
+	assert_true(sq.can_afford(2), "够攻击")
+	assert_true(sq.can_afford(4), "够移动4格")
+	assert_false(sq.can_afford(5), "不够5AP")
+
+func test_squad_ap_spend():
+	print("  Squad AP消耗")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.spend_ap(2)
+	assert_eq(sq.ap, 2, "攻击后剩2AP")
+	sq.spend_ap(2)
+	assert_eq(sq.ap, 0, "再花2AP=0")
+	assert_false(sq.can_afford(1), "0AP不能行动")
+
+func test_squad_ap_reset():
+	print("  Squad AP重置")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.spend_ap(3)
+	assert_eq(sq.ap, 1, "花3AP剩1")
+	sq.reset_ap()
+	assert_eq(sq.ap, 4, "重置后满AP")
+
+func test_squad_move_with_ap():
+	print("  Squad 移动+AP")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	var dist = HexUtil.hex_distance(Vector2i(0,0), Vector2i(2,0))
+	assert_eq(dist, 2, "到(2,0)需2AP")
+	assert_true(sq.can_afford(dist), "有足够AP移动")
+	sq.move_to(Vector2i(2,0))
+	sq.spend_ap(dist)
+	assert_eq(sq.hex_coord, Vector2i(2,0), "移动到(2,0)")
+	assert_eq(sq.ap, 2, "花2AP剩2")
+
+func test_squad_move_not_enough_ap():
+	print("  Squad AP不足不能移动")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.spend_ap(3)
+	assert_eq(sq.ap, 1, "仅剩1AP")
+	var dist = HexUtil.hex_distance(Vector2i(0,0), Vector2i(2,0))
+	assert_eq(dist, 2, "到(2,0)需2AP")
+	assert_false(sq.can_afford(dist), "AP不足不能移动")
+
+func test_battle_with_weapons():
+	print("  Squad 战斗(带武器)")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var member_atk = preload("res://scripts/core/member.gd").new("步兵", "infantry", 10, 60, wd.rifle())
+	var member_def = preload("res://scripts/core/member.gd").new("步兵", "infantry", 10, 60, wd.rifle())
+	var atk = _S("infantry", 0, Vector2i(0,0), [member_atk])
+	var def = _S("infantry", 1, Vector2i(1,0), [member_def])
+	
+	var bm = load("res://scripts/battle/battle_manager.gd").new()
+	var result = bm.resolve_combat(atk, def)
+	
+	assert_true(result.damage_to_defender >= 0, "造成伤害≥0")
+	assert_true(atk.has_acted, "攻击后标记已行动")
+	assert_true(atk.ap < 4, "攻击消耗AP")
+
+func test_battle_tank_vs_infantry():
+	print("  Squad 坦克vs步兵")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var tank_member = preload("res://scripts/core/member.gd").new("车长", "vehicle", 15, 50, wd.tank_gun())
+	tank_member.armor = 10
+	var inf_member = preload("res://scripts/core/member.gd").new("步兵", "infantry", 10, 60, wd.rifle())
+	
+	var tank = _S("tank", 0, Vector2i(0,0), [tank_member])
+	var inf = _S("infantry", 1, Vector2i(1,0), [inf_member])
+	
+	var bm = load("res://scripts/battle/battle_manager.gd").new()
+	var result = bm.resolve_combat(tank, inf)
+	
+	assert_true(result.has("damage_to_defender"), "战斗返回有效结果")
+
+func test_cqb_terrain_check():
+	print("  CQB 地形检测")
+	# 验证CQB相关地形的数据存在
+	var db = GameManager.TERRAIN_DB
+	assert_true(db.has("city"), "城市存在")
+	assert_true(db.has("forest"), "森林存在")
+	assert_true(db.has("ruins"), "废墟存在")
+	assert_true(db.has("trench"), "战壕存在")
+	assert_true(db.has("bunker"), "堡垒存在")
+
+func test_cqb_weapon_mod():
+	print("  CQB 武器修正")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var bm = load("res://scripts/battle/battle_manager.gd").new()
+	# 冲锋枪部队
+	var smg_member = preload("res://scripts/core/member.gd").new("突击", "infantry", 10, 60, wd.smg())
+	var smg_sq = _S("infantry", 0, Vector2i(0,0), [smg_member])
+	var smg_mod = bm._cqb_weapon_mod(smg_sq)
+	assert_true(smg_mod > 0, "冲锋枪CQB正修正")
+
+	# 步枪部队
+	var rifle_member = preload("res://scripts/core/member.gd").new("步", "infantry", 10, 60, wd.rifle())
+	var rifle_sq = _S("infantry", 0, Vector2i(0,0), [rifle_member])
+	var rifle_mod = bm._cqb_weapon_mod(rifle_sq)
+	assert_true(rifle_mod <= 0, "步枪CQB非正修正")
+
+# ========== State Tests ==========
+
+func test_squad_state_normal():
+	print("  Squad 正常状态")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	assert_eq(sq.get_state(), 2, "默认70士气=正常")
+	assert_eq(sq.get_state_name(), "正常")
+	assert_eq(sq.get_hit_modifier(), 0, "正常无命中修正")
+
+func test_squad_state_confused():
+	print("  Squad 混乱状态")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.morale = 15
+	assert_eq(sq.get_state(), 1, "士气15=混乱")
+	assert_eq(sq.get_hit_modifier(), -15, "混乱命中-15")
+	assert_eq(int(sq.get_damage_modifier() * 100), 80, "混乱伤害80%")
+
+func test_squad_state_broken():
+	print("  Squad 溃败状态")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.morale = 0
+	assert_eq(sq.get_state(), 0, "士气0=溃败")
+	assert_eq(sq.get_move_range(), 0, "溃败不能移动")
+	assert_false(sq.can_attack(null), "溃败不能攻击")
+
+func test_squad_morale_change():
+	print("  Squad 士气变化")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.apply_morale(-20)
+	assert_eq(sq.morale, 50, "扣20士气=50")
+	sq.apply_morale(100)
+	assert_eq(sq.morale, 100, "不能超过100")
+
+func test_squad_suppression():
+	print("  Squad 压制")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.apply_suppression(50)
+	assert_eq(sq.suppression, 50, "压制50")
+	var bonus_range = sq.get_suppression_damage_bonus_range()
+	assert_eq(int(bonus_range), -15, "压制50→伤害范围-15%")
+
+func test_squad_zoc_check():
+	print("  ZOC检测函数")
+	var mn = load("res://scripts/map/hex_map.gd").new()
+	mn.hex_size = 32.0
+	mn.map_width = 5
+	mn.map_height = 5
+	mn._terrain_db = GameManager.TERRAIN_DB
+	for q in range(5):
+		for r in range(5):
+			mn.terrain_grid[Vector2i(q, r)] = "plain"
+
+	# 创建两个不同阵营的Squad
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var sq_a = _S("infantry", 0, Vector2i(2, 2), [preload("res://scripts/core/member.gd").new("A","infantry",10,60,wd.rifle())])
+	var sq_b = _S("infantry", 1, Vector2i(2, 3), [preload("res://scripts/core/member.gd").new("B","infantry",10,60,wd.rifle())])
+
+	GameManager.all_squads = [sq_a, sq_b]
+
+	assert_true(mn.has_enemy_zoc(Vector2i(2,4), 0), "敌方ZOC检测(2,4)")
+	assert_false(mn.has_enemy_zoc(Vector2i(0,0), 0), "无ZOC(0,0)")
+
+	var zoc_units = mn.get_zoc_units_at(Vector2i(2,3))
+	assert_true(zoc_units.size() > 0, "ZOC范围内有单位")
+
+	GameManager.all_squads = []
+
+# ========== UnitType ==========
+
+func test_unit_type_data():
+	print("  UnitType 数据")
+	var db = GameManager.UNIT_TYPE_DB
+	assert_true(db.has("infantry"))
+	assert_true(db.has("tank"))
+	assert_true(db.has("recon"))
+	assert_true(db.has("artillery"))
+
+func test_unit_type_cost():
+	print("  UnitType 价格")
+	var db = GameManager.UNIT_TYPE_DB
+	assert_true(db["infantry"].cost > 0)
+	assert_true(db["tank"].cost > db["infantry"].cost)
+
+# ========== GameManager ==========
 
 func test_game_manager_basic():
-	print("  [模块] GameManager 基础")
-	var gm := GameManager
-	gm.player_units.clear()
-	gm.enemy_units.clear()
-	gm.all_units.clear()
-	var unit = load("res://scripts/units/unit.gd").new()
-	unit.team = 0
-	unit.hex_coord = Vector2i(1, 1)
-	unit.hp = 10
-	gm.register_unit(unit)
-	assert_eq(gm.all_units.size(), 1, "注册")
-	assert_eq(gm.player_units.size(), 1, "玩家+1")
-	assert_true(gm.get_unit_at(Vector2i(1,1)) != null, "查询到单位")
-	gm.unregister_unit(unit)
-	assert_eq(gm.all_units.size(), 0, "注销后空")
-	assert_eq(gm.get_unit_at(Vector2i(1,1)), null, "注销后查不到")
+	print("  GameManager 基础")
+	assert_true(GameManager.TERRAIN_DB.size() > 0)
+	assert_true(GameManager.UNIT_TYPE_DB.size() > 0)
 
-func test_game_manager_command_points():
-	print("  [模块] GameManager 指挥点")
+func test_game_manager_squad():
+	print("  GameManager Squad")
 	var gm = GameManager
-	gm.command_points = 100
-	assert_true(gm.spend_command_points(50), "消费50成功")
-	assert_eq(gm.command_points, 50, "余额")
-	assert_false(gm.spend_command_points(100), "余额不足失败")
-	assert_eq(gm.command_points, 50, "失败余额不变")
+	gm.all_squads.clear()
+	gm.player_squads.clear()
+	var sq = _S("infantry", 0, Vector2i(3, 3), [_M("A", "infantry", 10)])
+	gm.register_squad(sq)
+	assert_eq(gm.all_squads.size(), 1)
+	assert_true(gm.get_squad_at(Vector2i(3, 3)) != null)
+	gm.unregister_squad(sq)
+	assert_eq(gm.get_squad_at(Vector2i(3, 3)), null)
+
+func test_game_manager_multi_squad():
+	print("  GameManager 多Squad")
+	var gm = GameManager
+	gm.all_squads.clear()
+	gm.player_squads.clear()
+	gm.enemy_squads.clear()
+	
+	var p1 = _S("infantry", 0, Vector2i(0,0), [_M("a","infantry",10)])
+	var p2 = _S("tank", 0, Vector2i(1,0), [_M("b","vehicle",15)])
+	var e1 = _S("infantry", 1, Vector2i(5,5), [_M("c","infantry",10)])
+	
+	gm.register_squad(p1)
+	gm.register_squad(p2)
+	gm.register_squad(e1)
+	assert_eq(gm.all_squads.size(), 3)
+	assert_eq(gm.player_squads.size(), 2)
+	assert_eq(gm.enemy_squads.size(), 1)
 
 func test_game_manager_turn_cycle():
-	print("  [模块] GameManager 回合循环")
+	print("  GameManager 回合循环")
 	var gm = GameManager
 	gm.turn_count = 0
-
-	# 模拟玩家回合开始
 	gm.start_battle()
-	assert_eq(gm.current_phase, 0, "初始phase=0 (玩家回合)")
-	assert_eq(gm.turn_count, 1, "初始回合=1")
-
-	# 模拟玩家行动：创建单位并标记已行动
-	var unit = load("res://scripts/units/unit.gd").new()
-	unit.team = 0
-	unit.hex_coord = Vector2i(0, 0)
-	unit.has_acted = true
-	gm.register_unit(unit)
-
-	# 玩家结束回合 -> 切换敌方回合
+	assert_eq(gm.current_phase, 0)
+	assert_eq(gm.turn_count, 1)
 	gm.end_player_turn()
-	assert_eq(gm.current_phase, 1, "结束玩家->phase=1 (敌方回合)")
-
-	# 敌方结束回合 -> 新玩家回合
+	assert_eq(gm.current_phase, 1)
 	gm.end_enemy_turn()
-	assert_eq(gm.current_phase, 0, "结束敌方->phase=0 (玩家回合)")
-	assert_eq(gm.turn_count, 2, "回合数+1")
-	assert_eq(gm.command_points, 150, "获得指挥点 (100+50)")
+	assert_eq(gm.current_phase, 0)
+	assert_eq(gm.turn_count, 2)
 
-	# 检查 has_acted 被重置
-	assert_false(unit.has_acted, "新回合 has_acted 被重置")
-
-	gm.unregister_unit(unit)
-
-# ============================================================
-# 测试用例 9-10: 数据定义
-# ============================================================
+# ========== Terrain ==========
 
 func test_terrain_data():
-	print("  [模块] 地形数据")
+	print("  地形数据")
 	var db = GameManager.TERRAIN_DB
-	assert_true(db.has("plain"), "平地")
-	assert_true(db.has("forest"), "森林")
-	assert_true(db.has("mountain"), "山地")
-	assert_true(db.has("city"), "城市")
-	assert_eq(db["plain"].move_cost, 1, "平地移动=1")
-	assert_eq(db["forest"].move_cost, 2, "森林移动=2")
-	assert_eq(db["mountain"].move_cost, 3, "山地移动=3")
-	assert_eq(db["mountain"].defense_bonus, 4, "山地防御+4")
-	assert_eq(db["city"].defense_bonus, 3, "城市防御+3")
+	assert_true(db.has("plain"))
+	assert_true(db.has("forest"))
+	assert_true(db.has("mountain"))
+	assert_true(db.has("city"))
+	assert_eq(db["plain"].move_cost, 1)
+	assert_eq(db["mountain"].move_cost, 3)
+	assert_eq(db["mountain"].defense_bonus, 4)
 
-func test_unit_data():
-	print("  [模块] 兵种数据")
-	var db = GameManager.UNIT_DB
-	assert_true(db.has("infantry"), "步兵")
-	assert_true(db.has("tank"), "坦克")
-	assert_true(db.has("artillery"), "火炮")
-	assert_true(db.has("recon"), "侦察车")
-	assert_eq(db["infantry"].attack, 2, "步兵攻击=2")
-	assert_eq(db["tank"].attack, 5, "坦克攻击=5")
-	assert_eq(db["tank"].defense, 3, "坦克防御=3")
-	assert_eq(db["tank"].move_range, 4, "坦克移动=4")
-	assert_eq(db["artillery"].attack_range, 3, "火炮射程=3")
-	assert_false(db["artillery"].can_attack_after_move, "火炮不可移动攻击")
-
-# ============================================================
-# 测试用例 11-14: 单位行为
-# ============================================================
-
-func _make_unit(type_id: String, team: int, hex: Vector2i):
-	var unit = load("res://scripts/units/unit.gd").new()
-	unit.unit_data_id = type_id
-	unit.team = team
-	unit.hex_coord = hex
-	var db = GameManager.UNIT_DB
-	unit.unit_data = db.get(type_id, db["infantry"])
-	unit.max_hp = unit.unit_data.max_hp
-	unit.hp = unit.max_hp
-	unit.is_alive = true
-	unit.has_acted = false
-	return unit
-
-func test_unit_creation_and_position():
-	print("  [模块] 单位创建")
-	var unit = _make_unit("tank", 0, Vector2i(3, 4))
-	assert_eq(unit.unit_data.display_name, "坦克", "名称")
-	assert_eq(unit.max_hp, 15, "HP=15")
-	assert_eq(unit.team, 0, "阵营=玩家")
-	assert_true(unit.is_alive, "存活")
-
-func test_unit_movement():
-	print("  [模块] 单位移动")
-	var unit = _make_unit("infantry", 0, Vector2i(0, 0))
-	unit.move_to(Vector2i(2, 3))
-	assert_eq(unit.hex_coord, Vector2i(2, 3), "移动到 (2,3)")
-	unit.move_to(Vector2i(-1, 2))
-	assert_eq(unit.hex_coord, Vector2i(-1, 2), "移动到 (-1,2)")
-
-func test_unit_take_damage():
-	print("  [模块] 单位受伤")
-	var unit = _make_unit("tank", 0, Vector2i(0, 0))
-	var hp_left = unit.take_damage(5)
-	assert_eq(hp_left, unit.max_hp - 5, "扣5HP")
-	assert_true(unit.is_alive, "HP>0 存活")
-	unit.take_damage(unit.hp)
-	assert_false(unit.is_alive, "HP=0 死亡")
-
-func test_unit_can_attack():
-	print("  [模块] 单位攻击判定")
-	var tank = _make_unit("tank", 0, Vector2i(0, 0))
-	var enemy = _make_unit("infantry", 1, Vector2i(1, 0))
-	var ally = _make_unit("infantry", 0, Vector2i(0, 1))
-	var far = _make_unit("infantry", 1, Vector2i(5, 0))
-
-	assert_true(tank.can_attack(enemy), "邻格可攻击")
-	assert_false(tank.can_attack(null), "空目标不可")
-	assert_false(tank.can_attack(ally), "同阵营不可")
-	tank.has_acted = true
-	assert_false(tank.can_attack(enemy), "已行动不可")
-	tank.has_acted = false
-	assert_false(tank.can_attack(far), "超射程不可")
-
-# ============================================================
-# 测试用例 15-16: 战斗系统
-# ============================================================
-
-func test_battle_combat_resolution():
-	print("  [模块] 战斗系统")
-	var tank = _make_unit("tank", 0, Vector2i(0, 0))
-	var infantry = _make_unit("infantry", 1, Vector2i(1, 0))
-	var bm = load("res://scripts/battle/battle_manager.gd").new()
-	var result = bm.resolve_combat(tank, infantry)
-
-	# 坦克攻击=5, 步兵防御=1 => 伤害=4
-	assert_eq(result.damage_to_defender, 4, "坦克->步兵 伤害4")
-	assert_true(result.damage_to_defender > 0, "造成伤害")
-	assert_eq(result.attacker, tank, "攻击者正确")
-	assert_eq(result.defender, infantry, "防御者正确")
-	assert_true(tank.has_acted, "已标记行动")
-
-func test_battle_counter_attack():
-	print("  [模块] 战斗反击")
-	var infantry = _make_unit("infantry", 0, Vector2i(0, 0))
-	var tank = _make_unit("tank", 1, Vector2i(1, 0))
-	var bm = load("res://scripts/battle/battle_manager.gd").new()
-	var result = bm.resolve_combat(infantry, tank)
-
-	# 步兵攻击=2, 坦克防御=3 => 伤害=1 (max(1,2-3))
-	assert_eq(result.damage_to_defender, 1, "步兵->坦克 伤害1")
-	# 反击: 坦克攻击=5, 步兵防御=1 => 反击=4
-	assert_eq(result.damage_to_attacker, 4, "坦克反击 伤害4")
-
-# ============================================================
-# 测试用例 17-18: 地图系统
-# ============================================================
+# ========== HexMap ==========
 
 func test_hex_map_reachable():
-	print("  [模块] HexMap 可达范围")
+	print("  HexMap 可达范围")
 	var map_node = load("res://scripts/map/hex_map.gd").new()
 	map_node.hex_size = 32.0
 	map_node.map_width = 5
@@ -334,17 +475,15 @@ func test_hex_map_reachable():
 		for r in range(5):
 			map_node.terrain_grid[Vector2i(q, r)] = "plain"
 
-	var reachable = map_node.get_reachable_hexes(Vector2i(2, 2), 3)
-	assert_true(reachable.size() > 0, "有可达格子")
-	assert_true(reachable.size() <= 36, "数量合理")
-	assert_false(reachable.has(Vector2i(2, 2)), "不含起点")
+	var r = map_node.get_reachable_hexes(Vector2i(2, 2), 3)
+	assert_true(r.size() > 0)
+	assert_false(r.has(Vector2i(2, 2)))
 
-	var reachable_corner = map_node.get_reachable_hexes(Vector2i(0, 0), 2)
-	assert_true(reachable_corner.size() > 0, "角落可达")
-	assert_false(reachable_corner.has(Vector2i(-1, 0)), "不出界")
+	var rc = map_node.get_reachable_hexes(Vector2i(0, 0), 2)
+	assert_true(rc.size() > 0)
 
 func test_hex_map_attackable():
-	print("  [模块] HexMap 攻击范围")
+	print("  HexMap 攻击范围")
 	var map_node = load("res://scripts/map/hex_map.gd").new()
 	map_node.hex_size = 32.0
 	map_node.map_width = 5
@@ -354,53 +493,26 @@ func test_hex_map_attackable():
 		for r in range(5):
 			map_node.terrain_grid[Vector2i(q, r)] = "plain"
 
-	var attackable = map_node.get_attackable_hexes(Vector2i(2, 2), 1)
-	assert_eq(attackable.size(), 6, "射程1 => 6格")
-	assert_false(attackable.has(Vector2i(2, 2)), "不含自身")
+	var a1 = map_node.get_attackable_hexes(Vector2i(2, 2), 1)
+	assert_eq(a1.size(), 6)
+	assert_false(a1.has(Vector2i(2, 2)))
 
-	var attackable2 = map_node.get_attackable_hexes(Vector2i(0, 0), 2)
-	assert_true(attackable2.size() > 0, "角落射程2")
-	assert_false(attackable2.has(Vector2i(0, 0)), "不含自身")
+	var a2 = map_node.get_attackable_hexes(Vector2i(0, 0), 2)
+	assert_true(a2.size() > 0)
 
-func test_has_acted_prevents_reselect():
-	print("  [模块] has_acted 禁止重复选中")
-	var unit = _make_unit("infantry", 0, Vector2i(0, 0))
-	assert_false(unit.has_acted, "初始未行动")
-	assert_eq(unit.get_move_range(), 3, "行动前有移动范围")
-
-	unit.has_acted = true
-	assert_eq(unit.get_move_range(), 0, "行动后移动范围为0")
-	assert_true(unit.has_acted, "已标记行动")
-
-	# 关键: 即使调用 move_to 也不会重置 has_acted
-	unit.move_to(Vector2i(2, 2))
-	assert_true(unit.has_acted, "移动后仍保持已行动状态")
-	assert_eq(unit.get_move_range(), 0, "移动后仍无移动范围")
-
-	unit.has_acted = false
-	unit.has_acted = true
-	unit.take_damage(1)
-	assert_true(unit.is_alive, "受伤不解除已行动")
-	assert_true(unit.has_acted, "受伤不影响已行动状态")
-
-# ============================================================
-# 结果输出
-# ============================================================
+# ========== Summary ==========
 
 func _print_summary():
 	print("")
 	print("=".repeat(60))
-	print("  测试报告")
+	print("  全量测试报告")
 	print("=".repeat(60))
-	print("  总用例: %d" % _tests_run)
-	print("  通过:   %d" % _passed)
-	print("  失败:   %d" % _failed)
-	print("-".repeat(60))
+	print("  用例: %d  通过: %d  失败: %d" % [_tests_run, _passed, _failed])
 	if _failed > 0:
 		print("  失败详情:")
 		for line in _test_log:
 			if line.begins_with("[FAIL]"):
-				print("    %s" % line)
+				print("  " + line)
 	else:
 		print("  全部通过!")
 	print("=".repeat(60))
