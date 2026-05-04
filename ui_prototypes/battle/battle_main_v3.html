@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>战场主界面 v3 - UI原型</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh}
+
+.game{width:1280px;height:720px;background:#0f0f1a;position:relative;border-radius:8px;overflow:hidden}
+
+.battlefield{position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 30%, rgba(40,60,40,0.3) 0%, transparent 60%),
+  radial-gradient(circle at 80% 70%, rgba(40,40,60,0.2) 0%, transparent 50%),
+  linear-gradient(180deg,#14141e 0%,#1a1a28 50%,#121218 100%)}
+.battlefield::before{content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 100px 100px, rgba(255,255,255,0.03) 1px, transparent 1px),
+    radial-gradient(circle at 300px 200px, rgba(255,255,255,0.03) 1px, transparent 1px),
+    radial-gradient(circle at 500px 400px, rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(circle at 700px 150px, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:60px 60px}
+
+/* 顶部栏 */
+.top-bar{position:absolute;top:0;left:0;right:0;height:30px;background:rgba(10,10,25,0.92);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:20}
+.top-bar .left,.top-bar .right{display:flex;align-items:center;gap:6px}
+.top-bar .t-title{color:#77aaff;font-size:12px;font-weight:bold}
+.top-bar .t-sep{color:#333;font-size:10px}
+.top-bar .t-info{color:#888;font-size:10px}
+.top-bar .t-val{color:#eee;font-size:11px}
+.top-btn{padding:2px 8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:3px;color:#888;font-size:10px;cursor:pointer}
+.top-btn:hover{background:rgba(100,170,255,0.08);color:#fff}
+
+/* ===== 底部信息区 ===== */
+.bottom-strip{position:absolute;bottom:10px;left:10px;right:10px;display:flex;align-items:flex-end;gap:6px;z-index:15}
+
+/* ===== 信息主面板(单一框体,三列) ===== */
+.main-panel{background:rgba(10,10,25,0.94);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 10px;display:flex;gap:6px;flex:1;min-width:0}
+
+/* 第一列: 图片 */
+.img-col{flex-shrink:0;display:flex;flex-direction:column;gap:4px}
+.img-box{width:50px;height:66px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#444;cursor:pointer}
+.img-box:hover{border-color:rgba(100,170,255,0.3);color:#666}
+
+/* 第二列: 名称+士气+属性+HP+武器 */
+.detail-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.name-row{display:flex;align-items:center;gap:6px}
+.unit-name{color:#fff;font-size:13px;font-weight:bold;cursor:pointer}
+.unit-name:hover{color:#77aaff}
+.status-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;color:#fff;background:#448844}
+
+.morale-row{display:flex;align-items:center;gap:6px}
+.bar-wrap{flex:1;height:12px;background:rgba(255,255,255,0.06);border-radius:3px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.bar-fill.morale{background:linear-gradient(90deg,#338833,#55bb55)}
+.bar-text{position:absolute;inset:0;line-height:12px;font-size:8px;padding:0 4px;color:#fff;text-shadow:0 0 2px #000}
+.morale-icon{width:16px;height:16px;border-radius:3px;background:#448844;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0}
+
+.stats-row{display:flex;gap:8px;font-size:10px;color:#aaa}
+.stats-row .sl{color:#666}
+.stats-row .sv{color:#ddd}
+
+.hp-grid{display:flex;gap:3px;flex-wrap:wrap}
+.hp-cell{height:14px;background:rgba(255,255,255,0.06);border-radius:2px;position:relative;overflow:hidden;width:35px;flex:1;max-width:38px}
+.hp-fill{height:100%;border-radius:2px}
+.hp-fill.good{background:linear-gradient(90deg,#338833,#55bb55)}
+.hp-fill.mid{background:linear-gradient(90deg,#aa8833,#ddaa44)}
+.hp-fill.dead{background:rgba(60,60,60,0.4)}
+.hp-cell .txt{position:absolute;inset:0;line-height:14px;text-align:center;font-size:7px;color:#fff;text-shadow:0 0 2px #000}
+.hp-cell .txt.dead{color:#555}
+
+.weapon-row{display:flex;gap:4px;flex-wrap:wrap;font-size:9px}
+.weapon-row .w{padding:1px 5px;background:rgba(255,255,255,0.04);border-radius:2px;color:#aaa}
+
+/* 第三列: 压制+行动图标(横向排列) */
+.action-col{width:100px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;justify-content:flex-start}
+
+.sup-block{text-align:center;padding:3px;background:rgba(255,170,68,0.06);border:1px solid rgba(255,170,68,0.15);border-radius:4px;margin-bottom:2px}
+.sup-block .sup-icon{font-size:14px;color:#fa4}
+.sup-block .sup-val{font-size:9px;color:#fa4;line-height:1}
+.sup-block .sup-label{font-size:7px;color:#664;line-height:1}
+
+.action-grid{display:flex;flex-direction:column;gap:2px}
+.act-row{display:flex;gap:2px}
+.act-btn{flex:1;padding:3px 2px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:3px;color:#aaa;font-size:8px;text-align:center;cursor:pointer;line-height:1.1;min-width:0}
+.act-btn:hover{background:rgba(100,170,255,0.08);color:#fff}
+.act-btn .ac{color:#4d4;font-size:7px;display:block}
+.act-btn.accent{border-color:rgba(68,170,136,0.2);color:#4a8}
+.act-btn.passive{border-color:rgba(100,200,255,0.1);color:#7bf}
+.act-btn.wait{color:#666}
+
+/* ===== 地形面板(主面板右侧) ===== */
+.terrain-panel{width:100px;flex-shrink:0;background:rgba(10,10,25,0.92);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 8px}
+.terrain-panel .t-name{color:#fff;font-size:11px;font-weight:bold;margin-bottom:3px}
+.terrain-panel .t-row{font-size:9px;color:#aaa;display:flex;justify-content:space-between;margin:1px 0}
+.terrain-panel .t-neg{color:#e88}
+.terrain-panel .t-pos{color:#8e8}
+.terrain-panel .t-tag{display:inline-block;padding:0 5px;border-radius:2px;font-size:8px;color:#fff;background:#448844;margin-top:2px}
+
+/* ===== 结束回合(右下角独立) ===== */
+.end-turn-col{flex-shrink:0;display:flex;align-items:flex-end}
+.end-turn-btn{width:56px;height:56px;background:rgba(200,60,60,0.1);border:1px solid rgba(200,60,60,0.2);border-radius:6px;color:#d77;font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2;transition:all .15s}
+.end-turn-btn:hover{background:rgba(200,60,60,0.18);border-color:rgba(200,60,60,0.35);color:#f99}
+.end-turn-btn .et-sm{font-size:8px;color:#944}
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="battlefield"></div>
+
+  <!-- 顶部栏 -->
+  <div class="top-bar">
+    <div class="left">
+      <span class="t-title">大战略</span>
+      <span class="t-sep">|</span>
+      <span class="t-info">回合</span>
+      <span class="t-val">3</span>
+      <span class="t-sep">|</span>
+      <span class="t-val" style="color:#44aa88">玩家回合</span>
+    </div>
+    <div class="right">
+      <span class="t-info">货币</span>
+      <span class="t-val">750</span>
+      <span class="t-sep">|</span>
+      <span class="t-info">补给</span>
+      <span class="t-val" style="color:#55cc55">充足</span>
+      <span style="width:8px"></span>
+      <span class="top-btn">日志</span>
+      <span class="top-btn">储备库</span>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-strip">
+
+    <!-- 主面板(单框体,三列) -->
+    <div class="main-panel">
+
+      <!-- 列1: 图片 -->
+      <div class="img-col">
+        <div class="img-box" title="点击查看部队详情">?</div>
+      </div>
+
+      <!-- 列2: 详情 -->
+      <div class="detail-col">
+        <div class="name-row">
+          <span class="unit-name" title="点击查看部队详情">第一步兵班</span>
+          <span class="status-badge">正常</span>
+        </div>
+
+        <div class="morale-row">
+          <div class="bar-wrap"><div class="bar-fill morale" style="width:70%"></div><span class="bar-text">士气 70/100</span></div>
+          <div class="morale-icon">✓</div>
+        </div>
+
+        <div class="stats-row">
+          <span><span class="sl">AP</span> <span class="sv">4/4</span></span>
+          <span><span class="sl">隐蔽</span> <span class="sv">15</span></span>
+          <span><span class="sl">机动</span> <span class="sv">步行</span></span>
+          <span><span class="sl">护甲</span> <span class="sv">1</span></span>
+        </div>
+
+        <div class="hp-grid">
+          <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+        </div>
+        <div class="hp-grid">
+          <div class="hp-cell"><div class="hp-fill good" style="width:90%"></div><span class="txt">9/10</span></div>
+          <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill mid" style="width:70%"></div><span class="txt">7/10</span></div>
+          <div class="hp-cell"><div class="hp-fill dead" style="width:0%"></div><span class="txt dead">0/10</span></div>
+          <div class="hp-cell"><div class="hp-fill dead" style="width:0%"></div><span class="txt dead">0/10</span></div>
+        </div>
+
+        <div class="weapon-row">
+          <span class="w">Kar98k×6</span>
+          <span class="w">MP40</span>
+          <span class="w">MG42</span>
+        </div>
+      </div>
+
+      <!-- 列3: 压制+行动图标(横向排列在右侧) -->
+      <div class="action-col">
+        <div class="sup-block">
+          <div class="sup-icon">⚠</div>
+          <div class="sup-val">20%</div>
+          <div class="sup-label">压制中</div>
+        </div>
+
+        <div class="action-grid">
+          <div class="act-row">
+            <div class="act-btn">射击<span class="ac">2AP</span></div>
+            <div class="act-btn passive">专注</div>
+          </div>
+          <div class="act-row">
+            <div class="act-btn">标记<span class="ac">1AP</span></div>
+            <div class="act-btn accent">突击<span class="ac">3AP</span></div>
+          </div>
+          <div class="act-row">
+            <div class="act-btn">战壕<span class="ac">3AP</span></div>
+            <div class="act-btn">布雷<span class="ac">3AP</span></div>
+          </div>
+          <div class="act-row">
+            <div class="act-btn wait">待机</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 地形面板 -->
+    <div class="terrain-panel">
+      <div class="t-name">城市</div>
+      <div class="t-row"><span>移动</span><span>1</span></div>
+      <div class="t-row"><span>防御</span><span class="t-pos">+3</span></div>
+      <div class="t-row"><span>命中</span><span class="t-neg">-15%</span></div>
+      <span class="t-tag">CQB</span>
+    </div>
+
+    <!-- 结束回合(右下角独立) -->
+    <div class="end-turn-col">
+      <div class="end-turn-btn">结束<span class="et-sm">回合</span></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

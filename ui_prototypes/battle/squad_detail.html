@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>部队详情弹窗 - UI原型</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.game{width:1280px;height:720px;background:#2d2d44;position:relative;border-radius:8px;overflow:hidden}
+.game-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a3a2a 0%,#2a1a1a 50%,#1a1a3a 100%);}
+
+/* 左上信息面板 */
+.info-panel{position:absolute;top:12px;left:12px;width:210px;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px;color:#ccc;font-size:11px;z-index:10}
+.info-panel .name{color:#fff;font-size:13px;font-weight:bold;margin-bottom:4px}
+.info-panel .row{margin:2px 0;display:flex;justify-content:space-between}
+.tag{display:inline-block;padding:0 6px;border-radius:3px;font-size:10px;margin-left:4px;color:#fff}
+.inf{background:#4a8}
+.tank{background:#c84}
+
+/* 详情按钮 */
+.detail-btn{position:absolute;top:135px;left:12px;padding:5px 16px;background:#445;color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:4px;font-size:11px;cursor:pointer;z-index:10}
+.detail-btn:hover{background:#556}
+
+/* ===== 弹窗 ===== */
+.modal{position:absolute;top:30px;left:30px;right:30px;bottom:30px;background:rgba(10,10,25,0.96);border:1px solid rgba(255,255,255,0.2);border-radius:10px;display:none;flex-direction:column;z-index:100;box-shadow:0 0 60px rgba(0,0,0,0.8)}
+.modal.show{display:flex}
+
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.header .title{color:#fff;font-size:16px;font-weight:bold}
+.header .close{padding:4px 14px;background:#444;color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:4px;cursor:pointer;font-size:12px}
+
+.body{flex:1;display:flex;overflow:hidden;padding:0}
+.left-col{flex:1;padding:12px 16px;overflow-y:auto;border-right:1px solid rgba(255,255,255,0.08)}
+.right-col{width:260px;padding:12px 16px;overflow-y:auto}
+
+.section-title{color:#7af;font-size:12px;font-weight:bold;margin:12px 0 6px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.section-title:first-child{margin-top:0}
+
+.stat-grid{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:12px;color:#ccc;margin-bottom:6px}
+.stat-grid .label{color:#888}
+.stat-grid .value{color:#eee;text-align:right}
+
+.bar-wrap{height:16px;background:rgba(255,255,255,0.08);border-radius:3px;position:relative;margin:4px 0;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.bar-fill.morale{background:linear-gradient(90deg,#4a4,#6c6)}
+.bar-fill.sup{background:linear-gradient(90deg,#a84,#da4)}
+.bar-text{position:absolute;inset:0;line-height:16px;font-size:10px;padding:0 4px;color:#fff;text-shadow:0 0 3px #000}
+
+.ap-dots{font-size:18px;letter-spacing:3px}
+.ap-dots .on{color:#4d4}
+.ap-dots .off{color:#444}
+
+.status-badge{display:inline-block;padding:1px 8px;border-radius:3px;font-size:10px;color:#fff}
+.normal{background:#484}
+.high{background:#884}
+.confused{background:#864}
+.broken{background:#844}
+.frenzy{background:#c80}
+
+.zoc-warn{background:rgba(255,50,50,0.12);border:1px solid rgba(255,50,50,0.25);border-radius:4px;padding:5px 8px;margin:4px 0;font-size:11px;color:#f88}
+
+/* 成员卡片 */
+.member-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:8px 10px;margin:4px 0}
+.member-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.member-name{color:#fff;font-size:12px;font-weight:bold}
+.member-hp{display:flex;align-items:center;gap:6px}
+.hp-small{width:60px;height:8px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden}
+.hp-fill{height:100%;border-radius:2px}
+.hp-good{background:#4a4}
+.hp-mid{background:#ca4}
+.hp-low{background:#c44}
+
+.weapon-row{font-size:11px;color:#aaa;display:flex;gap:8px;flex-wrap:wrap}
+.weapon-row .stat{padding:1px 4px;background:rgba(255,255,255,0.05);border-radius:2px}
+
+/* 指挥官 */
+.cmd-block{background:rgba(255,255,200,0.04);border:1px solid rgba(255,255,200,0.1);border-radius:6px;padding:10px;margin-bottom:8px}
+.cmd-name{color:#fe8;font-size:14px;font-weight:bold;margin-bottom:2px}
+.cmd-level{color:#8bf;font-size:11px;margin-bottom:6px}
+.cmd-stats{font-size:11px;color:#aaa;margin-bottom:6px}
+
+.skill-item{margin:4px 0;padding:4px 8px;background:rgba(255,255,255,0.04);border-radius:4px}
+.skill-name{color:#ddd;font-size:11px;font-weight:bold}
+.skill-desc{color:#888;font-size:10px;margin-top:1px}
+
+/* 底部地形 */
+.terrain-bar{display:flex;align-items:center;gap:14px;padding:8px 16px;border-top:1px solid rgba(255,255,255,0.08);font-size:11px;color:#aaa;background:rgba(0,0,0,0.3)}
+.terrain-bar .t-name{color:#fff;font-weight:bold}
+.terrain-bar .cqb-tag{padding:1px 8px;border-radius:3px;font-size:10px;color:#fff;background:#484}
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="game-bg"></div>
+
+  <!-- 模拟游戏中的信息面板 -->
+  <div class="info-panel">
+    <div class="name">第一步兵班 <span class="tag inf">步兵</span></div>
+    <div class="bar-wrap"><div class="bar-fill morale" style="width:70%"></div><span class="bar-text">士气 70/100</span></div>
+    <div class="bar-wrap"><div class="bar-fill sup" style="width:20%"></div><span class="bar-text">压制 20/100</span></div>
+    <div class="row"><span>AP</span><span><span class="ap-dots"><span class="on">●</span><span class="on">●</span><span class="on">●</span><span class="on">●</span></span> 4/4</span></div>
+    <div class="row"><span>成员 8/10</span><span class="status-badge normal">正常</span></div>
+  </div>
+
+  <div class="detail-btn" onclick="show()">📋 详情</div>
+
+  <!-- 弹窗 -->
+  <div class="modal" id="m">
+    <div class="header">
+      <div class="title">
+        第一步兵班
+        <span class="tag inf">步兵</span>
+        <span class="tag" style="background:#484;margin-left:4px">CQB</span>
+      </div>
+      <button class="close" onclick="hide()">✕ 关闭</button>
+    </div>
+
+    <div class="body">
+      <!-- 左栏：属性 + 成员 -->
+      <div class="left-col">
+        <div class="section-title">■ 基本属性</div>
+        <div class="stat-grid">
+          <span class="label">士气</span><span class="value">70 / 100 <span class="status-badge normal" style="margin-left:6px">正常</span></span>
+          <span class="label">压制</span><span class="value">20 / 100</span>
+          <span class="label">行动点</span><span class="value"><span class="ap-dots"><span class="on">●</span><span class="on">●</span><span class="on">●</span><span class="on">●</span></span> 4/4</span>
+          <span class="label">状态</span><span class="value">未行动</span>
+          <span class="label">位置</span><span class="value">(2,3) 城市</span>
+          <span class="label">成员</span><span class="value">8 / 10</span>
+          <span class="label">士气修正</span><span class="value" style="color:#8f8">+0%</span>
+          <span class="label">伤害修正</span><span class="value" style="color:#8f8">+0%</span>
+        </div>
+
+        <div class="zoc-warn">⚠ 敌方ZOC内 — 命中-10% · 每回合+5压制</div>
+
+        <div class="section-title">■ 成员列表</div>
+
+        <div class="member-card">
+          <div class="member-header">
+            <span class="member-name">班长</span>
+            <div class="member-hp">
+              <div class="hp-small"><div class="hp-fill hp-good" style="width:100%"></div></div>
+              <span style="font-size:10px;color:#ccc">12/12</span>
+            </div>
+          </div>
+          <div class="weapon-row">
+            <span class="stat">MP40</span><span class="stat">伤20</span><span class="stat">穿2</span><span class="stat">射程2</span><span class="stat">命中65%</span><span class="stat" style="color:#4a4">CQB+</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-header">
+            <span class="member-name">步枪手 #1</span>
+            <div class="member-hp">
+              <div class="hp-small"><div class="hp-fill hp-good" style="width:100%"></div></div>
+              <span style="font-size:10px;color:#ccc">10/10</span>
+            </div>
+          </div>
+          <div class="weapon-row">
+            <span class="stat">Kar98k</span><span class="stat">伤15</span><span class="stat">穿3</span><span class="stat">射程4</span><span class="stat">命中60%</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-header">
+            <span class="member-name">步枪手 #2</span>
+            <div class="member-hp">
+              <div class="hp-small"><div class="hp-fill hp-mid" style="width:50%"></div></div>
+              <span style="font-size:10px;color:#ccc">5/10</span>
+            </div>
+          </div>
+          <div class="weapon-row">
+            <span class="stat">Kar98k</span><span class="stat">伤15</span><span class="stat">穿3</span><span class="stat">射程4</span><span class="stat">命中60%</span>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-header">
+            <span class="member-name">机枪手</span>
+            <div class="member-hp">
+              <div class="hp-small"><div class="hp-fill hp-good" style="width:100%"></div></div>
+              <span style="font-size:10px;color:#ccc">12/12</span>
+            </div>
+          </div>
+          <div class="weapon-row">
+            <span class="stat">MG42</span><span class="stat">伤25</span><span class="stat">穿4</span><span class="stat">射程5</span><span class="stat">命中55%</span><span class="stat">压制25</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右栏：指挥官 -->
+      <div class="right-col">
+        <div class="section-title">■ 指挥官</div>
+        <div class="cmd-block">
+          <div class="cmd-name">弗里茨·缪勒</div>
+          <div class="cmd-level">Lv.3 / 10</div>
+          <div class="cmd-stats">经验 150 / 350</div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name" style="color:#6f6">背景 · 装甲学校</div>
+          <div class="skill-desc">所属装甲部队命中+5%，护甲+2</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name" style="color:#68f">天赋 · 冷静</div>
+          <div class="skill-desc">部队士气下降速度-20%</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name" style="color:#fa6">品质 · 应急治疗</div>
+          <div class="skill-desc">消耗1AP，恢复部队HP总量15%</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name" style="color:#ff8">升级 · 鼓舞士气</div>
+          <div class="skill-desc">消耗1AP，所属部队恢复20士气</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部地形 -->
+    <div class="terrain-bar">
+      <span class="t-name">城市</span>
+      <span>移动消耗: 1</span>
+      <span>防御加成: +3</span>
+      <span>命中惩罚: -15%</span>
+      <span class="cqb-tag">CQB 地形</span>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(){document.getElementById('m').classList.add('show')}
+function hide(){document.getElementById('m').classList.remove('show')}
+show()
+</script>
+</body>
+</html>

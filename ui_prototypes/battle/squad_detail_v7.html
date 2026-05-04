@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>部队详情 v7 - UI原型</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.game{width:1280px;height:720px;background:#2d2d44;position:relative;border-radius:8px;overflow:hidden}
+.game-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a3a2a 0%,#2a1a1a 50%,#1a1a3a 100%)}
+
+.info-panel{position:absolute;top:12px;left:12px;width:200px;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:10px;color:#ccc;font-size:11px;z-index:5}
+.info-panel .name{color:#fff;font-size:13px;font-weight:bold;margin-bottom:4px}
+.tag{display:inline-block;padding:0 6px;border-radius:3px;font-size:10px;margin-left:4px;color:#fff;vertical-align:middle}
+.inf{background:#4a8}
+
+.detail-btn{position:absolute;top:135px;left:12px;padding:5px 16px;background:#445;color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:4px;font-size:11px;cursor:pointer;z-index:5}
+.detail-btn:hover{background:#556}
+
+/* ===== 弹窗(更窄) ===== */
+.modal{position:absolute;top:50px;left:280px;right:280px;bottom:50px;min-width:460px;max-width:720px;background:rgba(10,10,25,0.97);border:1px solid rgba(255,255,255,0.2);border-radius:10px;display:none;flex-direction:column;z-index:100;box-shadow:0 0 60px rgba(0,0,0,0.8)}
+.modal.show{display:flex}
+.header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.header .title{color:#fff;font-size:14px;font-weight:bold}
+.header .close{padding:2px 10px;background:#444;color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:4px;cursor:pointer;font-size:10px}
+.body{flex:1;display:flex;overflow:hidden;padding:0}
+.left-col{flex:1;padding:8px 12px;overflow-y:auto;border-right:1px solid rgba(255,255,255,0.08);position:relative}
+.right-col{width:165px;padding:8px 10px;overflow-y:auto;position:relative}
+
+.section-title{color:#7af;font-size:11px;font-weight:bold;margin:8px 0 4px;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.section-title:first-child{margin-top:0}
+
+.prop-row{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:#ccc;padding:4px 0;margin-bottom:2px}
+.prop-item{display:flex;align-items:center;gap:4px}
+.prop-item .lbl{color:#888}.prop-item .val{color:#eee}
+.prop-item .val.clickable{cursor:default;border-bottom:1px dotted rgba(255,255,255,0.2)}
+.prop-item .val.clickable:hover{color:#fff}
+
+.ap-dots{font-size:15px;letter-spacing:2px}
+.ap-dots .on{color:#4d4}.ap-dots .off{color:#444}
+
+.status-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;color:#fff}
+.normal{background:#484}
+
+/* 战况修正 */
+.summary-row{display:flex;gap:12px;flex-wrap:wrap;padding:4px 8px;background:rgba(255,255,255,0.04);border-radius:6px;margin:4px 0 6px}
+.summary-item{display:flex;align-items:center;gap:4px;font-size:10px}
+.summary-item .sl{color:#888}
+.summary-item .sv{color:#eee;font-weight:bold}
+.summary-item .sv.neg{color:#f88}
+.summary-item .sv.pos{color:#8f8}
+
+.factor-grid{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}
+.factor-btn{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:9px;color:#bbb;cursor:default;position:relative}
+.factor-btn .f-name{color:#ddd}
+.factor-btn .f-val{color:#f88;font-size:9px}
+.factor-btn .f-val.pos{color:#8f8}
+.factor-btn:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}
+.factor-btn:hover .f-tooltip{display:block}
+
+/* ===== Tooltips: 用fixed+最高层级避开容器裁剪 ===== */
+.f-tooltip,.s-tooltip{display:none;position:fixed;background:rgba(0,0,0,0.96);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:5px 8px;font-size:9px;color:#ccc;white-space:nowrap;z-index:99999!important;line-height:1.4;pointer-events:none}
+.f-tooltip .tt-title,.s-tooltip .st-title{color:#fff;font-weight:bold;margin-bottom:2px;white-space:nowrap}
+.f-tooltip .tt-row{display:flex;justify-content:space-between;gap:8px;white-space:nowrap}
+.f-tooltip .tt-label{color:#888}
+.f-tooltip .tt-val.neg{color:#f88}
+.s-tooltip .st-desc{color:#aaa;white-space:nowrap}
+.s-tooltip .st-row{color:#888;font-size:8px;margin-top:1px;white-space:nowrap}
+
+/* 用JS动态定位tooltip */
+.skill-btn,.factor-btn,.clickable{cursor:default;position:relative}
+
+/* 技能按钮 */
+.skill-grid{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}
+.skill-btn{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;font-size:9px;color:#ccc;cursor:default}
+.skill-btn .ap-cost{color:#4d4;font-weight:bold}
+.skill-btn.passive{background:rgba(100,200,255,0.06);border-color:rgba(100,200,255,0.15);color:#bdf}
+.skill-btn.passive .ap-cost{color:#8cf}
+
+/* 成员HP网格(8/10) */
+.member-hp-grid{display:flex;gap:4px;flex-wrap:wrap;margin:4px 0}
+.hp-cell{height:16px;background:rgba(255,255,255,0.06);border-radius:3px;position:relative;overflow:hidden;width:50px;flex:1;max-width:65px}
+.hp-fill{height:100%;border-radius:3px}
+.hp-good{background:linear-gradient(90deg,#3a3,#5c5)}
+.hp-mid{background:linear-gradient(90deg,#ca4,#ea6)}
+.hp-low{background:linear-gradient(90deg,#c44,#e66)}
+.hp-dead{background:rgba(60,60,60,0.4)}
+.hp-cell .txt{position:absolute;inset:0;line-height:16px;text-align:center;font-size:8px;color:#fff;text-shadow:0 0 3px #000}
+.hp-cell .txt.dead{color:#555;text-shadow:none}
+
+.weapon-group{border:1px solid rgba(255,255,255,0.06);border-radius:5px;padding:5px 8px;margin:3px 0}
+.weapon-group .wg-name{color:#fff;font-size:11px;font-weight:bold}
+.weapon-group .wg-count{color:#888;font-size:9px;margin-left:4px;font-weight:normal}
+.weapon-group .wg-stats{display:flex;gap:8px;font-size:10px;color:#aaa;flex-wrap:wrap;margin-top:2px}
+.weapon-group .wg-stats span{padding:1px 4px;background:rgba(255,255,255,0.04);border-radius:2px}
+.weapon-group .wg-cqb{color:#4a4;font-weight:bold}
+
+/* 指挥官(窄版,竖向矩形头像) */
+.cmd-block{background:rgba(255,255,200,0.04);border:1px solid rgba(255,255,200,0.1);border-radius:6px;padding:8px 6px;margin-bottom:6px;text-align:center}
+.cmd-block .portrait{width:48px;height:64px;background:rgba(255,255,255,0.08);border-radius:4px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#666}
+.cmd-name{color:#fe8;font-size:11px;font-weight:bold}
+.cmd-level{color:#8bf;font-size:9px;margin-bottom:4px}
+
+/* 指挥官技能竖向排列 */
+.right-col .skill-grid{flex-direction:column;align-items:stretch}
+.right-col .skill-btn{width:100%;justify-content:flex-start;font-size:9px;padding:3px 6px}
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="game-bg"></div>
+  <div class="info-panel">
+    <div class="name">第一步兵班 <span class="tag inf">步兵</span></div>
+    <div style="margin-top:4px;font-size:11px">AP <span class="ap-dots"><span class="on">●</span><span class="on">●</span><span class="on">●</span><span class="on">●</span></span> 4/4</div>
+  </div>
+  <div class="detail-btn" onclick="toggle()">📋 详情</div>
+
+  <div class="modal" id="m">
+    <div class="header">
+      <div class="title">第一步兵班 <span class="tag inf">步兵</span></div>
+      <button class="close" onclick="toggle()">✕ 关闭</button>
+    </div>
+
+    <div class="body">
+      <div class="left-col">
+        <div class="prop-row">
+          <div class="prop-item"><span class="lbl">士气</span><span class="val clickable" data-tip="t-morale">70/100</span><span class="status-badge normal">正常</span></div>
+          <div class="prop-item"><span class="lbl">压制</span><span class="val clickable" data-tip="t-suppress">20/100</span></div>
+          <div class="prop-item"><span class="lbl">AP</span><span class="val"><span class="ap-dots"><span class="on">●</span><span class="on">●</span><span class="on">●</span><span class="on">●</span></span></span></div>
+          <div class="prop-item"><span class="lbl">状态</span><span class="val">未行动</span></div>
+        </div>
+
+        <div class="section-title">■ 战况修正</div>
+        <div class="summary-row">
+          <div class="summary-item"><span class="sl">命中</span><span class="sv neg">-25%</span></div>
+          <div class="summary-item"><span class="sl">防御</span><span class="sv pos">+3</span></div>
+          <div class="summary-item"><span class="sl">压制/回合</span><span class="sv neg">+5</span></div>
+        </div>
+        <div class="factor-grid">
+          <div class="factor-btn" data-tip="tt-city">
+            <span class="f-name">城市</span><span class="f-val neg">-15%</span>
+          </div>
+          <div class="factor-btn" data-tip="tt-zoc">
+            <span class="f-name">ZOC</span><span class="f-val neg">-10%</span>
+          </div>
+        </div>
+
+        <div class="section-title">■ 部队技能</div>
+        <div class="skill-grid">
+          <div class="skill-btn" data-tip="st-suppress"><span class="ap-cost">2AP</span>压制射击</div>
+          <div class="skill-btn passive" data-tip="st-armor"><span class="ap-cost">被动</span>装甲专注</div>
+          <div class="skill-btn" data-tip="st-spot"><span class="ap-cost">1AP</span>侦查标记</div>
+        </div>
+
+        <div class="section-title">■ 成员列表 (8/10)</div>
+        <div class="member-hp-grid">
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:100%"></div><span class="txt">10/10</span></div>
+        </div>
+        <div class="member-hp-grid">
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:90%"></div><span class="txt">9/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-good" style="width:100%"></div><span class="txt">10/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-mid" style="width:70%"></div><span class="txt">7/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-dead" style="width:0%"></div><span class="txt dead">0/10</span></div>
+          <div class="hp-cell"><div class="hp-fill hp-dead" style="width:0%"></div><span class="txt dead">0/10</span></div>
+        </div>
+
+        <div style="margin-top:6px">
+          <div class="weapon-group">
+            <div class="wg-name">Kar98k 步枪 <span class="wg-count">×6</span></div>
+            <div class="wg-stats"><span>伤 15</span><span>穿 3</span><span>射程 4</span><span>命中 60%</span><span>弹药 20/20</span></div>
+          </div>
+          <div class="weapon-group">
+            <div class="wg-name">MP40 冲锋枪 <span class="wg-count">×1</span></div>
+            <div class="wg-stats"><span>伤 20</span><span>穿 2</span><span>射程 2</span><span>命中 65%</span><span>弹药 30/30</span><span class="wg-cqb">CQB优势</span></div>
+          </div>
+          <div class="weapon-group">
+            <div class="wg-name">MG42 机枪 <span class="wg-count">×1</span></div>
+            <div class="wg-stats"><span>伤 25</span><span>穿 4</span><span>射程 5</span><span>命中 55%</span><span>弹药 50/50</span><span>压制 25</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右栏: 指挥官(窄+竖向) -->
+      <div class="right-col">
+        <div class="section-title">■ 指挥官</div>
+        <div class="cmd-block">
+          <div class="portrait">🎖</div>
+          <div class="cmd-name">弗里茨·缪勒</div>
+          <div class="cmd-level">Lv.3 · 150/350</div>
+        </div>
+        <div class="skill-grid">
+          <div class="skill-btn passive" data-tip="st-bg"><span class="ap-cost" style="color:#6f6">背景</span>装甲学校</div>
+          <div class="skill-btn passive" data-tip="st-tal"><span class="ap-cost" style="color:#68f">天赋</span>冷静</div>
+          <div class="skill-btn" data-tip="st-heal"><span class="ap-cost">1AP</span>应急治疗</div>
+          <div class="skill-btn" data-tip="st-morale"><span class="ap-cost">1AP</span>鼓舞士气</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 全局tooltip容器(在modal外面,不受overflow影响) -->
+<div class="f-tooltip" id="tt-city"><div class="tt-title">城市</div><div class="tt-row"><span>命中惩罚</span><span class="tt-val neg">-15%</span></div><div class="tt-row"><span>防御加成</span><span>+3</span></div><div class="tt-row"><span>移动消耗</span><span>1AP</span></div><div class="tt-row"><span>CQB</span><span style="color:#4a4">有效</span></div></div>
+<div class="f-tooltip" id="tt-zoc"><div class="tt-title">ZOC</div><div class="tt-row"><span>命中惩罚</span><span class="tt-val neg">-10%</span></div><div class="tt-row"><span>压制</span><span class="tt-val neg">+5/回合</span></div></div>
+<div class="s-tooltip" id="st-suppress"><div class="st-title">压制射击</div><div class="st-desc">快速积累目标压制值</div><div class="st-row">需要: MG42 · 2AP</div></div>
+<div class="s-tooltip" id="st-armor"><div class="st-title">装甲专注</div><div class="st-desc">对装甲单位伤害+25%</div><div class="st-row">需要: 反坦克武器 · 被动</div></div>
+<div class="s-tooltip" id="st-spot"><div class="st-title">侦查标记</div><div class="st-desc">标记目标,命中+伤害提升</div><div class="st-row">需要: 望远镜 · 1AP</div></div>
+<div class="s-tooltip" id="st-bg"><div class="st-title">装甲学校</div><div class="st-desc">装甲部队命中+5% 护甲+2</div></div>
+<div class="s-tooltip" id="st-tal"><div class="st-title">冷静</div><div class="st-desc">士气下降速度-20%</div></div>
+<div class="s-tooltip" id="st-heal"><div class="st-title">应急治疗</div><div class="st-desc">恢复部队HP总量15%</div><div class="st-row">消耗: 1AP</div></div>
+<div class="s-tooltip" id="st-morale"><div class="st-title">鼓舞士气</div><div class="st-desc">恢复20士气</div><div class="st-row">消耗: 1AP</div></div>
+
+<!-- 士气状态说明 -->
+<div class="f-tooltip" id="t-morale">
+  <div class="tt-title">士气状态一览</div>
+  <div class="tt-row" style="color:#844"><span>溃败 (0)</span><span>不受控制自动撤退</span></div>
+  <div class="tt-row" style="color:#864"><span>混乱 (1-20)</span><span>命中-15% 无法用技能</span></div>
+  <div class="tt-row" style="color:#aaa"><span>正常 (21-70)</span><span style="color:#4a4">当前</span></div>
+  <div class="tt-row" style="color:#aa4"><span>高昂 (71-90)</span><span>命中+10% 伤害+15%</span></div>
+  <div class="tt-row" style="color:#fa4"><span>狂热 (91-100)</span><span>命中+20% 伤害+30%</span></div>
+</div>
+<!-- 压制效果说明 -->
+<div class="f-tooltip" id="t-suppress">
+  <div class="tt-title">压制效果</div>
+  <div class="tt-row"><span>当前压制</span><span style="color:#fa4">20</span></div>
+  <div class="tt-row"><span>伤害波动上限</span><span class="tt-val neg">-10%</span></div>
+  <div class="tt-row"><span>压制60+</span><span style="color:#aaa">无法使用主动技能</span></div>
+  <div class="tt-row"><span>压制100</span><span class="tt-val neg">伤害波动-50%~-30%</span></div>
+  <div class="tt-row" style="font-size:8px;color:#666;margin-top:4px;border-top:1px solid #333;padding-top:4px">每回合自动恢复20，掩体中+10</div>
+</div>
+
+<script>
+function toggle(){document.getElementById('m').classList.toggle('show')}
+document.getElementById('m').classList.add('show')
+
+// 全局tooltip控制: 用JS将tooltip定位到按钮上方(最外层容器)
+document.querySelectorAll('[data-tip]').forEach(btn=>{
+  btn.addEventListener('mouseenter',function(e){
+    var tip=document.getElementById(this.dataset.tip)
+    if(!tip)return
+    var r=this.getBoundingClientRect()
+    tip.style.display='block'
+    tip.style.left=Math.max(4,r.left+r.width/2-tip.offsetWidth/2)+'px'
+    tip.style.top=(r.top-4-tip.offsetHeight)+'px'
+    // 防止top溢出屏幕
+    if(parseInt(tip.style.top)<4)tip.style.top=(r.bottom+4)+'px'
+  })
+  btn.addEventListener('mouseleave',function(){
+    document.querySelectorAll('.f-tooltip,.s-tooltip').forEach(t=>t.style.display='none')
+  })
+})
+</script>
+</body>
+</html>

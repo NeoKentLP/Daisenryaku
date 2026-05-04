@@ -1,0 +1,483 @@
+[
+  {
+    "id": "sov_i153",
+    "name": "I-153",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_i153",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_mig3",
+    "name": "MiG-3",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_mig3",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_il4",
+    "name": "IL-4",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_il4",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_yak1b",
+    "name": "Yak-1B",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_yak1b",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_la5fn",
+    "name": "La-5FN",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_la5fn",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_tu2",
+    "name": "Tu-2",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_tu2",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_yak3",
+    "name": "Yak-3",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_yak3",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_la7b",
+    "name": "La-7B",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_la7b",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_il10",
+    "name": "IL-10",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_il10",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_li2",
+    "name": "Li-2运输机",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_li2",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_yak9r",
+    "name": "Yak-9R侦察型",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "air"
+    ],
+    "replaces_unit_type": "sov_yak9r",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_sniper_sq",
+    "name": "狙击班",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_sniper_sq",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_penal_sq",
+    "name": "惩戒营",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_penal_sq",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_guard_inf41",
+    "name": "近卫步兵41型",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_guard_inf41",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_guard_inf43",
+    "name": "近卫步兵43型",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_guard_inf43",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_guard_inf44",
+    "name": "近卫步兵44型",
+    "rarity": "orange",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_guard_inf44",
+    "cost_formula": "base × 6.0",
+    "source": "loot"
+  },
+  {
+    "id": "sov_marine_inf",
+    "name": "海军步兵",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_marine_inf",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_airborne",
+    "name": "空降兵",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_airborne",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_ot130",
+    "name": "OT-130喷火",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_ot130",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_t28",
+    "name": "T-28多炮塔",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_t28",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_t35",
+    "name": "T-35多炮塔",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_t35",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_t70",
+    "name": "T-70轻坦",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_t70",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_kv8",
+    "name": "KV-8喷火",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_kv8",
+    "cost_formula": "base × 3.0",
+    "source": "loot"
+  },
+  {
+    "id": "sov_is1",
+    "name": "IS-1",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_is1",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_isu122",
+    "name": "ISU-122",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_isu122",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_su100",
+    "name": "SU-100",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_su100",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_is3",
+    "name": "IS-3",
+    "rarity": "orange",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_is3",
+    "cost_formula": "base × 6.0",
+    "source": "loot"
+  },
+  {
+    "id": "sov_isu152",
+    "name": "ISU-152",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_isu152",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_su5",
+    "name": "SU-5自行炮",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_su5",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_zsu37",
+    "name": "ZSU-37",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_zsu37",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_quad_maxim",
+    "name": "四管Maxim",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "artillery"
+    ],
+    "replaces_unit_type": "sov_quad_maxim",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_bm31",
+    "name": "BM-31",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "artillery"
+    ],
+    "replaces_unit_type": "sov_bm31",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_b4",
+    "name": "203mm B-4",
+    "rarity": "orange",
+    "nation": "soviet",
+    "applicable_branches": [
+      "artillery"
+    ],
+    "replaces_unit_type": "sov_b4",
+    "cost_formula": "base × 6.0",
+    "source": "loot"
+  },
+  {
+    "id": "sov_assault_eng",
+    "name": "突击工兵",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "support",
+      "infantry"
+    ],
+    "replaces_unit_type": "sov_assault_eng",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_bridge_eng",
+    "name": "架桥工兵",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "support"
+    ],
+    "replaces_unit_type": "sov_bridge_eng",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_mot_recce",
+    "name": "摩托化侦察队",
+    "rarity": "green",
+    "nation": "soviet",
+    "applicable_branches": [
+      "support"
+    ],
+    "replaces_unit_type": "sov_mot_recce",
+    "cost_formula": "base × 1.5",
+    "source": "market"
+  },
+  {
+    "id": "sov_heavy_bridge",
+    "name": "重型架桥工兵",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "support"
+    ],
+    "replaces_unit_type": "sov_heavy_bridge",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_arv_recovery",
+    "name": "ARV回收",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "support"
+    ],
+    "replaces_unit_type": "sov_arv_recovery",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_btr40",
+    "name": "BTR-40",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "support"
+    ],
+    "replaces_unit_type": "sov_btr40",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  },
+  {
+    "id": "sov_t44",
+    "name": "T-44(道具)",
+    "rarity": "purple",
+    "nation": "soviet",
+    "applicable_branches": [
+      "vehicle"
+    ],
+    "replaces_unit_type": "sov_t44",
+    "cost_formula": "base × 3.0",
+    "source": "market"
+  }
+]

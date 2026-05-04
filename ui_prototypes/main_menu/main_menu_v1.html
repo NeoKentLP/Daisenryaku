@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>主界面 - UI原型</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.game{width:1280px;height:720px;background:linear-gradient(135deg,#0d0d1a 0%,#1a1a30 50%,#0f0f20 100%);position:relative;border-radius:8px;overflow:hidden}
+
+/* 背景装饰 - 模拟军事地图网格 */
+.game::before{content:'';position:absolute;inset:0;background:
+  repeating-linear-gradient(0deg,rgba(255,255,255,0.02) 0,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 40px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,0.02) 0,rgba(255,255,255,0.02) 1px,transparent 1px,transparent 40px)}
+
+/* ===== 标题区 ===== */
+.title-area{position:absolute;top:60px;left:50%;transform:translateX(-50%);text-align:center}
+.title-area h1{color:#fff;font-size:48px;font-weight:bold;letter-spacing:8px;text-shadow:0 0 40px rgba(100,170,255,0.3)}
+.title-area .sub{color:#77aaff;font-size:14px;letter-spacing:4px;margin-top:8px;opacity:0.7}
+
+/* ===== 版本信息 ===== */
+.version{position:absolute;bottom:12px;right:16px;color:#444;font-size:10px}
+
+/* ===== 主菜单 ===== */
+.menu{position:absolute;top:240px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px}
+.menu-btn{width:260px;padding:14px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#ccc;font-size:15px;text-align:center;cursor:pointer;transition:all .2s;letter-spacing:2px}
+.menu-btn:hover{background:rgba(100,170,255,0.08);border-color:rgba(100,170,255,0.3);color:#fff;padding-left:28px}
+.menu-btn .shortcut{display:block;color:#555;font-size:10px;margin-top:2px;letter-spacing:0}
+
+/* ===== 底部快捷信息 ===== */
+.bottom-bar{position:absolute;bottom:12px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:10px;color:#555}
+.bottom-bar span{color:#666}
+.bottom-bar .hl{color:#77aaff}
+</style>
+</head>
+<body>
+<div class="game">
+  <!-- 标题 -->
+  <div class="title-area">
+    <h1>大战略</h1>
+    <div class="sub">— GRAND STRATEGY —</div>
+  </div>
+
+  <!-- 菜单按钮 -->
+  <div class="menu">
+    <div class="menu-btn">
+      继续战役
+      <span class="shortcut">CONTINUE · 当前进度: 第2章</span>
+    </div>
+    <div class="menu-btn">
+      新战役
+      <span class="shortcut">NEW CAMPAIGN · 选择剧本</span>
+    </div>
+    <div class="menu-btn" style="opacity:0.5">
+      加载存档
+      <span class="shortcut">LOAD · 暂未开放</span>
+    </div>
+    <div class="menu-btn" style="opacity:0.5">
+      设置
+      <span class="shortcut">SETTINGS</span>
+    </div>
+    <div class="menu-btn" style="opacity:0.5">
+      退出
+      <span class="shortcut">QUIT</span>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-bar">
+    <div><span class="hl">大战略</span> v0.1.0 · Godot 4.6</div>
+  </div>
+</div>
+</body>
+</html>

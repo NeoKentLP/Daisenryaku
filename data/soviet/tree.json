@@ -1,0 +1,942 @@
+[
+  {
+    "id": "sov_i16",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 0,
+    "unlock_xp": 0,
+    "parent_id": null,
+    "unit_type_id": "sov_i16",
+    "equipment": false
+  },
+  {
+    "id": "sov_lagg3",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": "sov_i16",
+    "unit_type_id": "sov_lagg3",
+    "equipment": false
+  },
+  {
+    "id": "sov_yak9",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 20,
+    "parent_id": "sov_lagg3",
+    "unit_type_id": "sov_yak9",
+    "equipment": false
+  },
+  {
+    "id": "sov_la7",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 3,
+    "unlock_xp": 30,
+    "parent_id": "sov_yak9",
+    "unit_type_id": "sov_la7",
+    "equipment": false
+  },
+  {
+    "id": "sov_sb2",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 0,
+    "unlock_xp": 5,
+    "parent_id": null,
+    "unit_type_id": "sov_sb2",
+    "equipment": false
+  },
+  {
+    "id": "sov_il2",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 15,
+    "parent_id": "sov_sb2",
+    "unit_type_id": "sov_il2",
+    "equipment": false
+  },
+  {
+    "id": "sov_il2m3",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 20,
+    "parent_id": "sov_il2",
+    "unit_type_id": "sov_il2m3",
+    "equipment": false
+  },
+  {
+    "id": "sov_pe2",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": null,
+    "unit_type_id": "sov_pe2",
+    "equipment": false
+  },
+  {
+    "id": "sov_pe3",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 20,
+    "parent_id": "sov_pe2",
+    "unit_type_id": "sov_pe3",
+    "equipment": false
+  },
+  {
+    "id": "sov_r5",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 0,
+    "unlock_xp": 0,
+    "parent_id": null,
+    "unit_type_id": "sov_r5",
+    "equipment": false
+  },
+  {
+    "id": "sov_u2",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 0,
+    "unlock_xp": 3,
+    "parent_id": "sov_r5",
+    "unit_type_id": "sov_u2",
+    "equipment": false
+  },
+  {
+    "id": "sov_tb3",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 0,
+    "unlock_xp": 5,
+    "parent_id": null,
+    "unit_type_id": "sov_tb3",
+    "equipment": false
+  },
+  {
+    "id": "sov_yak9r",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 22,
+    "parent_id": "sov_yak9",
+    "unit_type_id": "sov_yak9r",
+    "equipment": "sov_yak9r"
+  },
+  {
+    "id": "sov_i153",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 0,
+    "unlock_xp": 5,
+    "parent_id": "sov_i16",
+    "unit_type_id": "sov_i153",
+    "equipment": "sov_i153"
+  },
+  {
+    "id": "sov_mig3",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_lagg3",
+    "unit_type_id": "sov_mig3",
+    "equipment": "sov_mig3"
+  },
+  {
+    "id": "sov_il4",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 20,
+    "parent_id": "sov_il2",
+    "unit_type_id": "sov_il4",
+    "equipment": "sov_il4"
+  },
+  {
+    "id": "sov_yak1b",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_lagg3",
+    "unit_type_id": "sov_yak1b",
+    "equipment": "sov_yak1b"
+  },
+  {
+    "id": "sov_la5fn",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 25,
+    "parent_id": "sov_yak9",
+    "unit_type_id": "sov_la5fn",
+    "equipment": "sov_la5fn"
+  },
+  {
+    "id": "sov_tu2",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 3,
+    "unlock_xp": 35,
+    "parent_id": "sov_il2m3",
+    "unit_type_id": "sov_tu2",
+    "equipment": "sov_tu2"
+  },
+  {
+    "id": "sov_yak3",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 3,
+    "unlock_xp": 35,
+    "parent_id": "sov_yak9",
+    "unit_type_id": "sov_yak3",
+    "equipment": "sov_yak3"
+  },
+  {
+    "id": "sov_la7b",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 3,
+    "unlock_xp": 40,
+    "parent_id": "sov_la7",
+    "unit_type_id": "sov_la7b",
+    "equipment": "sov_la7b"
+  },
+  {
+    "id": "sov_il10",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 3,
+    "unlock_xp": 35,
+    "parent_id": "sov_il2m3",
+    "unit_type_id": "sov_il10",
+    "equipment": "sov_il10"
+  },
+  {
+    "id": "sov_li2",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": "sov_sb2",
+    "unit_type_id": "sov_li2",
+    "equipment": "sov_li2"
+  },
+  {
+    "id": "sov_inf_sq39",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 0,
+    "unlock_xp": 0,
+    "parent_id": null,
+    "unit_type_id": "sov_inf_sq39",
+    "equipment": false
+  },
+  {
+    "id": "sov_inf_sq41",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_inf_sq41",
+    "equipment": false
+  },
+  {
+    "id": "sov_smg_sq",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_smg_sq",
+    "equipment": false
+  },
+  {
+    "id": "sov_mg_sq",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 20,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_mg_sq",
+    "equipment": false
+  },
+  {
+    "id": "sov_mobilized_sq",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 0,
+    "unlock_xp": 5,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_mobilized_sq",
+    "equipment": false
+  },
+  {
+    "id": "sov_at_sq",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 25,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_at_sq",
+    "equipment": false
+  },
+  {
+    "id": "sov_inf_sq43",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 2,
+    "unlock_xp": 30,
+    "parent_id": "sov_inf_sq41",
+    "unit_type_id": "sov_inf_sq43",
+    "equipment": false
+  },
+  {
+    "id": "sov_mg_sq43",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 2,
+    "unlock_xp": 35,
+    "parent_id": "sov_mg_sq",
+    "unit_type_id": "sov_mg_sq43",
+    "equipment": false
+  },
+  {
+    "id": "sov_smg_sq44",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 3,
+    "unlock_xp": 40,
+    "parent_id": "sov_smg_sq",
+    "unit_type_id": "sov_smg_sq44",
+    "equipment": false
+  },
+  {
+    "id": "sov_sniper_sq",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 12,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_sniper_sq",
+    "equipment": "sov_sniper_sq"
+  },
+  {
+    "id": "sov_penal_sq",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 0,
+    "unlock_xp": 3,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_penal_sq",
+    "equipment": "sov_penal_sq"
+  },
+  {
+    "id": "sov_guard_inf41",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_inf_sq41",
+    "unit_type_id": "sov_guard_inf41",
+    "equipment": "sov_guard_inf41"
+  },
+  {
+    "id": "sov_guard_inf43",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 2,
+    "unlock_xp": 30,
+    "parent_id": "sov_guard_inf41",
+    "unit_type_id": "sov_guard_inf43",
+    "equipment": "sov_guard_inf43"
+  },
+  {
+    "id": "sov_guard_inf44",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 3,
+    "unlock_xp": 45,
+    "parent_id": "sov_guard_inf43",
+    "unit_type_id": "sov_guard_inf44",
+    "equipment": "sov_guard_inf44"
+  },
+  {
+    "id": "sov_marine_inf",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 20,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_marine_inf",
+    "equipment": "sov_marine_inf"
+  },
+  {
+    "id": "sov_airborne",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 1,
+    "unlock_xp": 25,
+    "parent_id": "sov_inf_sq39",
+    "unit_type_id": "sov_airborne",
+    "equipment": "sov_airborne"
+  },
+  {
+    "id": "sov_t26",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 0,
+    "parent_id": null,
+    "unit_type_id": "sov_t26",
+    "equipment": false
+  },
+  {
+    "id": "sov_bt5",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 5,
+    "parent_id": "sov_t26",
+    "unit_type_id": "sov_bt5",
+    "equipment": false
+  },
+  {
+    "id": "sov_bt7m",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": "sov_bt5",
+    "unit_type_id": "sov_bt7m",
+    "equipment": false
+  },
+  {
+    "id": "sov_t34_76_41",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_bt7m",
+    "unit_type_id": "sov_t34_76_41",
+    "equipment": false
+  },
+  {
+    "id": "sov_kv1_41",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 20,
+    "parent_id": "sov_t34_76_41",
+    "unit_type_id": "sov_kv1_41",
+    "equipment": false
+  },
+  {
+    "id": "sov_t60",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 8,
+    "parent_id": "sov_t26",
+    "unit_type_id": "sov_t60",
+    "equipment": false
+  },
+  {
+    "id": "sov_t34_76_42",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 25,
+    "parent_id": "sov_t34_76_41",
+    "unit_type_id": "sov_t34_76_42",
+    "equipment": false
+  },
+  {
+    "id": "sov_kv1s",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 30,
+    "parent_id": "sov_kv1_41",
+    "unit_type_id": "sov_kv1s",
+    "equipment": false
+  },
+  {
+    "id": "sov_su76m",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 22,
+    "parent_id": "sov_t60",
+    "unit_type_id": "sov_su76m",
+    "equipment": false
+  },
+  {
+    "id": "sov_su152",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 35,
+    "parent_id": "sov_kv1s",
+    "unit_type_id": "sov_su152",
+    "equipment": false
+  },
+  {
+    "id": "sov_t34_85",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 40,
+    "parent_id": "sov_t34_76_42",
+    "unit_type_id": "sov_t34_85",
+    "equipment": false
+  },
+  {
+    "id": "sov_is2",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 45,
+    "parent_id": "sov_kv1s",
+    "unit_type_id": "sov_is2",
+    "equipment": false
+  },
+  {
+    "id": "sov_su85",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 42,
+    "parent_id": "sov_su76m",
+    "unit_type_id": "sov_su85",
+    "equipment": false
+  },
+  {
+    "id": "sov_ot130",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 12,
+    "parent_id": "sov_t26",
+    "unit_type_id": "sov_ot130",
+    "equipment": "sov_ot130"
+  },
+  {
+    "id": "sov_t28",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_t26",
+    "unit_type_id": "sov_t28",
+    "equipment": "sov_t28"
+  },
+  {
+    "id": "sov_t35",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 18,
+    "parent_id": "sov_t26",
+    "unit_type_id": "sov_t35",
+    "equipment": "sov_t35"
+  },
+  {
+    "id": "sov_t70",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": "sov_t26",
+    "unit_type_id": "sov_t70",
+    "equipment": "sov_t70"
+  },
+  {
+    "id": "sov_kv8",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 25,
+    "parent_id": "sov_kv1_41",
+    "unit_type_id": "sov_kv8",
+    "equipment": "sov_kv8"
+  },
+  {
+    "id": "sov_is1",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 35,
+    "parent_id": "sov_kv1s",
+    "unit_type_id": "sov_is1",
+    "equipment": "sov_is1"
+  },
+  {
+    "id": "sov_isu122",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 50,
+    "parent_id": "sov_is2",
+    "unit_type_id": "sov_isu122",
+    "equipment": "sov_isu122"
+  },
+  {
+    "id": "sov_su100",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 55,
+    "parent_id": "sov_su85",
+    "unit_type_id": "sov_su100",
+    "equipment": "sov_su100"
+  },
+  {
+    "id": "sov_is3",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 60,
+    "parent_id": "sov_is2",
+    "unit_type_id": "sov_is3",
+    "equipment": "sov_is3"
+  },
+  {
+    "id": "sov_isu152",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 65,
+    "parent_id": "sov_su152",
+    "unit_type_id": "sov_isu152",
+    "equipment": "sov_isu152"
+  },
+  {
+    "id": "sov_su5",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 30,
+    "parent_id": "sov_t34_76_42",
+    "unit_type_id": "sov_su5",
+    "equipment": "sov_su5"
+  },
+  {
+    "id": "sov_zsu37",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 28,
+    "parent_id": "sov_t34_76_42",
+    "unit_type_id": "sov_zsu37",
+    "equipment": "sov_zsu37"
+  },
+  {
+    "id": "sov_t44",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 3,
+    "unlock_xp": 65,
+    "parent_id": "sov_t34_85",
+    "unit_type_id": "sov_t44",
+    "equipment": "sov_t44"
+  },
+  {
+    "id": "sov_pm37",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 0,
+    "unlock_xp": 0,
+    "parent_id": null,
+    "unit_type_id": "sov_pm37",
+    "equipment": false
+  },
+  {
+    "id": "sov_zis3",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 0,
+    "unlock_xp": 5,
+    "parent_id": "sov_pm37",
+    "unit_type_id": "sov_zis3",
+    "equipment": false
+  },
+  {
+    "id": "sov_61k",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 0,
+    "unlock_xp": 8,
+    "parent_id": "sov_pm37",
+    "unit_type_id": "sov_61k",
+    "equipment": false
+  },
+  {
+    "id": "sov_45mm_at",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 1,
+    "unlock_xp": 12,
+    "parent_id": "sov_pm37",
+    "unit_type_id": "sov_45mm_at",
+    "equipment": false
+  },
+  {
+    "id": "sov_52k",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_zis3",
+    "unit_type_id": "sov_52k",
+    "equipment": false
+  },
+  {
+    "id": "sov_zis2_57mm",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 2,
+    "unlock_xp": 20,
+    "parent_id": "sov_45mm_at",
+    "unit_type_id": "sov_zis2_57mm",
+    "equipment": false
+  },
+  {
+    "id": "sov_m30",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 2,
+    "unlock_xp": 25,
+    "parent_id": "sov_zis3",
+    "unit_type_id": "sov_m30",
+    "equipment": false
+  },
+  {
+    "id": "sov_bm13",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 2,
+    "unlock_xp": 30,
+    "parent_id": "sov_m30",
+    "unit_type_id": "sov_bm13",
+    "equipment": false
+  },
+  {
+    "id": "sov_pm120",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 2,
+    "unlock_xp": 22,
+    "parent_id": "sov_pm37",
+    "unit_type_id": "sov_pm120",
+    "equipment": false
+  },
+  {
+    "id": "sov_100mm_at",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 3,
+    "unlock_xp": 35,
+    "parent_id": "sov_zis2_57mm",
+    "unit_type_id": "sov_100mm_at",
+    "equipment": false
+  },
+  {
+    "id": "sov_d1",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 3,
+    "unlock_xp": 40,
+    "parent_id": "sov_m30",
+    "unit_type_id": "sov_d1",
+    "equipment": false
+  },
+  {
+    "id": "sov_quad_maxim",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 1,
+    "unlock_xp": 15,
+    "parent_id": "sov_61k",
+    "unit_type_id": "sov_quad_maxim",
+    "equipment": "sov_quad_maxim"
+  },
+  {
+    "id": "sov_bm31",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 3,
+    "unlock_xp": 45,
+    "parent_id": "sov_bm13",
+    "unit_type_id": "sov_bm31",
+    "equipment": "sov_bm31"
+  },
+  {
+    "id": "sov_b4",
+    "nation": "germany",
+    "branch": "artillery",
+    "tech_tier_required": 3,
+    "unlock_xp": 50,
+    "parent_id": "sov_d1",
+    "unit_type_id": "sov_b4",
+    "equipment": "sov_b4"
+  },
+  {
+    "id": "sov_ba20",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 0,
+    "unlock_xp": 0,
+    "parent_id": null,
+    "unit_type_id": "sov_ba20",
+    "equipment": false
+  },
+  {
+    "id": "sov_horse_supply",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 0,
+    "unlock_xp": 5,
+    "parent_id": "sov_ba20",
+    "unit_type_id": "sov_horse_supply",
+    "equipment": false
+  },
+  {
+    "id": "sov_ba10",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 1,
+    "unlock_xp": 10,
+    "parent_id": "sov_ba20",
+    "unit_type_id": "sov_ba10",
+    "equipment": false
+  },
+  {
+    "id": "sov_truck_supply",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 1,
+    "unlock_xp": 12,
+    "parent_id": "sov_horse_supply",
+    "unit_type_id": "sov_truck_supply",
+    "equipment": false
+  },
+  {
+    "id": "sov_eng_sq40",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 1,
+    "unlock_xp": 8,
+    "parent_id": "sov_ba20",
+    "unit_type_id": "sov_eng_sq40",
+    "equipment": false
+  },
+  {
+    "id": "sov_ba64",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 15,
+    "parent_id": "sov_ba10",
+    "unit_type_id": "sov_ba64",
+    "equipment": false
+  },
+  {
+    "id": "sov_eng_sq43",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 16,
+    "parent_id": "sov_eng_sq40",
+    "unit_type_id": "sov_eng_sq43",
+    "equipment": false
+  },
+  {
+    "id": "sov_halftrack_supply",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 18,
+    "parent_id": "sov_truck_supply",
+    "unit_type_id": "sov_halftrack_supply",
+    "equipment": false
+  },
+  {
+    "id": "sov_heavy_truck_supply",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 3,
+    "unlock_xp": 20,
+    "parent_id": "sov_halftrack_supply",
+    "unit_type_id": "sov_heavy_truck_supply",
+    "equipment": false
+  },
+  {
+    "id": "sov_assault_eng",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 18,
+    "parent_id": "sov_eng_sq43",
+    "unit_type_id": "sov_assault_eng",
+    "equipment": "sov_assault_eng"
+  },
+  {
+    "id": "sov_bridge_eng",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 20,
+    "parent_id": "sov_eng_sq43",
+    "unit_type_id": "sov_bridge_eng",
+    "equipment": "sov_bridge_eng"
+  },
+  {
+    "id": "sov_mot_recce",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 22,
+    "parent_id": "sov_ba64",
+    "unit_type_id": "sov_mot_recce",
+    "equipment": "sov_mot_recce"
+  },
+  {
+    "id": "sov_heavy_bridge",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 3,
+    "unlock_xp": 25,
+    "parent_id": "sov_bridge_eng",
+    "unit_type_id": "sov_heavy_bridge",
+    "equipment": "sov_heavy_bridge"
+  },
+  {
+    "id": "sov_arv_recovery",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 24,
+    "parent_id": "sov_ba64",
+    "unit_type_id": "sov_arv_recovery",
+    "equipment": "sov_arv_recovery"
+  },
+  {
+    "id": "sov_btr40",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 26,
+    "parent_id": "sov_ba64",
+    "unit_type_id": "sov_btr40",
+    "equipment": "sov_btr40"
+  }
+]

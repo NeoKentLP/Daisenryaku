@@ -1,0 +1,2634 @@
+[
+  {
+    "id": "sov_inf_sq39",
+    "name": "步兵班39型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 0,
+    "cost": 120,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "步枪手",
+        "count": 5,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "dp27"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_inf_sq41",
+    "name": "步兵班41型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 200,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "步枪手",
+        "count": 5,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "svt40"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "dp27"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_smg_sq",
+    "name": "冲锋枪班",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 200,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "冲锋枪手",
+        "count": 6,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_mg_sq",
+    "name": "机枪班",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 250,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "机枪手",
+        "count": 2,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "dp27"
+        ]
+      },
+      {
+        "role": "冲锋枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_mobilized_sq",
+    "name": "动员兵班",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 0,
+    "cost": 80,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 1,
+    "members": [
+      {
+        "role": "步枪手",
+        "count": 8,
+        "hp": 8,
+        "bs": 40,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_at_sq",
+    "name": "AT班(PTRD)",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 280,
+    "move_type": "foot",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "反坦克手",
+        "count": 3,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ptrd41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_inf_sq43",
+    "name": "步兵班43型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 2,
+    "cost": 220,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "步枪手",
+        "count": 4,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "dp27"
+        ]
+      },
+      {
+        "role": "冲锋枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_mg_sq43",
+    "name": "机枪班43型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 2,
+    "cost": 350,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "机枪手",
+        "count": 2,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "sg43"
+        ]
+      },
+      {
+        "role": "冲锋枪手",
+        "count": 2,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_smg_sq44",
+    "name": "冲锋枪班44型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 3,
+    "cost": 350,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "冲锋枪手",
+        "count": 5,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      },
+      {
+        "role": "反坦克手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ptrs41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_sniper_sq",
+    "name": "狙击班",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 300,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 4,
+    "members": [
+      {
+        "role": "狙击手",
+        "count": 2,
+        "hp": 10,
+        "bs": 75,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 3,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      },
+      {
+        "role": "观察员",
+        "count": 2,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 2,
+        "weapons": [
+          "ppsh41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_penal_sq",
+    "name": "惩戒营",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 100,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 1,
+    "members": [
+      {
+        "role": "惩戒兵",
+        "count": 6,
+        "hp": 8,
+        "bs": 35,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_guard_inf41",
+    "name": "近卫步兵41型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 280,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "步枪手",
+        "count": 5,
+        "hp": 12,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "svt40"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 1,
+        "hp": 12,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "dp27"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_guard_inf43",
+    "name": "近卫步兵43型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 2,
+    "cost": 320,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "步枪手",
+        "count": 4,
+        "hp": 12,
+        "bs": 70,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "svt40"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 2,
+        "hp": 12,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "sg43"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_guard_inf44",
+    "name": "近卫步兵44型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 3,
+    "cost": 380,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "突击手",
+        "count": 4,
+        "hp": 12,
+        "bs": 70,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 2,
+        "hp": 12,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "sg43"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_marine_inf",
+    "name": "海军步兵",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 240,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "步兵",
+        "count": 6,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      },
+      {
+        "role": "机枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "dp27"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_airborne",
+    "name": "空降兵",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 280,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "伞兵",
+        "count": 5,
+        "hp": 10,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "svt40"
+        ]
+      },
+      {
+        "role": "冲锋枪手",
+        "count": 1,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t26",
+    "name": "T-26",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 800,
+    "move_type": "track",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_bt5",
+    "name": "BT-5",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 850,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 3,
+        "evasion": 6,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_bt7m",
+    "name": "BT-7M",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1000,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 6,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t34_76_41",
+    "name": "T-34/76 M1940",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1300,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 65,
+        "armor": 8,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "f34_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_kv1_41",
+    "name": "KV-1 M1941",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1600,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 65,
+        "armor": 11,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "zis5_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t60",
+    "name": "T-60",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 900,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 55,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "f34_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t34_76_42",
+    "name": "T-34/76 M1942",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1600,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 70,
+        "armor": 9,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "f34_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_kv1s",
+    "name": "KV-1S",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1800,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 70,
+        "armor": 11,
+        "evasion": 3,
+        "conceal": 0,
+        "weapons": [
+          "zis5_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_su76m",
+    "name": "SU-76M",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1200,
+    "move_type": "track",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "zis5_76mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_su152",
+    "name": "SU-152",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 2000,
+    "move_type": "track",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 70,
+        "armor": 11,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "ml20s_152mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t34_85",
+    "name": "T-34/85",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2000,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 75,
+        "armor": 10,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "zis_s53_85mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_is2",
+    "name": "IS-2",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2400,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 35,
+        "bs": 75,
+        "armor": 13,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "d25t_122mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_su85",
+    "name": "SU-85",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2200,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 70,
+        "armor": 8,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "d5t_85mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t44",
+    "name": "T-44(道具)",
+    "nation": "soviet",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2200,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 75,
+        "armor": 11,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "zis_s53_85mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_ot130",
+    "name": "OT-130喷火",
+    "nation": "soviet",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 950,
+    "move_type": "track",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 55,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "roks3"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t28",
+    "name": "T-28多炮塔",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1100,
+    "move_type": "track",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 60,
+        "armor": 5,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t35",
+    "name": "T-35多炮塔",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1500,
+    "move_type": "track",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 60,
+        "armor": 5,
+        "evasion": 3,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_t70",
+    "name": "T-70轻坦",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 900,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_kv8",
+    "name": "KV-8喷火",
+    "nation": "soviet",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1700,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 65,
+        "armor": 11,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "roks3"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_is1",
+    "name": "IS-1",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 2200,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 35,
+        "bs": 70,
+        "armor": 12,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "d5t_85mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_isu122",
+    "name": "ISU-122",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2300,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 70,
+        "armor": 13,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "d25t_122mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_su100",
+    "name": "SU-100",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2400,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 75,
+        "armor": 8,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "d10_100mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_is3",
+    "name": "IS-3",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2800,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 35,
+        "bs": 80,
+        "armor": 15,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "d25t_122mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_isu152",
+    "name": "ISU-152",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2500,
+    "move_type": "track",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 70,
+        "armor": 13,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "ml20s_152mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_su5",
+    "name": "SU-5自行炮",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1300,
+    "move_type": "track",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 55,
+        "armor": 3,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "m30_122mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_zsu37",
+    "name": "ZSU-37",
+    "nation": "soviet",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1100,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "61k_37mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_pm37",
+    "name": "82mm迫击炮",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 0,
+    "cost": 350,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 3,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "pm37_82mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_zis3",
+    "name": "76mm ZiS-3",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 0,
+    "cost": 550,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 4,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "zis3_76mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_61k",
+    "name": "37mm防空",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 0,
+    "cost": 280,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 3,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "61k_37mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_45mm_at",
+    "name": "45mm AT",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 1,
+    "cost": 350,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 3,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_52k",
+    "name": "85mm防空",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 1,
+    "cost": 650,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 4,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "52k_85mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_zis2_57mm",
+    "name": "57mm ZiS-2 AT",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 2,
+    "cost": 450,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 3,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "zis5_76mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_m30",
+    "name": "122mm榴弹炮",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 2,
+    "cost": 750,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 4,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "m30_122mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_bm13",
+    "name": "BM-13喀秋莎",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 2,
+    "cost": 700,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 4,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "bm13"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_pm120",
+    "name": "120mm迫击炮",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 2,
+    "cost": 450,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 3,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "pm120_120mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_100mm_at",
+    "name": "100mm BS-3 AT",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 3,
+    "cost": 600,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 4,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "d10_100mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_d1",
+    "name": "152mm D-1",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 3,
+    "cost": 1100,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 5,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "d1_152mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_quad_maxim",
+    "name": "四管Maxim",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 1,
+    "cost": 400,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 4,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "61k_37mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_bm31",
+    "name": "BM-31",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 3,
+    "cost": 900,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 5,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "bm31"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_b4",
+    "name": "203mm B-4",
+    "nation": "soviet",
+    "type": "artillery",
+    "tech_tier": 3,
+    "cost": 1500,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "炮组",
+        "count": 6,
+        "hp": 10,
+        "bs": 55,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ml20s_152mm"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_ba20",
+    "name": "BA-20装甲车",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 0,
+    "cost": 800,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 4,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 60,
+        "armor": 3,
+        "evasion": 6,
+        "conceal": 0,
+        "weapons": [
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_ba10",
+    "name": "BA-10重装甲车",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1000,
+    "move_type": "track",
+    "initiative": 6,
+    "vision": 4,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 5,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "l11_76mm",
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_ba64",
+    "name": "BA-64",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1200,
+    "move_type": "track",
+    "initiative": 7,
+    "vision": 4,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 6,
+        "conceal": 0,
+        "weapons": [
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_horse_supply",
+    "name": "骡马补给",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 0,
+    "cost": 120,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "后勤",
+        "count": 2,
+        "hp": 10,
+        "bs": 50,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_truck_supply",
+    "name": "卡车补给",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 1,
+    "cost": 250,
+    "move_type": "wheel",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "后勤",
+        "count": 3,
+        "hp": 10,
+        "bs": 50,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_halftrack_supply",
+    "name": "半履带补给",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 2,
+    "cost": 400,
+    "move_type": "track",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "后勤",
+        "count": 3,
+        "hp": 10,
+        "bs": 50,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_heavy_truck_supply",
+    "name": "重型补给卡车",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 3,
+    "cost": 500,
+    "move_type": "wheel",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "后勤",
+        "count": 4,
+        "hp": 10,
+        "bs": 50,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_eng_sq40",
+    "name": "工兵班40型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 1,
+    "cost": 180,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "工兵",
+        "count": 5,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_eng_sq43",
+    "name": "工兵班43型",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 2,
+    "cost": 280,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "工兵",
+        "count": 5,
+        "hp": 10,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "svt40"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_assault_eng",
+    "name": "突击工兵",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 2,
+    "cost": 320,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "突击工兵",
+        "count": 5,
+        "hp": 10,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "ppsh41"
+        ]
+      },
+      {
+        "role": "喷火兵",
+        "count": 1,
+        "hp": 12,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "roks3"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_bridge_eng",
+    "name": "架桥工兵",
+    "nation": "soviet",
+    "type": "infantry",
+    "tech_tier": 2,
+    "cost": 300,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "工兵",
+        "count": 6,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_mot_recce",
+    "name": "摩托化侦察队",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 2,
+    "cost": 600,
+    "move_type": "wheel",
+    "initiative": 7,
+    "vision": 5,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 60,
+        "armor": 4,
+        "evasion": 6,
+        "conceal": 0,
+        "weapons": [
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_heavy_bridge",
+    "name": "重型架桥工兵",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 3,
+    "cost": 400,
+    "move_type": "foot",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "工兵",
+        "count": 6,
+        "hp": 10,
+        "bs": 60,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mosin_nagant"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_arv_recovery",
+    "name": "ARV回收",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 2,
+    "cost": 800,
+    "move_type": "track",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 5,
+        "evasion": 3,
+        "conceal": 0,
+        "weapons": [
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_btr40",
+    "name": "BTR-40",
+    "nation": "soviet",
+    "type": "support",
+    "tech_tier": 2,
+    "cost": 1000,
+    "move_type": "wheel",
+    "initiative": 7,
+    "vision": 5,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 20,
+        "bs": 60,
+        "armor": 5,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "dt_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sov_i16",
+    "name": "I-16",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 0,
+    "cost": 400,
+    "move_type": "flight",
+    "initiative": 8,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 10,
+        "bs": 55,
+        "armor": 2,
+        "evasion": 8,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm",
+          "shkas_7_62mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_lagg3",
+    "name": "LaGG-3",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 1,
+    "cost": 500,
+    "move_type": "flight",
+    "initiative": 8,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 12,
+        "bs": 60,
+        "armor": 3,
+        "evasion": 8,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "ubs_12_7mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_yak9",
+    "name": "Yak-9",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 600,
+    "move_type": "flight",
+    "initiative": 9,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 12,
+        "bs": 65,
+        "armor": 3,
+        "evasion": 9,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "ubs_12_7mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_la7",
+    "name": "La-7",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 3,
+    "cost": 700,
+    "move_type": "flight",
+    "initiative": 9,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 14,
+        "bs": 70,
+        "armor": 3,
+        "evasion": 10,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shvak_20mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_sb2",
+    "name": "SB-2",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 0,
+    "cost": 400,
+    "move_type": "flight",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 16,
+        "bs": 55,
+        "armor": 3,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm",
+          "shkas_7_62mm",
+          "fab100_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_il2",
+    "name": "IL-2",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 500,
+    "move_type": "flight",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 18,
+        "bs": 60,
+        "armor": 5,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shkas_7_62mm",
+          "fab250_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_il2m3",
+    "name": "IL-2M3",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 550,
+    "move_type": "flight",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 20,
+        "bs": 65,
+        "armor": 6,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shkas_7_62mm",
+          "rs82_rocket"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_pe2",
+    "name": "Pe-2",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 1,
+    "cost": 500,
+    "move_type": "flight",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 16,
+        "bs": 60,
+        "armor": 3,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm",
+          "shkas_7_62mm",
+          "fab100_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_pe3",
+    "name": "Pe-3",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 550,
+    "move_type": "flight",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 16,
+        "bs": 60,
+        "armor": 3,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shvak_20mm",
+          "fab100_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_r5",
+    "name": "R-5",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 0,
+    "cost": 200,
+    "move_type": "flight",
+    "initiative": 4,
+    "vision": 4,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 8,
+        "bs": 50,
+        "armor": 1,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm"
+        ]
+      }
+    ],
+    "fuel": 25,
+    "max_fuel": 25,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_u2",
+    "name": "U-2",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 0,
+    "cost": 150,
+    "move_type": "flight",
+    "initiative": 3,
+    "vision": 3,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 8,
+        "bs": 45,
+        "armor": 1,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": []
+      }
+    ],
+    "fuel": 28,
+    "max_fuel": 28,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_tb3",
+    "name": "TB-3",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 0,
+    "cost": 500,
+    "move_type": "flight",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 24,
+        "bs": 50,
+        "armor": 3,
+        "evasion": 2,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm",
+          "shkas_7_62mm",
+          "fab100_bomb",
+          "fab100_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_yak9r",
+    "name": "Yak-9R侦察型",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 450,
+    "move_type": "flight",
+    "initiative": 8,
+    "vision": 5,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 12,
+        "bs": 65,
+        "armor": 3,
+        "evasion": 9,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm"
+        ]
+      }
+    ],
+    "fuel": 22,
+    "max_fuel": 22,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_i153",
+    "name": "I-153",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 0,
+    "cost": 350,
+    "move_type": "flight",
+    "initiative": 8,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 10,
+        "bs": 55,
+        "armor": 2,
+        "evasion": 8,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm",
+          "shkas_7_62mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_mig3",
+    "name": "MiG-3",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 1,
+    "cost": 550,
+    "move_type": "flight",
+    "initiative": 9,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 12,
+        "bs": 65,
+        "armor": 3,
+        "evasion": 9,
+        "conceal": 0,
+        "weapons": [
+          "ubs_12_7mm",
+          "ubs_12_7mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_il4",
+    "name": "IL-4",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 500,
+    "move_type": "flight",
+    "initiative": 4,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 20,
+        "bs": 60,
+        "armor": 3,
+        "evasion": 4,
+        "conceal": 0,
+        "weapons": [
+          "shkas_7_62mm",
+          "shkas_7_62mm",
+          "fab250_bomb",
+          "fab250_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_yak1b",
+    "name": "Yak-1B",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 1,
+    "cost": 500,
+    "move_type": "flight",
+    "initiative": 9,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 12,
+        "bs": 65,
+        "armor": 3,
+        "evasion": 9,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "ubs_12_7mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_la5fn",
+    "name": "La-5FN",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 2,
+    "cost": 600,
+    "move_type": "flight",
+    "initiative": 9,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 14,
+        "bs": 65,
+        "armor": 3,
+        "evasion": 9,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shvak_20mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_tu2",
+    "name": "Tu-2",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 3,
+    "cost": 600,
+    "move_type": "flight",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 20,
+        "bs": 65,
+        "armor": 3,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "fab250_bomb",
+          "fab250_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_yak3",
+    "name": "Yak-3",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 3,
+    "cost": 650,
+    "move_type": "flight",
+    "initiative": 10,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 12,
+        "bs": 70,
+        "armor": 3,
+        "evasion": 10,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shvak_20mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_la7b",
+    "name": "La-7B",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 3,
+    "cost": 700,
+    "move_type": "flight",
+    "initiative": 10,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 14,
+        "bs": 70,
+        "armor": 3,
+        "evasion": 10,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shvak_20mm",
+          "shvak_20mm"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_il10",
+    "name": "IL-10",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 3,
+    "cost": 600,
+    "move_type": "flight",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 22,
+        "bs": 65,
+        "armor": 6,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "shvak_20mm",
+          "shvak_20mm",
+          "fab250_bomb"
+        ]
+      }
+    ],
+    "fuel": 20,
+    "max_fuel": 20,
+    "needs_airfield": true
+  },
+  {
+    "id": "sov_li2",
+    "name": "Li-2运输机",
+    "nation": "soviet",
+    "type": "air",
+    "tech_tier": 1,
+    "cost": 300,
+    "move_type": "flight",
+    "initiative": 2,
+    "vision": 2,
+    "members": [
+      {
+        "role": "飞行员",
+        "count": 1,
+        "hp": 16,
+        "bs": 50,
+        "armor": 2,
+        "evasion": 3,
+        "conceal": 0,
+        "weapons": []
+      }
+    ],
+    "fuel": 30,
+    "max_fuel": 30,
+    "needs_airfield": true
+  }
+]

@@ -15,7 +15,7 @@ var valid_attack_hexes = []
 var _cam
 var _drag_start: Vector2
 var _is_dragging: bool = false
-const CAM_SPEED: float = 400.0
+const CAM_SPEED: float = 600.0
 const CAM_ZOOM_MIN: float = 0.5
 const CAM_ZOOM_MAX: float = 3.0
 
@@ -31,14 +31,17 @@ func _ready():
 	add_child(ai)
 	_cam = Camera2D.new()
 	_cam.name = "Camera2D"
-	_cam.zoom = Vector2(1.5, 1.5)
+	_cam.zoom = Vector2(1.0, 1.0)
 	_cam.enabled = true
 	map.add_child(_cam)
 	ui = load("res://scripts/ui/ui_manager.gd").new()
 	ui.name = "UIManager"
 	add_child(ui)
 	await get_tree().process_frame
-	_spawn_test_squads()
+	if GameManager.world_selected_squads.is_empty():
+		_spawn_test_squads()
+	else:
+		_spawn_world_squads()
 	GameManager.start_battle()
 
 func _process(delta):
@@ -123,11 +126,38 @@ func _select_squad(squad):
 		ui.show_assault_button(squad.can_afford(3))
 	if _is_engineer(squad):
 		ui.show_engineer_buttons(squad.ap)
+	if _can_supply(squad):
+		ui.show_supply_button(true)
 	var msg = "AP:%d" % squad.ap
-	if _can_assault(squad): msg += " 可突击(3AP)"
+	if _can_supply(squad): msg += " 可补给(1AP)"
+	elif _can_assault(squad): msg += " 可突击(3AP)"
 	elif zoc_blocked.size() > 0: msg += " 橙色=ZOC(进入即停)"
 	else: msg += " 选移动或攻击"
 	ui.show_message(msg)
+
+func _can_supply(squad) -> bool:
+	if not squad or not squad.is_alive: return false
+	if not squad.needs_supply(): return false
+	if not squad.can_afford(1): return false
+	return squad.is_near_supply_source()
+
+func _execute_supply():
+	if not selected_squad: return
+	if not _can_supply(selected_squad):
+		ui.show_message("无法补给")
+		return
+	var mn = GameManager.hex_map
+	if mn: mn.clear_highlights()
+	selected_squad.resupply()
+	selected_squad.spend_ap(1)
+	ui.add_log("[补给] " + selected_squad.squad_name + " 已补给")
+	ui.show_message("补给完成")
+	ui.show_squad_info(selected_squad)
+	if not selected_squad.can_afford(2):
+		selected_squad.has_acted = true
+		selected_squad.update_visual()
+	_deselect_squad()
+	_check_all_acted()
 
 func _view_squad(squad):
 	_deselect_squad()
@@ -136,7 +166,7 @@ func _view_squad(squad):
 
 func _find_attackable_hexes(squad):
 	var mn = GameManager.hex_map
-	if not mn or not squad.can_afford(2): return []
+	if not mn or not squad.can_afford(2) or not squad.has_ammo(): return []
 	var r = []
 	for h in mn.get_attackable_hexes(squad.hex_coord, 3):
 		var t = GameManager.get_squad_at(h)
@@ -151,10 +181,10 @@ func _deselect_squad():
 
 func _can_assault(squad) -> bool:
 	if squad.get_state() == 0: return false
+	if not squad.has_ammo(): return false
 	var mn = GameManager.hex_map
 	if not mn: return false
 
-	# 检查相邻敌人是否在CQB地形(地形或overlay)
 	for nb in HexUtil.hex_neighbors(squad.hex_coord):
 		var t = GameManager.get_squad_at(nb)
 		if t and t.team != squad.team and t.is_alive:
@@ -170,6 +200,9 @@ func _on_squad_assault():
 	if not selected_squad: return
 	if not selected_squad.can_afford(3):
 		ui.show_message("AP不足!需要3AP")
+		return
+	if not selected_squad.has_ammo():
+		ui.show_message("弹药耗尽!无法突击")
 		return
 	var mn = GameManager.hex_map
 	if not mn: return
@@ -335,11 +368,24 @@ func _execute_move(hex):
 	mn.clear_highlights()
 
 	# 逐步移动动画
+	var prev_hex = selected_squad.hex_coord
 	for i in range(1, path.size()):
 		var step = path[i]
 		var step_cost = mn.get_movement_cost(step)
+
+		# 离开ZOC: 双倍AP消耗 + 借机攻击
+		if mn.has_enemy_zoc(prev_hex, selected_squad.team):
+			if not mn.has_enemy_zoc(step, selected_squad.team):
+				step_cost *= 2
+				if battle and battle.has_method("resolve_zoc_attack"):
+					var zoc_result = battle.resolve_zoc_attack(selected_squad)
+					if zoc_result:
+						var zmsg = "[ZOC] " + selected_squad.squad_name + " 遭" + zoc_result.attacker.squad_name + "借机攻击 伤" + str(zoc_result.damage)
+						ui.add_log(zmsg)
+
 		selected_squad.move_to(step)
 		selected_squad.spend_ap(step_cost)
+		prev_hex = step
 		await get_tree().create_timer(0.12).timeout
 
 	# 更新信息面板
@@ -413,6 +459,47 @@ func _check_all_acted():
 	ui.show_message("全部部队行动完毕")
 	await get_tree().create_timer(1.0).timeout
 	GameManager.end_player_turn()
+
+func _spawn_world_squads():
+	var mn = GameManager.hex_map
+	if not mn: return
+	var selected = GameManager.world_selected_squads
+	var start_hexes = [Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4), Vector2i(0, 5)]
+	for i in range(selected.size()):
+		var sq = selected[i]
+		if i < start_hexes.size():
+			mn.add_child(sq)
+			sq.hex_coord = start_hexes[i]
+			sq.position = mn.hex_to_pixel(start_hexes[i])
+			sq.update_visual()
+			GameManager.register_squad(sq)
+	# 敌方(从encounter_node读部队配置)
+	var nd = GameManager.world_encounter_node
+	var enemy_count = 2
+	if nd and nd.has("enemy_garrison"):
+		enemy_count = nd["enemy_garrison"]
+	_spawn_enemy_squads(enemy_count)
+	# 清空世界选择
+	GameManager.world_selected_squads.clear()
+
+func _spawn_enemy_squads(count: int):
+	var mn = GameManager.hex_map
+	if not mn: return
+	var ss = load("res://scripts/core/squad.gd")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var ms = preload("res://scripts/core/member.gd")
+	var enemy_hexes = [Vector2i(8, 2), Vector2i(8, 4), Vector2i(10, 3), Vector2i(6, 5)]
+	for i in range(min(count, enemy_hexes.size())):
+		var sq = ss.new()
+		var m = []
+		for j in range(4):
+			m.append(ms.new("步兵", "infantry", 10, 55, wd.rifle()))
+		m.append(ms.new("机枪手", "infantry", 12, 50, wd.mg()))
+		sq.setup("infantry", 1, enemy_hexes[i], m)
+		sq.name = "E_" + str(i)
+		mn.add_child(sq)
+		sq.update_visual()
+		GameManager.register_squad(sq)
 
 func _spawn_test_squads():
 	var mn = GameManager.hex_map
@@ -516,7 +603,15 @@ func _update_terrain_tooltip():
 	txt += "防御加成: +" + str(td.defense_bonus) + "减伤\n"
 	if hit_penalty != 0: txt += "命中惩罚: " + str(hit_penalty) + "%\n"
 	if is_cqb: txt += "[CQB地形]"
-	ui.show_terrain_tooltip(txt)
+	if mn.is_supply_station(hex): txt += "\n[补给站]"
+	ui.show_terrain_tooltip(txt, wp)
+
+func _return_to_world():
+	GameManager.enemy_squads.clear()
+	GameManager.player_squads.clear()
+	GameManager.all_squads.clear()
+	var scene = load("res://scenes/world/world_map.tscn")
+	get_tree().change_scene_to_packed(scene)
 
 func _check_win_condition():
 	var ae = 0
@@ -525,3 +620,6 @@ func _check_win_condition():
 	if ae == 0:
 		ui.add_log("[系统] 胜利!所有敌人被消灭!")
 		ui.show_victory("胜利!所有敌人被消灭!")
+		if GameManager.world_controller:
+			await get_tree().create_timer(2.0).timeout
+			_return_to_world()

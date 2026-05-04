@@ -1,0 +1,5162 @@
+[
+  {
+    "id": "P1",
+    "name": "穿甲专精",
+    "name_en": "armor_piercing_spec",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "penetration",
+            "value": 2,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P2",
+    "name": "掩体利用",
+    "name_en": "cover_use",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P3",
+    "name": "隐蔽行动",
+    "name_en": "stealth",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 2,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P4",
+    "name": "弹药管理",
+    "name_en": "ammo_management",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "ammo_capacity",
+            "value": 1.5,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P5",
+    "name": "强壮",
+    "name_en": "tough",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "hp_multiply",
+            "value": 0.2,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P6",
+    "name": "压制抵抗",
+    "name_en": "suppression_resist_a",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "suppression_reduction",
+            "value": 0.15,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P7",
+    "name": "先发制人",
+    "name_en": "preemptive",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "initiative",
+            "value": 2,
+            "scope": "squad",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P8",
+    "name": "快速响应",
+    "name_en": "quick_response",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "reaction",
+            "value": 1,
+            "scope": "squad",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P9",
+    "name": "硬汉",
+    "name_en": "hardened",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_damage_taken",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "damage_taken_multiply",
+            "value": 0.9,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P10",
+    "name": "致命一击",
+    "name_en": "lethal_strike",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_attack",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "damage_fluctuation_lower",
+            "value": 0.1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P11",
+    "name": "稳定射击",
+    "name_en": "steady_shot",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 5,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P12",
+    "name": "韧性防御",
+    "name_en": "tough_defense",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_damage_taken",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "suppression_generated_multiply",
+            "value": 0.5,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "P13",
+    "name": "稳定阵型",
+    "name_en": "steady_formation",
+    "category": "passive",
+    "branch": "universal_passive",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_morale_event",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale_loss_multiply",
+            "value": 0.5,
+            "scope": "squad",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A1",
+    "name": "鼓舞士气",
+    "name_en": "inspire",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "ally_squad",
+    "range_min": 0,
+    "range_max": 2,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 15,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 25,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 35,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A2",
+    "name": "重整",
+    "name_en": "rally",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [
+      "rout",
+      "confused"
+    ],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 35,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "suppression",
+            "value": -20,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 50,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "suppression",
+            "value": -20,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A3",
+    "name": "精确射击",
+    "name_en": "precision_fire",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 20,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 30,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 40,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A4",
+    "name": "稳固射击",
+    "name_en": "steady_fire",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 1,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": true,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 10,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 15,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A5",
+    "name": "标记目标",
+    "name_en": "mark_target",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "enemy_squad",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "target_accuracy_penalty",
+            "value": 10,
+            "scope": "target",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "target_accuracy_penalty",
+            "value": 15,
+            "scope": "target",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "target_accuracy_penalty",
+            "value": 20,
+            "scope": "target",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A6",
+    "name": "火力全开",
+    "name_en": "full_power",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 0,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.3,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "accuracy",
+            "value": -10,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.45,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "accuracy",
+            "value": -10,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.6,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "accuracy",
+            "value": -10,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A7",
+    "name": "火力压制",
+    "name_en": "suppression_fire",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "enemy_squad",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 1,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "suppression",
+            "value": 25,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "suppression",
+            "value": 35,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "suppression",
+            "value": 45,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A8",
+    "name": "铁壁防御",
+    "name_en": "iron_wall",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": true,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 4,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A9",
+    "name": "阵地构筑",
+    "name_en": "fortify",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 2,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": true,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 3,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A10",
+    "name": "钢墙铁壁",
+    "name_en": "steel_bulwark",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "armor",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "armor",
+            "value": 5,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A11",
+    "name": "烟幕掩护",
+    "name_en": "smoke_screen",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 2,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 3,
+            "scope": "area",
+            "duration": "2_turns"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 4,
+            "scope": "area",
+            "duration": "2_turns"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 5,
+            "scope": "area",
+            "duration": "2_turns"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A12",
+    "name": "战术撤退",
+    "name_en": "tactical_retreat",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": true,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "ignore_zoc",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "move",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "ignore_zoc",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "move",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "ignore_zoc",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "move",
+            "value": 4,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A13",
+    "name": "急行军",
+    "name_en": "forced_march",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 0,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "move_multiply",
+            "value": 2,
+            "scope": "self",
+            "duration": "one_move"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A14",
+    "name": "战场侦察",
+    "name_en": "battlefield_recon",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "vision",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "vision",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A15",
+    "name": "奋起反击",
+    "name_en": "counter_charge",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 0,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "reaction",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A16",
+    "name": "呼叫补给",
+    "name_en": "call_supply",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": true,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.5,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.75,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 1.0,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A17",
+    "name": "紧急补给",
+    "name_en": "emergency_supply",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 1,
+    "cooldown": 5,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "resupply_flat",
+            "value": 2,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "ammo"
+          },
+          {
+            "type": "resupply_flat",
+            "value": 2,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "fuel"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_flat",
+            "value": 3,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "ammo"
+          },
+          {
+            "type": "resupply_flat",
+            "value": 3,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "fuel"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A18",
+    "name": "穿甲突击",
+    "name_en": "armor_piercing",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 0,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "penetration",
+            "value": 2,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "penetration",
+            "value": 3,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A19",
+    "name": "冷酷射击",
+    "name_en": "cold_shot",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 0,
+    "cooldown": 2,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "kill_no_reaction",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "A20",
+    "name": "破釜沉舟",
+    "name_en": "last_stand",
+    "category": "active",
+    "branch": "universal_active",
+    "ap_cost": 3,
+    "cooldown": 5,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 3,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "ap_cost": 3,
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 0.6,
+            "scope": "self",
+            "duration": "2_turns"
+          },
+          {
+            "type": "accuracy",
+            "value": 15,
+            "scope": "self",
+            "duration": "2_turns"
+          },
+          {
+            "type": "cover",
+            "value": -1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "conceal",
+            "value": -2,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "end_suppression",
+            "value": 25,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "ap_cost": 3,
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 0.8,
+            "scope": "self",
+            "duration": "2_turns"
+          },
+          {
+            "type": "accuracy",
+            "value": 20,
+            "scope": "self",
+            "duration": "2_turns"
+          },
+          {
+            "type": "cover",
+            "value": -1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "conceal",
+            "value": -2,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "end_suppression",
+            "value": 20,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "ap_cost": 2,
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.0,
+            "scope": "self",
+            "duration": "2_turns"
+          },
+          {
+            "type": "accuracy",
+            "value": 25,
+            "scope": "self",
+            "duration": "2_turns"
+          },
+          {
+            "type": "cover",
+            "value": -1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "conceal",
+            "value": -2,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "end_suppression",
+            "value": 15,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S1",
+    "name": "支援警戒",
+    "name_en": "overwatch_support",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "support",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "enter_overwatch",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "support"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S2",
+    "name": "请求支援",
+    "name_en": "call_support",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "ally_squad",
+    "range_min": 1,
+    "range_max": 1,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "grant_reaction",
+            "value": 1,
+            "scope": "target",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S3",
+    "name": "防空警戒",
+    "name_en": "overwatch_aa",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "has_anti_air"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "aa",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "enter_overwatch",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "aa"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S4",
+    "name": "炮火反制",
+    "name_en": "overwatch_cb",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_counter_battery"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "counter_battery",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "enter_overwatch",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "counter_battery"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S5",
+    "name": "建造战壕",
+    "name_en": "build_trench",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 3,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 1,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": true,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "build",
+            "value": "trench",
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S6",
+    "name": "布雷",
+    "name_en": "build_mine",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 3,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 1,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": true,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "build",
+            "value": "minefield",
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S7",
+    "name": "排雷",
+    "name_en": "clear_mine",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 2,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "clear_minefield",
+            "value": 1,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S8",
+    "name": "建造桥梁",
+    "name_en": "build_bridge",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 3,
+    "cooldown": 0,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 1,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 1,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": true,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "build",
+            "value": "bridge",
+            "scope": "target",
+            "duration": "2_turns"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S9",
+    "name": "建造机场",
+    "name_en": "build_airfield",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 3,
+    "cooldown": 0,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 1,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 3,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 1,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": true,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "build",
+            "value": "airfield",
+            "scope": "target",
+            "duration": "3_turns"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S10",
+    "name": "爆破建筑",
+    "name_en": "demolish",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 2,
+    "cooldown": 0,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 1,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": true,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "demolish",
+            "value": 1,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S11",
+    "name": "重建HQ",
+    "name_en": "rebuild_hq",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 3,
+    "cooldown": 0,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 1,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_build"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 20,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": true,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "build",
+            "value": "hq",
+            "scope": "target",
+            "duration": "3_turns"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S12",
+    "name": "炮火引导",
+    "name_en": "recon_guide",
+    "category": "squad",
+    "branch": "squad",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [
+      "can_recon"
+    ],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 3,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "artillery_guide",
+            "value": 1,
+            "scope": "target",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "C1",
+    "name": "重整",
+    "name_en": "rally",
+    "category": "commander",
+    "branch": "commander",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [
+      "rout",
+      "confused"
+    ],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 35,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "suppression",
+            "value": -20,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 50,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "suppression",
+            "value": -20,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "C2",
+    "name": "应急补给",
+    "name_en": "emergency_supply",
+    "category": "commander",
+    "branch": "commander",
+    "ap_cost": 1,
+    "cooldown": 5,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 2,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "resupply_flat",
+            "value": 2,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "ammo"
+          },
+          {
+            "type": "resupply_flat",
+            "value": 2,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "fuel"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_flat",
+            "value": 3,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "ammo"
+          },
+          {
+            "type": "resupply_flat",
+            "value": 3,
+            "scope": "self",
+            "duration": "instant",
+            "subtype": "fuel"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H1",
+    "name": "鼓舞",
+    "name_en": "inspire_aura",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_turn_end",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 3,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H2",
+    "name": "火力协调",
+    "name_en": "fire_coordination",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 3,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H3",
+    "name": "防护",
+    "name_en": "protection",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 1,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H4",
+    "name": "警戒",
+    "name_en": "vigilance",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_overwatch",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "reaction",
+            "value": 1,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H5",
+    "name": "急救强化",
+    "name_en": "first_aid_boost",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_heal",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "heal_multiply",
+            "value": 0.2,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H6",
+    "name": "侦察共享",
+    "name_en": "recon_share",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 2,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "initiative",
+            "value": 1,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H7",
+    "name": "压制",
+    "name_en": "suppression_aura",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_turn_end",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": -2,
+            "scope": "area",
+            "duration": "permanent",
+            "target_filter": "enemy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H8",
+    "name": "振奋",
+    "name_en": "morale_boost",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale_cap",
+            "value": 5,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H9",
+    "name": "休整",
+    "name_en": "rest",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_turn_end",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "suppression_recovery",
+            "value": 5,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "H10",
+    "name": "隐蔽",
+    "name_en": "concealment",
+    "category": "aura",
+    "branch": "aura",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 1,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 2,
+            "scope": "area",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I1",
+    "name": "突击冲锋",
+    "name_en": "assault_charge",
+    "category": "active",
+    "branch": "infantry",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": true,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 15,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 20,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 25,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I2",
+    "name": "步兵防御",
+    "name_en": "infantry_defense",
+    "category": "passive",
+    "branch": "infantry",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "cover",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I3",
+    "name": "火力协同",
+    "name_en": "fire_coordination",
+    "category": "active",
+    "branch": "infantry",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "cooperative_damage",
+            "value": 0.15,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "cooperative_damage",
+            "value": 0.2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "cooperative_damage",
+            "value": 0.25,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I4",
+    "name": "战场急救",
+    "name_en": "battlefield_aid",
+    "category": "active",
+    "branch": "infantry",
+    "ap_cost": 1,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.2,
+            "scope": "self",
+            "duration": "instant",
+            "count": 3,
+            "target_filter": "infantry"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.2,
+            "scope": "self",
+            "duration": "instant",
+            "count": 4,
+            "target_filter": "infantry"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.2,
+            "scope": "self",
+            "duration": "instant",
+            "count": 5,
+            "target_filter": "infantry"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I5",
+    "name": "隐蔽推进",
+    "name_en": "stealth_advance",
+    "category": "passive",
+    "branch": "infantry",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_move",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "I6",
+    "name": "步兵士气",
+    "name_en": "infantry_morale",
+    "category": "passive",
+    "branch": "infantry",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_kill",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "morale",
+            "value": 3,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V1",
+    "name": "装甲强化",
+    "name_en": "armor_reinforce",
+    "category": "passive",
+    "branch": "vehicle",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "armor",
+            "value": 2,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V2",
+    "name": "弹道学",
+    "name_en": "ballistics",
+    "category": "passive",
+    "branch": "vehicle",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 5,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V3",
+    "name": "快速行军",
+    "name_en": "rapid_march",
+    "category": "active",
+    "branch": "vehicle",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": true,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "move",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "move",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "move",
+            "value": 4,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V4",
+    "name": "急行军",
+    "name_en": "forced_march_v",
+    "category": "passive",
+    "branch": "vehicle",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "move",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V5",
+    "name": "附加装甲",
+    "name_en": "extra_armor",
+    "category": "passive",
+    "branch": "vehicle",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "hp_multiply",
+            "value": 0.15,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V6",
+    "name": "战地维修",
+    "name_en": "field_repair",
+    "category": "active",
+    "branch": "vehicle",
+    "ap_cost": 1,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.3,
+            "scope": "self",
+            "duration": "instant",
+            "target_filter": "vehicle"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.4,
+            "scope": "self",
+            "duration": "instant",
+            "target_filter": "vehicle"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.5,
+            "scope": "self",
+            "duration": "instant",
+            "target_filter": "vehicle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "V7",
+    "name": "穿甲优化",
+    "name_en": "ap_optimize",
+    "category": "passive",
+    "branch": "vehicle",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "penetration",
+            "value": 2,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "G1",
+    "name": "弹道计算",
+    "name_en": "ballistic_calc",
+    "category": "active",
+    "branch": "artillery",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 15,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 20,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 25,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "G2",
+    "name": "扩展射程",
+    "name_en": "extend_range",
+    "category": "passive",
+    "branch": "artillery",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "range",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "G3",
+    "name": "压制专精",
+    "name_en": "suppression_spec",
+    "category": "passive",
+    "branch": "artillery",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "suppression",
+            "value": 10,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "G4",
+    "name": "弹幕覆盖",
+    "name_en": "barrage",
+    "category": "active",
+    "branch": "artillery",
+    "ap_cost": 2,
+    "cooldown": 3,
+    "target_type": "hex",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 3,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.5,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "accuracy",
+            "value": -15,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "suppression",
+            "value": 30,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.7,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "accuracy",
+            "value": -15,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "suppression",
+            "value": 35,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.9,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "accuracy",
+            "value": -10,
+            "scope": "self",
+            "duration": "one_attack"
+          },
+          {
+            "type": "suppression",
+            "value": 40,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "G5",
+    "name": "攻坚炮术",
+    "name_en": "siege_gunnery",
+    "category": "passive",
+    "branch": "artillery",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "building_damage_multiply",
+            "value": 2,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "G6",
+    "name": "重炮穿甲",
+    "name_en": "heavy_ap",
+    "category": "passive",
+    "branch": "artillery",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "penetration",
+            "value": 3,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W1",
+    "name": "空战格斗",
+    "name_en": "air_combat",
+    "category": "active",
+    "branch": "air",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 20,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 25,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 30,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W2",
+    "name": "俯冲轰炸",
+    "name_en": "dive_bomb",
+    "category": "active",
+    "branch": "air",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.3,
+            "scope": "self",
+            "duration": "one_attack",
+            "subtype": "ground"
+          },
+          {
+            "type": "accuracy",
+            "value": -5,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.45,
+            "scope": "self",
+            "duration": "one_attack",
+            "subtype": "ground"
+          },
+          {
+            "type": "accuracy",
+            "value": -5,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.6,
+            "scope": "self",
+            "duration": "one_attack",
+            "subtype": "ground"
+          },
+          {
+            "type": "accuracy",
+            "value": -5,
+            "scope": "self",
+            "duration": "one_attack"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W3",
+    "name": "空中侦察",
+    "name_en": "aerial_recon",
+    "category": "active",
+    "branch": "air",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "reveal",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W4",
+    "name": "燃料节约",
+    "name_en": "fuel_save",
+    "category": "passive",
+    "branch": "air",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "fuel_cost_reduce",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W5",
+    "name": "空投补给",
+    "name_en": "airdrop_supply",
+    "category": "active",
+    "branch": "air",
+    "ap_cost": 1,
+    "cooldown": 5,
+    "target_type": "ally_squad",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": true,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.2,
+            "scope": "target",
+            "duration": "instant"
+          },
+          {
+            "type": "resupply_fuel",
+            "value": 0.2,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.3,
+            "scope": "target",
+            "duration": "instant"
+          },
+          {
+            "type": "resupply_fuel",
+            "value": 0.3,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.4,
+            "scope": "target",
+            "duration": "instant"
+          },
+          {
+            "type": "resupply_fuel",
+            "value": 0.4,
+            "scope": "target",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W6",
+    "name": "对地支援",
+    "name_en": "ground_support",
+    "category": "squad",
+    "branch": "air",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "ground",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "enter_overwatch",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "ground"
+          },
+          {
+            "type": "accuracy",
+            "value": 10,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "ground"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "W7",
+    "name": "制空巡逻",
+    "name_en": "air_patrol",
+    "category": "squad",
+    "branch": "air",
+    "ap_cost": 1,
+    "cooldown": 0,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "aa",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "enter_overwatch",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "aa"
+          },
+          {
+            "type": "accuracy",
+            "value": 10,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "U1",
+    "name": "快速建造",
+    "name_en": "fast_build",
+    "category": "passive",
+    "branch": "support",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "build_speed",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "U2",
+    "name": "资源回收",
+    "name_en": "resource_recycle",
+    "category": "passive",
+    "branch": "support",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "resource_cost_multiply",
+            "value": 0.8,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "U3",
+    "name": "医疗效率",
+    "name_en": "medical_eff",
+    "category": "passive",
+    "branch": "support",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "highest",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "heal_multiply",
+            "value": 1.5,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "U4",
+    "name": "紧急维修",
+    "name_en": "emergency_repair",
+    "category": "active",
+    "branch": "support",
+    "ap_cost": 1,
+    "cooldown": 5,
+    "target_type": "ally_squad",
+    "range_min": 0,
+    "range_max": 1,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 30,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.5,
+            "scope": "self",
+            "duration": "instant",
+            "target_filter": "vehicle"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.6,
+            "scope": "self",
+            "duration": "instant",
+            "target_filter": "vehicle"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "heal_percent",
+            "value": 0.7,
+            "scope": "self",
+            "duration": "instant",
+            "target_filter": "vehicle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "U5",
+    "name": "物资调配",
+    "name_en": "material_alloc",
+    "category": "active",
+    "branch": "support",
+    "ap_cost": 1,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.5,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "resupply_fuel",
+            "value": 0.5,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.7,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "resupply_fuel",
+            "value": 0.7,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "resupply_ammo",
+            "value": 0.9,
+            "scope": "self",
+            "duration": "instant"
+          },
+          {
+            "type": "resupply_fuel",
+            "value": 0.9,
+            "scope": "self",
+            "duration": "instant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "R1",
+    "name": "前沿侦察",
+    "name_en": "forward_recon",
+    "category": "passive",
+    "branch": "recon",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "vision",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          },
+          {
+            "type": "conceal",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "R2",
+    "name": "渗透机动",
+    "name_en": "infiltrate",
+    "category": "active",
+    "branch": "recon",
+    "ap_cost": 1,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "ignore_zoc",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          },
+          {
+            "type": "conceal",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "R3",
+    "name": "反侦察",
+    "name_en": "counter_recon",
+    "category": "passive",
+    "branch": "recon",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "on_recon",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "evasion",
+            "value": 15,
+            "scope": "self",
+            "duration": "permanent",
+            "trigger": "on_indirect_fire"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "R4",
+    "name": "远距观察",
+    "name_en": "long_spot",
+    "category": "active",
+    "branch": "recon",
+    "ap_cost": 1,
+    "cooldown": 2,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "vision",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "vision",
+            "value": 2,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "vision",
+            "value": 3,
+            "scope": "self",
+            "duration": "this_turn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "R5",
+    "name": "隐形哨所",
+    "name_en": "hidden_post",
+    "category": "passive",
+    "branch": "recon",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": true,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "conceal",
+            "value": 4,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "AA1",
+    "name": "空域警戒",
+    "name_en": "airspace_alert",
+    "category": "passive",
+    "branch": "aa",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "aa_range",
+            "value": 1,
+            "scope": "self",
+            "duration": "permanent"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "AA2",
+    "name": "防空弹幕",
+    "name_en": "aa_barrage",
+    "category": "active",
+    "branch": "aa",
+    "ap_cost": 1,
+    "cooldown": 3,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.3,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.45,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      },
+      {
+        "effects": [
+          {
+            "type": "damage_multiply",
+            "value": 1.6,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "AA3",
+    "name": "防空观测",
+    "name_en": "aa_spot",
+    "category": "passive",
+    "branch": "aa",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "accuracy",
+            "value": 10,
+            "scope": "self",
+            "duration": "permanent",
+            "subtype": "anti_air"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "AA4",
+    "name": "防空阵地",
+    "name_en": "aa_position",
+    "category": "active",
+    "branch": "aa",
+    "ap_cost": 1,
+    "cooldown": 4,
+    "target_type": "self",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 2,
+    "trigger": "none",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "none",
+    "max_level": 3,
+    "levels": [
+      {
+        "ap_cost": 1,
+        "effects": [
+          {
+            "type": "range",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          },
+          {
+            "type": "accuracy",
+            "value": 5,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      },
+      {
+        "ap_cost": 1,
+        "effects": [
+          {
+            "type": "range",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          },
+          {
+            "type": "accuracy",
+            "value": 10,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      },
+      {
+        "ap_cost": 0,
+        "effects": [
+          {
+            "type": "range",
+            "value": 1,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          },
+          {
+            "type": "accuracy",
+            "value": 15,
+            "scope": "self",
+            "duration": "this_turn",
+            "subtype": "anti_air"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "AA5",
+    "name": "破甲弹药",
+    "name_en": "ap_ammo",
+    "category": "passive",
+    "branch": "aa",
+    "ap_cost": 0,
+    "cooldown": 0,
+    "target_type": "none",
+    "range_min": 0,
+    "range_max": 0,
+    "aura_range": 0,
+    "state_required": [],
+    "squad_flags_required": [],
+    "cqb_only": false,
+    "hp_required": 0,
+    "unlock_level": 1,
+    "trigger": "always",
+    "overwatch_type": "none",
+    "ammo_cost": 0,
+    "fuel_cost": 0,
+    "parts_cost": 0,
+    "global_pool": false,
+    "self_hp_cost": 0,
+    "prevent_move": false,
+    "prevent_attack": false,
+    "cancels_on_move": false,
+    "consumes_all_ap": false,
+    "stacking": "additive",
+    "max_level": 1,
+    "levels": [
+      {
+        "effects": [
+          {
+            "type": "penetration",
+            "value": 2,
+            "scope": "self",
+            "duration": "permanent",
+            "subtype": "ground"
+          }
+        ]
+      }
+    ]
+  }
+]

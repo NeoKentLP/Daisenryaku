@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>战场主界面 - UI原型</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh}
+
+/* ===== 游戏窗口 ===== */
+.game{width:1280px;height:720px;background:#0f0f1a;position:relative;border-radius:8px;overflow:hidden}
+
+/* ===== 战场背景(模拟六边形网格) ===== */
+.battlefield{position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 30%, rgba(40,60,40,0.3) 0%, transparent 60%),
+  radial-gradient(circle at 80% 70%, rgba(40,40,60,0.2) 0%, transparent 50%),
+  linear-gradient(180deg,#14141e 0%,#1a1a28 50%,#121218 100%)}
+.battlefield::before{content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 100px 100px, rgba(255,255,255,0.03) 1px, transparent 1px),
+    radial-gradient(circle at 300px 200px, rgba(255,255,255,0.03) 1px, transparent 1px),
+    radial-gradient(circle at 500px 400px, rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(circle at 700px 150px, rgba(255,255,255,0.03) 1px, transparent 1px),
+    radial-gradient(circle at 900px 500px, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px}
+
+/* ===== 通用样式 ===== */
+.panel{background:rgba(10,10,25,0.93);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:10px;z-index:10}
+.btn{padding:5px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#ccc;font-size:11px;cursor:pointer;text-align:center;transition:all .15s;z-index:10}
+.btn:hover{background:rgba(100,170,255,0.1);border-color:rgba(100,170,255,0.25);color:#fff}
+
+/* ===== 顶部栏 ===== */
+.top-bar{position:absolute;top:0;left:0;right:0;height:32px;background:rgba(10,10,25,0.9);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:20}
+.top-bar .left{display:flex;align-items:center;gap:8px}
+.top-bar .right{display:flex;align-items:center;gap:6px}
+.top-bar .t-title{color:#77aaff;font-size:12px;font-weight:bold}
+.top-bar .t-info{color:#888;font-size:10px}
+.top-bar .t-val{color:#eee;font-size:11px}
+
+.top-btn{padding:2px 8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:3px;color:#888;font-size:10px;cursor:pointer;transition:all .15s}
+.top-btn:hover{background:rgba(100,170,255,0.08);color:#fff}
+
+/* ===== 信息面板(左上) ===== */
+.info-panel{position:absolute;top:40px;left:10px;width:200px;z-index:15}
+.info-panel .name{color:#fff;font-size:13px;font-weight:bold;margin-bottom:4px}
+.info-panel .row{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#aaa;margin:2px 0}
+.info-panel .val{color:#ddd}
+.info-panel .bar-wrap{height:12px;background:rgba(255,255,255,0.06);border-radius:3px;position:relative;margin:3px 0;overflow:hidden}
+.info-panel .bar-fill{height:100%;border-radius:3px}
+.info-panel .bar-fill.morale{background:linear-gradient(90deg,#338833,#55bb55)}
+.info-panel .bar-fill.sup{background:linear-gradient(90deg,#aa8833,#ddaa44)}
+.info-panel .bar-text{position:absolute;inset:0;line-height:12px;font-size:8px;padding:0 4px;color:#fff;text-shadow:0 0 2px #000}
+
+.ap-dots{font-size:14px;letter-spacing:2px}
+.ap-dots .on{color:#44dd44}
+.ap-dots .off{color:#444}
+
+.badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;color:#fff}
+.badge.normal{background:#448844}
+
+/* ===== 指挥官按钮 ===== */
+.cmd-btn{position:absolute;top:165px;left:10px;z-index:15;width:200px;padding:4px 10px;background:rgba(255,255,200,0.04);border:1px solid rgba(255,255,200,0.1);border-radius:4px;color:#ccc;font-size:10px;cursor:pointer;text-align:center;transition:all .15s}
+.cmd-btn:hover{background:rgba(255,255,200,0.1);color:#ffe}
+
+/* ===== 行动菜单(左中) ===== */
+.action-menu{position:absolute;top:195px;left:10px;width:200px;z-index:15}
+.action-menu .btn{margin:3px 0;width:100%}
+.action-menu .btn .cost{color:#44dd44;font-weight:bold}
+.action-menu .btn .cost.insufficient{color:#dd4444}
+.action-menu .btn .tag-passive{color:#88ccff;font-size:9px;margin-left:4px}
+
+/* ===== 地形提示(左下) ===== */
+.terrain-tip{position:absolute;bottom:44px;left:10px;padding:6px 10px;background:rgba(0,0,0,0.75);border:1px solid rgba(255,255,255,0.1);border-radius:4px;font-size:10px;color:#aaa;z-index:15}
+.terrain-tip .tt-name{color:#fff;font-weight:bold;font-size:11px}
+.terrain-tip .tt-row{display:flex;gap:8px;margin-top:2px}
+.terrain-tip .tt-tag{padding:0 5px;border-radius:2px;font-size:9px;color:#fff;background:#448844}
+
+/* ===== 底部(结束回合+消息) ===== */
+.bottom-bar{position:absolute;bottom:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center;z-index:15}
+.msg-area{font-size:11px;color:#aaa;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:5px 10px;flex:1;margin-right:10px}
+.end-turn-btn{padding:6px 18px;background:rgba(200,60,60,0.15);border:1px solid rgba(200,60,60,0.25);border-radius:4px;color:#e88;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.end-turn-btn:hover{background:rgba(200,60,60,0.25);color:#faa}
+
+/* ===== 右上功能区 ===== */
+.right-panel{position:absolute;top:40px;right:10px;display:flex;flex-direction:column;gap:6px;z-index:15}
+.right-panel .rp-btn{padding:4px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;color:#888;font-size:10px;cursor:pointer;text-align:center;min-width:60px}
+.right-panel .rp-btn:hover{background:rgba(100,170,255,0.08);color:#fff}
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="battlefield"></div>
+
+  <!-- ===== 顶部栏 ===== -->
+  <div class="top-bar">
+    <div class="left">
+      <span class="t-title">大战略</span>
+      <span class="t-info">|</span>
+      <span class="t-info">回合</span>
+      <span class="t-val">3</span>
+      <span class="t-info">|</span>
+      <span class="t-val" style="color:#44aa88">玩家回合</span>
+    </div>
+    <div class="right">
+      <span class="t-info">货币</span>
+      <span class="t-val">750</span>
+      <span class="t-info">|</span>
+      <span class="t-info">补给</span>
+      <span class="t-val" style="color:#55cc55">充足</span>
+      <span style="width:6px"></span>
+      <span class="top-btn">日志</span>
+      <span class="top-btn">储备库</span>
+    </div>
+  </div>
+
+  <!-- ===== 信息面板(左上) ===== -->
+  <div class="panel info-panel">
+    <div class="name">第一步兵班 <span class="badge normal">正常</span></div>
+    <div class="bar-wrap"><div class="bar-fill morale" style="width:70%"></div><span class="bar-text">士气 70/100</span></div>
+    <div class="bar-wrap"><div class="bar-fill sup" style="width:20%"></div><span class="bar-text">压制 20/100</span></div>
+    <div class="row"><span>AP</span><span class="val"><span class="ap-dots"><span class="on">●</span><span class="on">●</span><span class="on">●</span><span class="on">●</span></span></span></div>
+    <div class="row" style="color:#888;font-size:9px"><span>成员 8/10</span><span>命中 -25%</span></div>
+  </div>
+
+  <!-- ===== 指挥官按钮 ===== -->
+  <div class="cmd-btn">📋 部队详情</div>
+
+  <!-- ===== 行动菜单 ===== -->
+  <div class="panel action-menu">
+    <div class="btn"><span class="cost">2AP</span> 压制射击</div>
+    <div class="btn"><span class="tag-passive">被动</span> 装甲专注</div>
+    <div class="btn"><span class="cost">1AP</span> 侦查标记</div>
+    <div style="border-top:1px solid rgba(255,255,255,0.06);margin:4px 0;padding-top:4px">
+      <div class="btn" style="border-color:rgba(68,170,136,0.2);color:#4a8">
+        <span class="cost" style="color:#4a8">3AP</span> 突击
+      </div>
+      <div class="btn" style="border-color:rgba(68,170,136,0.15)">
+        <span class="cost">3AP</span> 挖战壕
+      </div>
+      <div class="btn" style="border-color:rgba(68,170,136,0.15)">
+        <span class="cost">3AP</span> 布雷
+      </div>
+    </div>
+    <div class="btn">待机</div>
+  </div>
+
+  <!-- ===== 地形提示(左下) ===== -->
+  <div class="terrain-tip">
+    <span class="tt-name">城市</span>
+    <div class="tt-row">
+      <span>移 1</span><span>防 +3</span><span style="color:#e88">命中 -15%</span>
+      <span class="tt-tag">CQB</span>
+    </div>
+  </div>
+
+  <!-- ===== 底部 ===== -->
+  <div class="bottom-bar">
+    <div class="msg-area">选择部队或目标</div>
+    <div class="end-turn-btn">结束回合</div>
+  </div>
+
+  <!-- ===== 右侧按钮 ===== -->
+  <div class="right-panel">
+    <span class="rp-btn">📋 日志</span>
+    <span class="rp-btn">📦 储备库</span>
+  </div>
+</div>
+</body>
+</html>

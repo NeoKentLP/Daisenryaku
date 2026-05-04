@@ -31,7 +31,7 @@ func resolve_combat(attacker, defender) -> Dictionary:
 			var d = HexUtil.hex_distance(attacker.hex_coord, defender.hex_coord)
 			if d < w.get("range_min", 1) or d > w.get("range_max", 3): continue
 
-			atk_member.consume_ammo()
+			w["ammo"] -= 1
 
 			var hit = _calc_hit(atk_member, w, attacker, defender)
 			if _roll(hit):
@@ -56,7 +56,7 @@ func resolve_combat(attacker, defender) -> Dictionary:
 			if HexUtil.hex_distance(defender.hex_coord, attacker.hex_coord) > 1: continue
 			if w.get("damage_type", "") != "soft": continue
 
-			def_member.consume_ammo()
+			w["ammo"] -= 1
 
 			var hit = _calc_hit(def_member, w, defender, attacker)
 			if _roll(hit):
@@ -109,7 +109,7 @@ func resolve_zoc_attack(mover):
 		if not m.is_alive: continue
 		for w in m.weapons:
 			if w.get("ammo", 0) <= 0: continue
-			m.consume_ammo()
+			w["ammo"] -= 1
 			var hit = _calc_hit(m, w, best, mover)
 			if _roll(hit):
 				var pen = _calc_pen(w)
@@ -170,6 +170,14 @@ func _calc_dmg(weapon, defender, attacker) -> int:
 	if attacker and (typeof(attacker) == TYPE_OBJECT) and attacker.has_method("get_damage_modifier"):
 		damage = int(damage * attacker.get_damage_modifier())
 
+	# 地形掩护减伤 (defender所在格)
+	var mn = GameManager.hex_map
+	if mn:
+		var td = mn.get_terrain_at(defender.hex_coord)
+		if td and td.defense_bonus > 0:
+			var cover_pct = td.defense_bonus * 10
+			damage = damage * (100 - cover_pct) / 100
+
 	if damage < 1: damage = 1
 	return damage
 
@@ -189,7 +197,7 @@ func resolve_cqb(attacker, defender) -> Dictionary:
 		for w in m.weapons:
 			if w.get("ammo", 0) <= 0: continue
 			if w.get("damage_type", "") == "": continue
-			m.consume_ammo()
+			w["ammo"] -= 1
 			var hit_chance = _calc_cqb_hit(m, w, attacker, def_mod)
 			if _roll(hit_chance):
 				atk_hits += 1
@@ -206,7 +214,7 @@ func resolve_cqb(attacker, defender) -> Dictionary:
 		for w in m.weapons:
 			if w.get("ammo", 0) <= 0: continue
 			if w.get("damage_type", "") == "": continue
-			m.consume_ammo()
+			w["ammo"] -= 1
 			var hit_chance = _calc_cqb_hit(m, w, defender, atk_mod)
 			if _roll(hit_chance):
 				def_hits += 1
@@ -230,18 +238,24 @@ func resolve_cqb(attacker, defender) -> Dictionary:
 	}
 
 func _cqb_weapon_mod(squad) -> int:
-	# 根据队伍的武器类型计算CQB修正
-	var smg_count = 0
+	var total_mod = 0
 	var total = 0
 	for m in squad.members:
 		if not m.is_alive: continue
 		for w in m.weapons:
+			if w.get("ammo", 0) <= 0: continue
 			total += 1
-			var wn = w.get("name", "")
-			if "MP40" in wn or "冲锋" in wn or "smg" in wn.to_lower() or "手枪" in wn:
-				smg_count += 1
+			var wn = w.get("name", "").to_lower()
+			if "mp40" in wn or "冲锋" in wn or "smg" in wn or "手枪" in wn or "汤普森" in wn or "ppsh" in wn:
+				total_mod += 15
+			elif "卡宾" in wn or "g43" in wn or "m1" in wn or "stg44" in wn or "突击" in wn:
+				total_mod += 5
+			elif "mg42" in wn or "机枪" in wn or "mg" in wn or "步枪" in wn or "kar98k" in wn or "莫辛" in wn:
+				total_mod += -10
+			else:
+				total_mod += -15
 	if total == 0: return 0
-	return (smg_count * 20) / total - 5
+	return total_mod / total
 
 func _calc_cqb_hit(member, weapon, squad, cqb_mod) -> int:
 	var base = member.bs

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var hex_size: float = 32.0
+@export var hex_size: float = 48.0
 @export var map_width: int = 15
 @export var map_height: int = 10
 
@@ -197,6 +197,10 @@ func get_zoc_units_at(hex: Vector2i) -> Array:
 		if sq.is_alive and HexUtil.hex_distance(sq.hex_coord, hex) == 1:
 			result.append(sq)
 	return result
+
+func is_supply_station(hex: Vector2i) -> bool:
+	var tid = terrain_grid.get(hex, "plain")
+	return tid == "hq" or tid == "factory"
 
 func hex_to_pixel(hex: Vector2i) -> Vector2:
 	return HexUtil.axial_to_pixel(hex.x, hex.y, hex_size)

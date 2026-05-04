@@ -29,6 +29,17 @@ var ui_manager: Node = null
 # 储备库: weapon_name -> count
 var reserve_storage: Dictionary = {}
 
+# 补给系统
+var global_supply_pool: int = 9999
+var supply_units: Array = []
+
+# 世界地图状态
+var world_day: int = 1
+var world_controller = null
+var world_encounter_node = null
+var world_current_hub = null
+var world_selected_squads: Array = []
+
 # 指挥官池
 var commander_pool: Array = []
 var squad_commanders: Dictionary = {}  # squad -> commander
@@ -76,6 +87,31 @@ func get_storage_count(weapon_name: String) -> int:
 signal phase_changed(phase: int)
 signal command_points_changed(points: int)
 signal turn_ended(turn: int)
+signal supply_changed(pool: int)
+
+func register_supply_unit(squad) -> void:
+	if not supply_units.has(squad):
+		supply_units.append(squad)
+
+func unregister_supply_unit(squad) -> void:
+	supply_units.erase(squad)
+
+func is_supply_station(hex: Vector2i) -> bool:
+	var mn = hex_map
+	if not mn: return false
+	var tid = mn.terrain_grid.get(hex, "plain")
+	return tid == "hq" or tid == "factory"
+
+func post_battle_auto_resupply(team_id: int) -> void:
+	var squads = player_squads if team_id == 0 else enemy_squads
+	var mn = hex_map
+	if not mn: return
+	for sq in squads:
+		if not sq.is_alive: continue
+		if sq.is_near_supply_source() and sq.needs_supply():
+			sq.resupply()
+			if ui_manager:
+				ui_manager.add_log("[补给] " + sq.squad_name + " 已自动补给")
 
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
@@ -90,11 +126,12 @@ func start_battle():
 func end_player_turn():
 	current_phase = 1
 	emit_signal("phase_changed", current_phase)
-	# ZOC内每回合+压制
 	var mn = hex_map
 	for sq in player_squads:
 		if sq.is_alive and mn and mn.has_enemy_zoc(sq.hex_coord, sq.team):
 			sq.apply_suppression(5)
+	# 敌方回合开始自动补给
+	post_battle_auto_resupply(1)
 	if battle_manager:
 		battle_manager.start_enemy_turn()
 
@@ -108,10 +145,11 @@ func end_enemy_turn():
 	for sq in all_squads:
 		sq.has_acted = false
 		sq.reset_ap()
-		# 回合恢复
 		sq.apply_morale(5)
 		sq.suppression = max(0, sq.suppression - 20)
 		sq.update_visual()
+	# 回合开始自动补给（在补给源附近）
+	post_battle_auto_resupply(0)
 	if battle_manager:
 		battle_manager.start_player_turn()
 

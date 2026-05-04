@@ -75,7 +75,9 @@ func get_damage_modifier() -> float:
 	return 1.0
 
 func get_suppression_damage_bonus_range() -> float:
-	return -suppression * 0.3
+	var lower = -20 - suppression * 0.2
+	var upper = 20 - suppression * 0.5
+	return randi() % int(upper - lower) + lower
 
 func apply_morale(delta: int):
 	morale = clampi(morale + delta, 0, max_morale)
@@ -201,14 +203,17 @@ func move_to(new_hex: Vector2i):
 
 func take_damage(amount: int) -> int:
 	if members.is_empty(): return 0
-	var t = _find_weakest()
-	if t:
-		t.take_damage(amount)
-		if get_alive_count() <= 0:
-			is_alive = false
-			_destroy_visual()
-		else:
-			_update_visual()
+	var alive = []
+	for m in members:
+		if m.is_alive: alive.append(m)
+	if alive.is_empty(): return 0
+	var t = alive[randi() % alive.size()]
+	t.take_damage(amount)
+	if get_alive_count() <= 0:
+		is_alive = false
+		_destroy_visual()
+	else:
+		_update_visual()
 	return amount
 
 func _find_weakest():
@@ -227,12 +232,59 @@ func _destroy_visual():
 	if _label: _label.hide()
 	if _done_label: _done_label.hide()
 
+func has_ammo() -> bool:
+	for m in members:
+		if m.is_alive and m.has_weapon(""):
+			return true
+	return false
+
+func get_total_ammo() -> int:
+	var total = 0
+	for m in members:
+		if not m.is_alive: continue
+		for w in m.weapons:
+			total += w.get("ammo", 0)
+	return total
+
+func get_max_ammo() -> int:
+	var total = 0
+	for m in members:
+		if not m.is_alive: continue
+		for w in m.weapons:
+			total += w.get("max_ammo", w.get("ammo", 0))
+	return total
+
+func needs_supply() -> bool:
+	for m in members:
+		if m.is_alive and m.needs_supply():
+			return true
+	return false
+
+func resupply() -> void:
+	for m in members:
+		if m.is_alive:
+			m.resupply_weapons()
+
+func is_near_supply_source() -> bool:
+	var mn = GameManager.hex_map
+	if not mn: return false
+	var tid = mn.terrain_grid.get(hex_coord, "plain")
+	if tid == "hq" or tid == "factory": return true
+	for nb in HexUtil.hex_neighbors(hex_coord):
+		var nt = mn.terrain_grid.get(nb, "plain")
+		if nt == "hq" or nt == "factory": return true
+		var sq = GameManager.get_squad_at(nb)
+		if sq and sq.team == team and sq.is_alive and sq.unit_type_id == "transport":
+			return true
+	return false
+
 func can_attack(target) -> bool:
 	if not target or not target.is_alive: return false
 	if target.team == team: return false
 	if has_acted: return false
 	if get_state() == STATE_BROKEN: return false
 	if not can_afford(2): return false
+	if not has_ammo(): return false
 	var d = HexUtil.hex_distance(hex_coord, target.hex_coord)
 	return d >= 1 and d <= 3
 

@@ -45,3 +45,19 @@ func consume_ammo() -> void:
 		if w.get("ammo", 0) > 0:
 			w["ammo"] -= 1
 			break
+
+func resupply_weapons() -> void:
+	for w in weapons:
+		w["ammo"] = w.get("max_ammo", w.get("ammo", 0))
+
+func get_ammo_summary() -> String:
+	var parts = []
+	for w in weapons:
+		parts.append(w.get("name", "?") + " " + str(w.get("ammo", 0)) + "/" + str(w.get("max_ammo", 0)))
+	return ", ".join(parts)
+
+func needs_supply() -> bool:
+	for w in weapons:
+		if w.get("ammo", 0) < w.get("max_ammo", 0):
+			return true
+	return false

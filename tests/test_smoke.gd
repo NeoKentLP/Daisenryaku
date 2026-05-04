@@ -43,6 +43,11 @@ func run_smoke_tests():
 	test_commander_basic()
 	test_commander_exp()
 	test_commander_pool()
+	test_member_resupply()
+	test_squad_ammo()
+	test_squad_resupply()
+	test_squad_can_attack_no_ammo()
+	test_game_manager_supply_pool()
 
 func assert_eq(got, expected, desc):
 	_tests_run += 1
@@ -321,6 +326,77 @@ func test_commander_pool():
 	gm.unassign_commander(sq)
 	assert_eq(gm.commander_pool.size(), 1, "卸载后回池")
 	assert_eq(gm.get_commander(sq), null, "Squad不再有指挥官")
+
+# ============================================================
+# 补给系统
+# ============================================================
+
+func test_member_resupply():
+	print("  Member 补给")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var m = _make_member("步枪手", "infantry", 10)
+	m.weapons.append(wd.rifle().duplicate())
+	assert_eq(m.weapons[0]["ammo"], 20, "初始弹药20")
+	assert_false(m.needs_supply(), "满弹药不需要补给")
+	m.consume_ammo()
+	assert_eq(m.weapons[0]["ammo"], 19, "消耗1弹药")
+	assert_true(m.needs_supply(), "消耗后需要补给")
+	m.resupply_weapons()
+	assert_eq(m.weapons[0]["ammo"], 20, "补给后回满")
+
+func test_squad_ammo():
+	print("  Squad 弹药跟踪")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var m1 = _make_member("A", "infantry", 10)
+	m1.weapons.append(wd.rifle().duplicate())
+	var m2 = _make_member("B", "infantry", 10)
+	m2.weapons.append(wd.smg().duplicate())
+	var sq = _make_squad("infantry", 0, Vector2i(0,0), [m1, m2])
+	assert_eq(sq.get_total_ammo(), 50, "总弹药20+30")
+	assert_eq(sq.get_max_ammo(), 50, "最大弹药20+30")
+	assert_true(sq.has_ammo(), "有弹药")
+	assert_false(sq.needs_supply(), "满弹药")
+
+func test_squad_resupply():
+	print("  Squad 补给")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var m = _make_member("A", "infantry", 10)
+	m.weapons.append(wd.rifle().duplicate())
+	var sq = _make_squad("infantry", 0, Vector2i(0,0), [m])
+	
+	m.consume_ammo()
+	assert_eq(sq.get_total_ammo(), 19, "消耗后19")
+	assert_true(sq.needs_supply(), "需要补给")
+	
+	sq.resupply()
+	assert_eq(sq.get_total_ammo(), 20, "补给后回满")
+	assert_false(sq.needs_supply(), "不再需要补给")
+
+func test_squad_can_attack_no_ammo():
+	print("  Squad 无弹药不可攻击")
+	var wd = preload("res://scripts/core/weapon_data.gd")
+	var m = _make_member("A", "infantry", 10)
+	var rifle = wd.rifle().duplicate()
+	rifle["ammo"] = 0
+	m.weapons.append(rifle)
+	var sq = _make_squad("infantry", 0, Vector2i(0,0), [m])
+	var target = _make_squad("infantry", 1, Vector2i(1,0), [_make_member("B","infantry",10)])
+	
+	assert_false(sq.has_ammo(), "无弹药")
+	assert_eq(sq.get_total_ammo(), 0, "弹药为0")
+	# can_attack应返回false（弹药为0）
+	assert_false(sq.can_attack(target), "无弹药不可攻击")
+
+func test_game_manager_supply_pool():
+	print("  GameManager 补给池")
+	var gm = GameManager
+	assert_true(gm.global_supply_pool > 0, "补给池>0")
+	assert_eq(gm.supply_units.size(), 0, "初始无补给部队")
+	var sq = _make_squad("transport", 0, Vector2i(0,0), [_make_member("A","vehicle",10)])
+	gm.register_supply_unit(sq)
+	assert_eq(gm.supply_units.size(), 1, "注册补给部队")
+	gm.unregister_supply_unit(sq)
+	assert_eq(gm.supply_units.size(), 0, "注销补给部队")
 
 # ============================================================
 # Summary
