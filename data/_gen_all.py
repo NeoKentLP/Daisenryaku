@@ -79,9 +79,73 @@ def output(out_dir):
         ensure_ascii=False, indent=2)
     json.dump(EQUIPMENT, open(os.path.join(out_dir,"equipment.json"),'w',encoding='utf-8'),
         ensure_ascii=False, indent=2)
-    print("Output to %s: %d weapons, %d units, %d tree, %d equip" % (
-        out_dir, len(WEAPONS), len(UNITS), len(nodes), len(EQUIPMENT)))
+    _validate_output(list(WEAPONS.values()), UNITS, nodes, EQUIPMENT, out_dir)
     WEAPONS.clear(); UNITS.clear(); RAW_NODES.clear(); EQUIPMENT.clear()
+
+# ============================================================
+# 自动验证系统
+# ============================================================
+EXPECTED_PEN = {
+    "kwk30_2cm":3,"kwk36_37mm":5,"kwk39_50mm":6,
+    "kwk40_75mm_L43":9,"kwk40_75mm_L48":9,
+    "kwk42_75mm_L70":11,"kwk36_88mm":12,"kwk43_88mm":13,
+    "stuk40_75mm":9,"stuk42_75mm_L70":11,
+    "l11_76mm":7,"f34_76mm":8,"zis5_76mm":8,
+    "d5t_85mm":10,"zis_s53_85mm":10,
+    "d25t_122mm":12,"ml20s_152mm":11,"d10_100mm":10,
+}
+
+def _validate_output(weapons, units, nodes, equipment, label):
+    errors = []
+    w_ids = [x['id'] for x in weapons]
+    u_ids = [x['id'] for x in units]
+    t_ids = [x['id'] for x in nodes]
+    e_ids = [x['id'] for x in equipment]
+    
+    # Check PEN
+    pen_ok = 0; pen_bad = 0
+    for w in weapons:
+        gid = w['id']
+        if gid in EXPECTED_PEN:
+            if w['penetration'] == EXPECTED_PEN[gid]:
+                pen_ok += 1
+            else:
+                pen_bad += 1
+                errors.append('PEN %s: got %d want %d' % (gid, w['penetration'], EXPECTED_PEN[gid]))
+    
+    # Check weapon references
+    ref_ok = 0; ref_bad = 0
+    for u in units:
+        for m in u.get('members', []):
+            for wep in m.get('weapons', []):
+                if wep in w_ids: ref_ok += 1
+                else: ref_bad += 1; errors.append('%s: missing weapon %s' % (u['id'], wep))
+    
+    # Check tree references
+    for n in nodes:
+        if n['unit_type_id'] not in u_ids: errors.append('%s: bad unit' % n['id'])
+        if n['parent_id'] and n['parent_id'] not in t_ids: errors.append('%s: bad parent' % n['id'])
+        eqid = n.get('equipment')
+        if eqid and eqid not in e_ids and eqid is not False: errors.append('%s: bad equip' % n['id'])
+    
+    # Check equipment
+    for e in equipment:
+        if e['replaces_unit_type'] not in u_ids: errors.append('%s: bad replace' % e['id'])
+    
+    # Build summary
+    summary = '%s %dw %du %dt %de' % (os.path.basename(label), len(weapons), len(units), len(nodes), len(equipment))
+    if pen_ok + pen_bad > 0:
+        summary += ' | PEN:%d/%d' % (pen_ok, pen_ok + pen_bad)
+    if ref_ok + ref_bad > 0:
+        summary += ' refs:%d%%' % (ref_ok * 100 // (ref_ok + ref_bad) if (ref_ok + ref_bad) > 0 else 100)
+    
+    if errors:
+        summary += ' FAIL(%d)' % len(errors)
+        for e in errors[:3]:
+            summary += '\n  - ' + e
+    else:
+        summary += ' OK'
+    print(summary)
 
 # ============================================================
 # GERMANY
@@ -99,15 +163,13 @@ w("mg42","MG42","mg","germany",20,2,0,1,-5,22,1,50,2,tier=2)
 w("ptrb38","PzB 38","at_rifle","germany",30,4,0,1,-5,15,0,5,3,tier=0)
 w("ptrb39","PzB 39","at_rifle","germany",30,4,0,1,-5,15,0,5,3,tier=1)
 w("kwk30_2cm","2cm KwK30","tank_gun","germany",20,3,0,1,0,12,0,20,3,tier=1)
-w("kwk36_37mm","3.7cm KwK36","tank_gun","germany",25,4,0,1,0,12,0,20,3,tier=1)
-w("kwk39_50mm","5cm KwK39","tank_gun","germany",30,5,0,1,0,12,0,20,3,tier=2)
-w("kwk40_75mm_L43","7.5cm KwK40 L43","tank_gun","germany",40,7,0,1,0,12,0,20,3,tier=2)
-w("kwk40_75mm_L48","7.5cm KwK40 L48","tank_gun","germany",42,7,0,1,0,12,0,20,3,tier=2)
-w("kwk42_75mm_L70","7.5cm KwK42 L70","tank_gun","germany",45,9,0,1,0,12,0,20,3,tier=3)
-w("kwk36_88mm","8.8cm KwK36","tank_gun","germany",50,10,0,1,0,12,0,20,3,tier=2)
-w("kwk43_88mm","8.8cm KwK43","tank_gun","germany",55,12,0,1,0,12,0,20,3,tier=3)
-w("stuk40_75mm","7.5cm StuK40","tank_gun","germany",42,7,0,1,0,12,0,20,3,tier=2)
-w("stuk42_75mm_L70","7.5cm StuK42 L70","tank_gun","germany",45,9,0,1,0,12,0,20,3,tier=3)
+w("kwk36_37mm","3.7cm KwK36","tank_gun","germany",25,5,0,1,0,12,0,20,3,tier=1)
+w("kwk39_50mm","5cm KwK39","tank_gun","germany",30,6,0,1,0,12,0,20,3,tier=2)
+w("kwk40_75mm_L43","7.5cm KwK40 L43","tank_gun","germany",40,9,0,1,0,12,0,20,3,tier=2)
+w("kwk40_75mm_L48","7.5cm KwK40 L48","tank_gun","germany",42,9,0,1,0,12,0,20,3,tier=2)
+w("kwk42_75mm_L70","7.5cm KwK42 L70","tank_gun","germany",45,11,0,1,0,12,0,20,3,tier=3)
+w("stuk40_75mm","7.5cm StuK40","tank_gun","germany",42,9,0,1,0,12,0,20,3,tier=2)
+w("stuk42_75mm_L70","7.5cm StuK42 L70","tank_gun","germany",45,11,0,1,0,12,0,20,3,tier=3)
 w("lefh18","10.5cm leFH18","artillery","germany",35,4,2,3,-10,15,0,10,4,tier=0)
 w("sfh18","15cm sFH18","artillery","germany",45,6,2,4,-10,15,0,10,4,tier=2)
 w("grw34","8cm GrW34","mortar","germany",25,1,1,2,-5,12,0,15,3,tier=0)
@@ -118,6 +180,9 @@ w("flak36_88mm","8.8cm Flak36","aa_gun","germany",45,7,0,1,0,10,0,20,3,
    aa=True,aa_dmg=20,aa_rng=3,aa_bs=5,tier=1)
 w("flak37_37mm","3.7cm Flak37","aa_gun","germany",30,4,0,1,5,10,0,20,3,
    aa=True,aa_dmg=15,aa_rng=1,aa_bs=8,tier=2)
+w("kwk36_88mm","8.8cm KwK36","tank_gun","germany",50,12,0,1,0,12,0,20,3,tier=2)
+w("kwk43_88mm","8.8cm KwK43","tank_gun","germany",55,13,0,1,0,12,0,20,3,tier=3)
+
 w("flammenwerfer35","Flammenwerfer 35","flamethrower","germany",20,0,0,0,10,30,3,5,3,tier=0)
 w("mg34_coaxial","MG34(同轴)","mg","germany",18,2,0,1,-5,20,1,50,2,tier=0)
 
@@ -509,17 +574,17 @@ w("pps43","PPS-43","smg","soviet",14,0,0,0,5,8,3,30,1,tier=2)
 w("dp27","DP-27","mg","soviet",18,2,0,1,-5,20,1,50,2,tier=0)
 w("sg43","SG-43","mg","soviet",19,2,0,1,-5,20,1,50,2,tier=2)
 w("ptrd41","PTRD-41","at_rifle","soviet",30,4,0,1,-5,15,0,5,3,tier=1)
-w("ptrs41","PTRS-41","at_rifle","soviet",32,5,0,1,-5,15,0,5,3,tier=2)
+w("ptrs41","PTRS-41","at_rifle","soviet",32,7,0,1,-5,15,0,5,3,tier=2)
 # Soviet tank guns
-w("l11_76mm","76mm L-11","tank_gun","soviet",35,5,0,1,0,12,0,20,3,tier=1)
-w("f34_76mm","76mm F-34","tank_gun","soviet",38,6,0,1,0,12,0,20,3,tier=2)
-w("zis5_76mm","76mm ZiS-5","tank_gun","soviet",38,6,0,1,0,12,0,20,3,tier=2)
-w("d5t_85mm","85mm D-5T","tank_gun","soviet",42,8,0,1,0,12,0,20,3,tier=2)
-w("zis_s53_85mm","85mm ZiS-S-53","tank_gun","soviet",44,8,0,1,0,12,0,20,3,tier=3)
-w("d25t_122mm","122mm D-25T","tank_gun","soviet",50,10,0,1,0,12,0,20,3,tier=3)
-# SPG guns
-w("ml20s_152mm","152mm ML-20S","tank_gun","soviet",55,9,0,1,0,12,0,10,4,tier=3)
-w("d10_100mm","100mm D-10","tank_gun","soviet",46,9,0,1,0,12,0,15,3,tier=3)
+w("l11_76mm","76mm L-11","tank_gun","soviet",35,7,0,1,0,12,0,20,3,tier=1)
+w("f34_76mm","76mm F-34","tank_gun","soviet",38,8,0,1,0,12,0,20,3,tier=2)
+w("zis5_76mm","76mm ZiS-5","tank_gun","soviet",38,8,0,1,0,12,0,20,3,tier=2)
+w("ml20s_152mm","152mm ML-20S","tank_gun","soviet",55,11,0,1,0,12,0,10,4,tier=3)
+
+w("d5t_85mm","85mm D-5T","tank_gun","soviet",42,10,0,1,0,12,0,20,3,tier=2)
+w("zis_s53_85mm","85mm ZiS-S-53","tank_gun","soviet",44,10,0,1,0,12,0,20,3,tier=3)
+w("d25t_122mm","122mm D-25T","tank_gun","soviet",50,12,0,1,0,12,0,20,3,tier=3)
+w("d10_100mm","100mm D-10","tank_gun","soviet",46,10,0,1,0,12,0,15,3,tier=3)
 # Artillery
 w("m30_122mm","122mm M-30","artillery","soviet",38,4,2,3,-10,15,0,10,4,tier=1)
 w("d1_152mm","152mm D-1","artillery","soviet",48,6,2,4,-10,15,0,10,4,tier=3)

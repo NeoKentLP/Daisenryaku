@@ -235,6 +235,7 @@ func resolve_cqb(attacker, defender) -> Dictionary:
 		"num_hits": atk_hits,
 		"num_counter_hits": def_hits,
 		"defender_destroyed": not defender.is_alive,
+		"attacker_destroyed": not attacker.is_alive,
 	}
 
 func _cqb_weapon_mod(squad) -> int:

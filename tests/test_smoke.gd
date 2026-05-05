@@ -275,7 +275,7 @@ func test_minefield_terrain():
 
 func test_equipment_upgrade_paths():
 	print("  装备升级路径")
-	var eq = preload("res://scripts/equipment/equipment_upgrade.gd")
+	var eq = preload("res://scripts/equipment/equipment_upgrade.gd").new()
 	var paths = eq.get_upgrade_paths()
 	assert_true(paths.has("Kar98k"), "Kar98k可升级")
 	assert_true(paths.has("MG42"), "MG42可升级")

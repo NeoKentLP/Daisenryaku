@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>国家选择 - UI原型</title>
+<link rel="stylesheet" href="../shared.css">
+<style>
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;justify-content:center;align-items:center;z-index:50}
+
+.panel{width:520px;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);overflow:hidden}
+
+/* 标题 */
+.panel-header{padding:10px 14px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+.panel-header .h-title{color:var(--color-highlight);font-size:var(--fs-title);font-weight:bold}
+.panel-header .h-step{color:var(--text-dim);font-size:var(--fs-small)}
+.panel-header .h-close{color:var(--text-dim);font-size:14px;cursor:pointer;padding:0 4px}
+.panel-header .h-close:hover{color:var(--text-highlight)}
+
+.panel-desc{padding:8px 14px;font-size:var(--fs-small);color:var(--text-secondary);border-bottom:1px solid var(--border-light)}
+
+/* 轮播主体: 左右箭头 + 中间卡片 */
+.carousel{display:flex;align-items:center;padding:14px;gap:10px}
+.arrow{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--border);cursor:pointer;flex-shrink:0;color:var(--text-secondary);font-size:16px;user-select:none}
+.arrow:hover{background:rgba(100,170,255,0.08);border-color:var(--color-highlight);color:var(--text-highlight)}
+.arrow.disabled{opacity:0.2;cursor:not-allowed}
+.arrow.disabled:hover{background:transparent;border-color:var(--border);color:var(--text-secondary)}
+
+/* 中间大卡片 */
+.nation-card{flex:1;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-box);padding:20px;display:none;flex-direction:column;align-items:center;gap:12px;min-height:260px}
+.nation-card.active{display:flex}
+.nation-card.locked{opacity:0.4}
+
+.nation-flag{width:80px;height:60px;border-radius:4px;border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.nation-name{font-size:16px;font-weight:bold;color:var(--text-highlight)}
+.nation-desc{font-size:var(--fs-small);color:var(--text-secondary);text-align:center;line-height:1.6}
+.nation-tag{font-size:var(--fs-tiny);padding:2px 10px;border-radius:4px}
+.nation-tag.avail{background:rgba(68,170,136,0.1);color:var(--color-ally)}
+.nation-tag.locked{background:rgba(255,255,255,0.04);color:var(--text-dim)}
+
+/* 底部指示器 + 确认 */
+.indicator{display:flex;justify-content:center;gap:6px;padding:0 14px 10px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.08);cursor:pointer}
+.dot.active{background:var(--color-highlight)}
+.dot.locked-dot{background:rgba(255,255,255,0.03)}
+
+.panel-footer{display:flex;justify-content:flex-end;gap:6px;padding:8px 14px;border-top:1px solid var(--border-light);background:rgba(255,255,255,0.02)}
+.f-btn{padding:5px 14px;border-radius:var(--radius-card);font-size:var(--fs-small);cursor:pointer;border:1px solid;transition:all 0.1s}
+.f-btn.confirm{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:var(--color-ally);opacity:0.4;pointer-events:none}
+.f-btn.confirm.active{opacity:1;pointer-events:auto}
+.f-btn.confirm.active:hover{background:rgba(68,170,136,0.15)}
+.f-btn.cancel{background:rgba(255,255,255,0.03);border-color:var(--border);color:var(--text-secondary)}
+.f-btn.cancel:hover{background:rgba(255,255,255,0.06);color:var(--text-highlight)}
+</style>
+</head>
+<body>
+<div class="overlay">
+  <div class="panel">
+
+    <div class="panel-header">
+      <div class="h-left"><span class="h-title">选择部队国家</span><span class="h-step">第1步/共2步</span></div>
+      <span class="h-close">✕</span>
+    </div>
+
+    <div class="panel-desc">选择初始部队所属国家。决定初始编制、第一关敌军及基地国。存档绑定后不可更改。</div>
+
+    <!-- 轮播区 -->
+    <div class="carousel">
+      <div class="arrow" id="prev-btn" onclick="prev()">‹</div>
+
+      <!-- 德国 -->
+      <div class="nation-card active" data-nation="germany" data-index="0">
+        <div class="nation-flag" style="background:linear-gradient(135deg,#333,#555,#cc0000);color:#fff">⚔</div>
+        <span class="nation-name">德国</span>
+        <span class="nation-desc">均衡的装甲部队与精良步兵。虎式、豹式、四号坦克等经典装备，<br>编制体系完整，装甲兵特色指挥官。</span>
+        <span class="nation-tag avail">可用</span>
+      </div>
+
+      <!-- 苏联 -->
+      <div class="nation-card" data-nation="soviet" data-index="1">
+        <div class="nation-flag" style="background:linear-gradient(135deg,#cc0000,#dd3333,#ffcc00);color:#fff">⚔</div>
+        <span class="nation-name">苏联</span>
+        <span class="nation-desc">数量优势的钢铁洪流。T-34、IS-2等经典装备，<br>动员兵与近卫步兵体系，政委特色指挥官。</span>
+        <span class="nation-tag avail">可用</span>
+      </div>
+
+      <!-- 美国(锁定) -->
+      <div class="nation-card locked" data-nation="usa" data-index="2">
+        <div class="nation-flag" style="background:linear-gradient(135deg,#333366,#cc3333,#fff);color:#fff">⚔</div>
+        <span class="nation-name">美国</span>
+        <span class="nation-desc">强大的空中支援与后勤能力。谢尔曼坦克海，<br>完整的海陆空协同体系，后勤官特色指挥官。</span>
+        <span class="nation-tag locked">待开放</span>
+      </div>
+
+      <!-- 英国(锁定) -->
+      <div class="nation-card locked" data-nation="uk" data-index="3">
+        <div class="nation-flag" style="background:linear-gradient(135deg,#003399,#cc0000,#fff);color:#fff">⚔</div>
+        <span class="nation-name">英国</span>
+        <span class="nation-desc">丘吉尔、克伦威尔等重型坦克。皇家工程兵、<br>苏格兰高地兵等特色单位，全球部署能力。</span>
+        <span class="nation-tag locked">待开放</span>
+      </div>
+
+      <div class="arrow" id="next-btn" onclick="next()">›</div>
+    </div>
+
+    <!-- 指示器 -->
+    <div class="indicator" id="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot locked-dot"></span>
+      <span class="dot locked-dot"></span>
+    </div>
+
+    <div class="panel-footer">
+      <div class="f-btn cancel">返回</div>
+      <div class="f-btn confirm" id="btn-confirm">确认选择</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var nations = document.querySelectorAll('.nation-card')
+var dots = document.querySelectorAll('.dot')
+var current = 0
+
+function selectNation(idx){
+  nations.forEach((n,i)=>{
+    n.classList.toggle('active', i===idx)
+    dots[i].classList.toggle('active', i===idx)
+  })
+  current = idx
+  // 确认按钮: 只有"可用"国家才能激活
+  var card = nations[idx]
+  var btn = document.getElementById('btn-confirm')
+  if(!card.classList.contains('locked')){
+    btn.classList.add('active')
+  } else {
+    btn.classList.remove('active')
+  }
+  // 箭头状态
+  document.getElementById('prev-btn').classList.toggle('disabled', idx===0)
+  document.getElementById('next-btn').classList.toggle('disabled', idx===nations.length-1)
+}
+
+function prev(){ if(current>0) selectNation(current-1) }
+function next(){ if(current<nations.length-1) selectNation(current+1) }
+
+// 点击指示器跳转
+dots.forEach((d,i)=>{ d.addEventListener('click',()=>selectNation(i)) })
+
+// 键盘左右
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowLeft') prev()
+  if(e.key==='ArrowRight') next()
+})
+
+selectNation(0)
+</script>
+</body>
+</html>

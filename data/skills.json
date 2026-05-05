@@ -2230,7 +2230,7 @@
     "name_en": "demolish",
     "category": "squad",
     "branch": "squad",
-    "ap_cost": 2,
+    "ap_cost": 3,
     "cooldown": 0,
     "target_type": "hex",
     "range_min": 0,
@@ -2265,7 +2265,8 @@
             "scope": "target",
             "duration": "instant"
           }
-        ]
+        ],
+        "ap_cost": 3
       }
     ]
   },
@@ -2320,7 +2321,7 @@
     "name_en": "recon_guide",
     "category": "squad",
     "branch": "squad",
-    "ap_cost": 1,
+    "ap_cost": 2,
     "cooldown": 0,
     "target_type": "hex",
     "range_min": 0,
@@ -2355,7 +2356,8 @@
             "scope": "target",
             "duration": "this_turn"
           }
-        ]
+        ],
+        "ap_cost": 2
       }
     ]
   },

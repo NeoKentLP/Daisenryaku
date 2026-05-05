@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>编制树浏览器</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a19;color:#ccc;font-family:sans-serif;font-size:11px;height:100vh;display:flex;flex-direction:column}
+.header{background:#0a0a19;border-bottom:1px solid rgba(255,255,255,0.12);padding:8px 12px;display:flex;gap:12px;align-items:center;flex-shrink:0}
+.header select,.header input{background:#1a1a2e;color:#ccc;border:1px solid rgba(255,255,255,0.15);padding:4px 8px;font-size:11px;border-radius:2px}
+.header input{width:200px}
+.header .title{color:#77aaff;font-size:12px;font-weight:bold}
+.content{display:flex;flex:1;overflow:hidden}
+.left{width:350px;border-right:1px solid rgba(255,255,255,0.12);flex-shrink:0;display:flex;flex-direction:column;overflow:hidden}
+.right{flex:1;overflow-y:auto;padding:12px}
+.tree-item{padding:3px 8px;cursor:pointer;white-space:nowrap;color:#888;border-left:2px solid transparent;font-size:11px}
+.tree-item:hover{background:rgba(119,170,255,0.08);color:#ccc}
+.tree-item.selected{background:rgba(119,170,255,0.12);border-left-color:#77aaff;color:#fff}
+.tree-item.equip{color:#ffaa66}
+.tree-item .tier{color:#555;font-size:9px;margin-right:4px}
+.tree-item .cost{color:#888;font-size:9px;margin-left:6px}
+.branch-tab{display:inline-block;padding:4px 10px;font-size:10px;cursor:pointer;color:#aaa;background:#0d0d20;border:1px solid rgba(255,255,255,0.1);margin:4px 2px 0 0;border-radius:2px}
+.branch-tab:hover{color:#fff;background:#1a1a2e}
+.branch-tab.active{color:#77aaff;border-color:#77aaff;background:#0d0d28}
+#branch-tabs{padding:4px 8px 0 8px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;min-height:30px}
+#tree-panel{overflow-y:auto;flex:1;padding:4px 0}
+.detail-section{margin-bottom:8px}
+.detail-section h3{color:#77aaff;font-size:12px;margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.detail-section .row{display:flex;gap:12px;padding:2px 0}
+.detail-section .label{color:#888;width:80px;flex-shrink:0}
+.detail-section .value{color:#ccc}
+.member-card{background:#0d0d20;border:1px solid rgba(255,255,255,0.08);padding:6px 8px;margin-bottom:4px;border-radius:2px}
+.member-card .role{color:#77aaff;font-size:11px;margin-bottom:2px}
+.member-card .stat{color:#888;font-size:10px}
+.member-card .stat span{color:#ccc}
+.weapon-link{color:#44aa88;cursor:pointer;text-decoration:underline}
+.weapon-link:hover{color:#66ccaa}
+.equip-badge{background:#ffaa44;color:#0a0a19;font-size:9px;padding:1px 4px;border-radius:2px;margin-left:4px}
+.search-result{padding:3px 8px;cursor:pointer;color:#888}
+.search-result:hover{background:rgba(119,170,255,0.08);color:#ccc}
+.search-result .type{color:#555;font-size:9px;margin-left:4px}
+#status{color:#555;font-size:10px;padding:2px 12px}
+#weapon-popup{display:none;position:fixed;background:#0a0a19;border:1px solid #77aaff;padding:10px;z-index:100;max-width:300px;font-size:10px}
+#weapon-popup h4{color:#77aaff;margin-bottom:4px}
+</style></head><body>
+<div class="header">
+  <span class="title">编制树浏览器</span>
+  <select id="nation-select"><option value="germany">德国</option><option value="soviet">苏联</option></select>
+  <input id="search-input" placeholder="搜索…" oninput="doSearch(this.value)">
+  <span id="status">就绪</span>
+</div>
+<div class="content">
+  <div class="left">
+    <div id="branch-tabs"></div>
+    <div id="tree-panel"><p style="color:#555;padding:20px">加载中…</p></div>
+  </div>
+  <div class="right" id="detail-panel"><p style="color:#555;padding:20px">选择节点查看详情</p></div>
+</div>
+<div id="weapon-popup"></div>
+
+<script>
+let currentNation = 'germany';
+let currentBranch = '';
+let allUnits = {};
+let allTreeData = [];
+let allTreeGroups = {};
+
+document.getElementById('nation-select').onchange = function() {
+  currentNation = this.value;
+  reloadTree();
+};
+
+function reloadTree() {
+  document.getElementById('status').textContent = '加载中…';
+  document.getElementById('branch-tabs').innerHTML = '';
+  document.getElementById('tree-panel').innerHTML = '<p style="color:#555;padding:20px">加载中…</p>';
+  document.getElementById('detail-panel').innerHTML = '<p style="color:#555;padding:20px">选择节点查看详情</p>';
+
+  fetch('/api/tree/' + currentNation)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.error) { throw new Error(d.error); }
+      allUnits = d.units || {};
+      allTreeData = d.tree || [];
+      document.getElementById('status').textContent = d.summary;
+
+      var groups = {};
+      for (var i = 0; i < allTreeData.length; i++) {
+        var item = allTreeData[i];
+        var info = allUnits[item.id] || {};
+        var branch = info.type || '?';
+        if (!groups[branch]) groups[branch] = [];
+        groups[branch].push(item);
+      }
+      allTreeGroups = groups;
+
+      renderTabs(groups);
+      var keys = Object.keys(groups).sort();
+      if (keys.length > 0) {
+        selectBranch(keys[0]);
+      }
+    })
+    .catch(function(err) {
+      document.getElementById('status').textContent = '错误: ' + err.message;
+      document.getElementById('tree-panel').innerHTML = '<p style="color:#c44">加载失败: ' + err.message + '</p>';
+    });
+}
+
+function renderTabs(groups) {
+  var div = document.getElementById('branch-tabs');
+  div.innerHTML = '';
+  var names = {infantry:'步兵',vehicle:'载具',artillery:'火炮',support:'支援',air:'空中'};
+  var keys = Object.keys(groups).sort();
+  for (var i = 0; i < keys.length; i++) {
+    var b = keys[i];
+    var tab = document.createElement('span');
+    tab.className = 'branch-tab';
+    tab.textContent = (names[b] || b) + ' (' + groups[b].length + ')';
+    tab.dataset.branch = b;
+    tab.onclick = function() { selectBranch(this.dataset.branch); };
+    div.appendChild(tab);
+  }
+}
+
+function selectBranch(branch) {
+  currentBranch = branch;
+  var tabs = document.querySelectorAll('.branch-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.toggle('active', tabs[i].dataset.branch === branch);
+  }
+  var items = allTreeGroups[branch] || [];
+  renderTree(items);
+}
+
+function renderTree(items) {
+  var panel = document.getElementById('tree-panel');
+  panel.innerHTML = '';
+  for (var i = 0; i < items.length; i++) {
+    var t = items[i];
+    var div = document.createElement('div');
+    div.className = 'tree-item' + (t.equip ? ' equip' : '');
+    div.style.paddingLeft = (12 + t.depth * 16) + 'px';
+    var info = allUnits[t.id] || {};
+    var name = info.name || t.id;
+    div.innerHTML = '<span class="tier">T' + t.tier + '</span>' + name +
+      (info.cost ? '<span class="cost">$' + info.cost + '</span>' : '') +
+      (t.equip ? '<span class="equip-badge">道具</span>' : '');
+    div.onclick = function() {
+      var sel = document.querySelectorAll('.tree-item.selected');
+      for (var j = 0; j < sel.length; j++) sel[j].classList.remove('selected');
+      this.classList.add('selected');
+      loadDetail(t.id);
+    };
+    (function(item) {
+      div.onclick = function() {
+        var sel = document.querySelectorAll('.tree-item.selected');
+        for (var j = 0; j < sel.length; j++) sel[j].classList.remove('selected');
+        this.classList.add('selected');
+        loadDetail(item.id);
+      };
+    })(t);
+    panel.appendChild(div);
+  }
+}
+
+function loadDetail(id) {
+  document.getElementById('status').textContent = id;
+  fetch('/api/unit/' + currentNation + '/' + id)
+    .then(function(r) { return r.json(); })
+    .then(function(u) {
+      if (u.error) { document.getElementById('detail-panel').innerHTML = '<p style="color:#c44">' + u.error + '</p>'; return; }
+      var html = '<div class="detail-section"><h3>' + u.name + (u.is_equipment ? '<span class="equip-badge">道具</span>' : '') + '</h3>';
+      html += '<div class="row"><span class="label">ID</span><span class="value">' + u.id + '</span></div>';
+      html += '<div class="row"><span class="label">类型</span><span class="value">' + u.type + '</span></div>';
+      html += '<div class="row"><span class="label">成本</span><span class="value">$' + u.cost + '</span></div>';
+      html += '<div class="row"><span class="label">科技等级</span><span class="value">T' + u.tech_tier + '</span></div>';
+      html += '<div class="row"><span class="label">移动</span><span class="value">' + u.move_type + '</span></div>';
+      html += '<div class="row"><span class="label">主动性</span><span class="value">' + u.initiative + '</span></div>';
+      html += '<div class="row"><span class="label">视野</span><span class="value">' + u.vision + '</span></div>';
+      if (u.fuel) html += '<div class="row"><span class="label">燃料</span><span class="value">' + u.fuel + '</span></div>';
+      if (u.needs_airfield) html += '<div class="row"><span class="label">需机场</span><span class="value">是</span></div>';
+      html += '</div>';
+
+      if (u.members && u.members.length > 0) {
+        html += '<div class="detail-section"><h3>成员 (' + u.members.length + '种)</h3>';
+        for (var i = 0; i < u.members.length; i++) {
+          var m = u.members[i];
+          var extra = '';
+          if (m.armor !== undefined) extra += ' | 装甲:' + m.armor;
+          if (m.evasion !== undefined) extra += ' | 回避:' + m.evasion;
+          if (m.conceal !== undefined && m.conceal > 0) extra += ' | 隐蔽:' + m.conceal;
+          html += '<div class="member-card">';
+          html += '<div class="role">' + m.role + ' x' + m.count + '</div>';
+          html += '<div class="stat">HP:<span>' + m.hp + '</span> BS:<span>' + m.bs + '</span>' + extra + '</div>';
+          if (m.weapon_details && m.weapon_details.length > 0) {
+            html += '<div class="stat">武器: ';
+            for (var j = 0; j < m.weapon_details.length; j++) {
+              var w = m.weapon_details[j];
+              var pen = w.penetration !== undefined ? ' PEN:' + w.penetration : '';
+              var dmg = w.base_damage !== undefined ? ' DMG:' + w.base_damage : '';
+              var aa = w.anti_air ? ' AA' : '';
+              html += '<span class="weapon-link" onclick="showWeapon(\'' + currentNation + '\',\'' + w.id + '\')">' + w.name + '</span>' + pen + dmg + aa + ' ';
+            }
+            html += '</div>';
+          }
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+      document.getElementById('detail-panel').innerHTML = html;
+    })
+    .catch(function(err) {
+      document.getElementById('detail-panel').innerHTML = '<p style="color:#c44">加载失败: ' + err.message + '</p>';
+    });
+}
+
+function showWeapon(nation, wid) {
+  fetch('/api/weapon/' + nation + '/' + wid)
+    .then(function(r) { return r.json(); })
+    .then(function(w) {
+      if (w.error) return;
+      var popup = document.getElementById('weapon-popup');
+      var html = '<h4>' + w.name + ' <span style="color:#888;font-size:9px">' + w.type + '</span></h4>';
+      html += '<div>DMG: ' + w.base_damage + ' | PEN: ' + w.penetration + '</div>';
+      html += '<div>射程: ' + w.range_min + '-' + w.range_max + ' | BS: ' + w.bs_bonus + '</div>';
+      html += '<div>压制: ' + w.suppression + ' | CQB: ' + w.cqb_rating + '</div>';
+      html += '<div>弹药: ' + w.ammo + ' | 补给: ' + w.supply_cost + '</div>';
+      if (w.anti_air) html += '<div style="color:#44aa88">可对空: DMG' + w.aa_damage + ' RNG' + w.aa_range_max + ' BS' + w.aa_bs_bonus + '</div>';
+      popup.innerHTML = html;
+      popup.style.display = 'block';
+    });
+}
+
+document.addEventListener('click', function(e) {
+  var popup = document.getElementById('weapon-popup');
+  if (popup.style.display !== 'none' && !e.target.closest('.weapon-link')) {
+    popup.style.display = 'none';
+  }
+});
+
+function doSearch(q) {
+  if (q.length < 2) { return; }
+  fetch('/api/search?q=' + encodeURIComponent(q) + '&nation=' + currentNation)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var panel = document.getElementById('detail-panel');
+      if (!d.results || d.results.length === 0) {
+        panel.innerHTML = '<p style="color:#555;padding:20px">无结果</p>';
+        return;
+      }
+      var html = '<div class="detail-section"><h3>搜索结果 (' + d.results.length + ')</h3>';
+      for (var i = 0; i < d.results.length; i++) {
+        var r = d.results[i];
+        html += '<div class="search-result" onclick="loadDetail(\'' + r.id + '\')">' +
+          r.name + '<span class="type">' + (r.type || '') + (r.cost ? ' $' + r.cost : '') + (r.pen !== undefined ? ' PEN' + r.pen : '') + '</span></div>';
+      }
+      html += '</div>';
+      panel.innerHTML = html;
+    });
+}
+
+reloadTree();
+</script>
+</body></html>

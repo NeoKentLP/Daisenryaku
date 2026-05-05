@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>大战略 UI 原型导航</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#0a0a19;color:#ccc;padding:20px 40px}
+h1{color:#77aaff;font-size:20px;margin-bottom:2px}
+.sub{color:#666;font-size:11px;margin-bottom:16px}
+
+.section{margin-bottom:20px}
+.section h2{color:#fff;font-size:13px;margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,0.06)}
+
+/* 流程导航条 */
+.flow-row{display:flex;align-items:center;gap:4px;margin:6px 0 12px;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:6px;border:1px solid rgba(255,255,255,0.04);flex-wrap:wrap}
+.flow-item{font-size:9px;padding:3px 8px;border-radius:3px;text-decoration:none;color:#888}
+.flow-item:hover{color:#fff;background:rgba(100,170,255,0.1)}
+.flow-item.done{color:#4a8}
+.flow-item.cur{color:#77aaff;border:1px solid rgba(100,170,255,0.2)}
+.flow-arr{color:#444;font-size:9px}
+.flow-brk{color:#333;font-size:8px;margin:0 2px}
+
+/* UI关系表 */
+.rel-table{width:100%;border-collapse:collapse;font-size:9px}
+.rel-table th{padding:5px 8px;text-align:left;color:#555;font-weight:normal;border-bottom:1px solid rgba(255,255,255,0.04)}
+.rel-table td{padding:4px 8px;border-bottom:1px solid rgba(255,255,255,0.02);vertical-align:top}
+.rel-table .tn{color:#eee;font-weight:bold;text-decoration:none;font-size:10px}
+.rel-table .tn:hover{color:#77aaff}
+.rel-table .tn.done{color:#4a8}
+.rel-table .tn.todo{color:#555}
+.rel-table .path{font-size:7px;color:#444;display:block}
+.rel-table .arrow{color:#555;font-size:10px}
+.rel-table .nav-to{color:#888;font-size:8px}
+.rel-table .nav-to a{color:#77aaff;text-decoration:none}
+.rel-table .nav-to a:hover{text-decoration:underline}
+.rel-table .status{display:inline-block;padding:1px 6px;border-radius:3px;font-size:7px}
+.rel-table .status.done{background:rgba(68,170,136,0.1);color:#4a8}
+.rel-table .status.todo{background:rgba(255,255,255,0.03);color:#555}
+</style>
+</head>
+<body>
+
+<h1>大战略 UI 原型导航</h1>
+<div class="sub">UI 关系图 · 点击名称查看原型</div>
+
+<!-- 主流程概览 -->
+<div class="section">
+  <h2>新游戏 → 第一关 完整流程</h2>
+  <div class="flow-row">
+    <a class="flow-item" href="main_menu/main_menu_v1.html">主菜单</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="new_game/nation_select.html">国家选择</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="new_game/commander_create_v6.html">指挥官创建</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="deployment/deployment.html">部署</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="battle/battle_main_v7.html">战场</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="battle/victory.html">胜利结算</a>
+  </div>
+</div>
+
+<div class="section">
+  <h2>战场内交互</h2>
+  <div class="flow-row">
+    <a class="flow-item done" href="battle/squad_detail_v7.html">部队详情</a>
+    <span class="flow-brk">|</span>
+    <a class="flow-item done" href="battle/combat_preview_v1.html">战斗预览</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="battle/combat_flow.html">战斗过程</a>
+    <span class="flow-arr">→</span>
+    <a class="flow-item done" href="battle/combat_log.html">战斗详情(流水账)</a>
+  </div>
+</div>
+
+<!-- 详细UI关系表 -->
+<div class="section">
+  <h2>UI 关系表</h2>
+  <table class="rel-table">
+    <tr><th style="width:110px">界面</th><th style="width:50px">状态</th><th style="width:100px">导航入口</th><th>导航到</th><th>文件</th></tr>
+
+    <tr>
+      <td><a class="tn done" href="main_menu/main_menu_v1.html">主菜单</a><span class="path">main_menu_v1.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>启动</td>
+      <td class="nav-to"><span class="arrow">→</span> <a href="new_game/nation_select.html">国家选择</a>（新游戏）<br><span class="arrow">→</span> 继续游戏（进基地）<br><span class="arrow">→</span> 设置</td>
+      <td>📁 main_menu/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="new_game/nation_select.html">国家选择</a><span class="path">nation_select.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>主菜单 → 新游戏</td>
+      <td class="nav-to"><span class="arrow">→</span> <a href="new_game/commander_create_v6.html">指挥官创建</a>（确认后）<br><span class="arrow">←</span> <a href="main_menu/main_menu_v1.html">主菜单</a>（返回）</td>
+      <td>📁 new_game/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="new_game/commander_create_v6.html">指挥官创建</a><span class="path">commander_create_v6.html</span></td>
+      <td><span class="status done">已完成 v6</span></td>
+      <td>国家选择 → 确认</td>
+      <td class="nav-to"><span class="arrow">→</span> <a href="deployment/deployment.html">部署</a>（确认编成后）<br><span class="arrow">←</span> <a href="new_game/nation_select.html">国家选择</a>（返回）</td>
+      <td>📁 new_game/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="deployment/deployment.html">部署</a><span class="path">deployment.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>指挥官创建 → 确认</td>
+      <td class="nav-to"><span class="arrow">→</span> <a href="battle/battle_main_v7.html">战场</a>（全部部署后确认）<br><span class="arrow">←</span> <a href="new_game/commander_create_v6.html">指挥官创建</a>（返回）<br>选中部队 → [编成] 弹窗 | [详情] 弹窗</td>
+      <td>📁 deployment/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="battle/battle_main_v7.html">战场主界面</a><span class="path">battle_main_v7.html</span></td>
+      <td><span class="status done">已完成 v7</span></td>
+      <td>部署 → 确认</td>
+      <td class="nav-to">
+        <span class="arrow">→</span> <a href="battle/squad_detail_v7.html">部队详情</a>（点击己方部队）<br>
+        <span class="arrow">→</span> <a href="battle/combat_preview_v1.html">战斗预览</a>（选动作→点目标）<br>
+        <span class="arrow">→</span> 战斗过程（预览确认后）<br>
+        <span class="arrow">→</span> <a href="battle/victory.html">胜利结算</a>（达成条件）
+      </td>
+      <td>📁 battle/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="battle/combat_preview_v1.html">战斗预览</a><span class="path">combat_preview_v1.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>战场 → 选动作 → 点目标</td>
+      <td class="nav-to"><span class="arrow">→</span> <a href="battle/combat_flow.html">战斗过程</a>（确认攻击后）<br><span class="arrow">←</span> 战场（取消）</td>
+      <td>📁 battle/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="battle/combat_flow.html">战斗过程</a><span class="path">combat_flow.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>战斗预览 → 确认</td>
+      <td class="nav-to"><span class="arrow">→</span> 战场（返回）<br><span class="arrow">→</span> <a href="battle/combat_log.html">战斗详情</a>（点击按钮弹出）</td>
+      <td>📁 battle/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="battle/combat_log.html">战斗详情(流水账)</a><span class="path">combat_log.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>战斗过程 → [战斗详情]按钮</td>
+      <td class="nav-to"><span class="arrow">←</span> <a href="battle/combat_flow.html">战斗过程</a>（关闭）</td>
+      <td>📁 battle/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="battle/squad_detail_v7.html">部队详情</a><span class="path">squad_detail_v7.html</span></td>
+      <td><span class="status done">已完成 v7</span></td>
+      <td>战场 → 点击己方部队</td>
+      <td class="nav-to"><span class="arrow">←</span> 战场（关闭）<br>点击[详情]按钮时打开</td>
+      <td>📁 battle/</td>
+    </tr>
+
+    <tr>
+      <td><a class="tn done" href="battle/victory.html">胜利结算</a><span class="path">victory.html</span></td>
+      <td><span class="status done">已完成</span></td>
+      <td>战场 → 达成胜利条件</td>
+      <td class="nav-to"><span class="arrow">→</span> 基地（进入基地）<br><span class="arrow">→</span> 详细统计（弹窗）</td>
+      <td>📁 battle/</td>
+    </tr>
+
+    <tr>
+      <td><span class="tn todo">基地主界面</span><span class="path">base_main.html</span></td>
+      <td><span class="status todo">待设计</span></td>
+      <td>胜利结算 → 进入基地</td>
+      <td class="nav-to"><span class="arrow">→</span> 兵营 · 指挥官营房 · 市场 · 仓库 · 军团中心</td>
+      <td>📁 base/ (待创建)</td>
+    </tr>
+
+    <tr>
+      <td><span class="tn todo">兵营·编成界面</span><span class="path">barracks.html</span></td>
+      <td><span class="status todo">待设计</span></td>
+      <td>基地 → 点击兵营</td>
+      <td class="nav-to"><span class="arrow">→</span> 编制树 · 道具详情 · 部队详情</td>
+      <td>📁 base/ (待创建)</td>
+    </tr>
+
+    <tr>
+      <td><span class="tn todo">编制树视图</span><span class="path">tech_tree.html</span></td>
+      <td><span class="status todo">待设计</span></td>
+      <td>兵营 → 编制树标签</td>
+      <td class="nav-to"><span class="arrow">←</span> 兵营</td>
+      <td>📁 base/ (待创建)</td>
+    </tr>
+
+  </table>
+</div>
+
+</body>
+</html>

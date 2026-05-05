@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>部署界面 v3 - UI原型</title>
+<link rel="stylesheet" href="../shared.css">
+<style>
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;justify-content:center;align-items:center;z-index:50}
+.panel{width:860px;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);overflow:hidden}
+
+.panel-header{padding:10px 14px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+.panel-header .h-left{display:flex;align-items:center;gap:8px}
+.panel-header .h-title{color:var(--color-highlight);font-size:14px;font-weight:bold}
+.panel-header .h-sub{color:var(--text-dim);font-size:9px}
+.panel-header .h-close{color:var(--text-dim);font-size:14px;cursor:pointer;padding:0 4px}
+.panel-header .h-close:hover{color:var(--text-highlight)}
+
+.panel-body{display:flex;min-height:380px}
+
+/* ===== 左: 部队总表(含出征选择) ===== */
+.roster-area{width:220px;flex-shrink:0;padding:10px;display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--border-light)}
+.rost-title{font-size:10px;color:var(--text-secondary);padding-bottom:4px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+.rost-title .slot-info{font-size:8px;color:var(--text-dim)}
+.rost-title .slot-info .hl{color:var(--color-ally)}
+
+/* 部队卡片 */
+.unit-card{display:flex;align-items:center;gap:5px;padding:5px 6px;background:rgba(255,255,255,0.02);border:1px solid var(--border-light);border-radius:var(--radius-card);cursor:pointer;transition:all 0.1s}
+.unit-card:hover{background:rgba(68,170,136,0.04);border-color:rgba(68,170,136,0.12)}
+.unit-card.selected{background:rgba(68,170,136,0.1);border-color:var(--color-ally)}
+.unit-card.deployed{background:rgba(68,170,136,0.06);border-color:rgba(68,170,136,0.15)}
+.unit-card.reserve{opacity:0.5;border-style:dashed}
+.unit-card.reserve:hover{opacity:0.7}
+
+.uc-icon{width:20px;height:26px;background:rgba(255,255,255,0.04);border:1px solid var(--border-light);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:7px;color:var(--text-dim)}
+.uc-body{flex:1;min-width:0}
+.uc-name{font-size:9px;font-weight:bold;color:var(--text-highlight);display:flex;align-items:center;gap:3px}
+.uc-meta{font-size:7px;color:var(--text-secondary)}
+.uc-badge{font-size:6px;padding:1px 4px;border-radius:3px;background:rgba(255,170,102,0.1);color:var(--color-quality)}
+.uc-status{font-size:7px;white-space:nowrap}
+.uc-status.onmap{color:var(--color-ally)}
+.uc-status.offmap{color:var(--text-dim)}
+
+/* 选中后操作按钮(2×2网格) */
+.action-strip{display:none;grid-template-columns:1fr 1fr;gap:3px;padding:6px;background:rgba(68,170,136,0.04);border:1px solid rgba(68,170,136,0.1);border-radius:var(--radius-card);margin-top:2px}
+.action-strip.show{display:grid}
+.actn-btn{padding:5px 4px;border-radius:3px;font-size:8px;border:1px solid var(--border-light);background:rgba(255,255,255,0.03);color:var(--text-secondary);cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:3px}
+.actn-btn:hover{background:rgba(100,170,255,0.08);color:var(--text-highlight);border-color:var(--color-highlight)}
+.actn-btn.prime{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:var(--color-ally)}
+.actn-btn.prime:hover{background:rgba(68,170,136,0.15)}
+.actn-btn.caution{background:rgba(204,68,68,0.06);border-color:rgba(204,68,68,0.12);color:var(--color-enemy)}
+.actn-btn.caution:hover{background:rgba(204,68,68,0.1)}
+.actn-btn .ab-icon{font-size:10px}
+
+.rost-hint{font-size:7px;color:var(--text-muted);text-align:center;padding:4px;margin-top:auto;line-height:1.4}
+
+/* ===== 右: 战场地图 ===== */
+.map-area{flex:1;padding:10px;display:flex;align-items:center;justify-content:center;position:relative;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(40,60,40,0.25) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(40,40,60,0.2) 0%, transparent 50%),
+    linear-gradient(180deg,#14141e 0%,#1a1a28 50%,#121218 100%)}
+
+.hex-grid{display:grid;grid-template-columns:repeat(12,28px);gap:1px}
+.hex{width:28px;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;position:relative;cursor:default;transition:all 0.08s}
+.hex.plain{background:rgba(255,255,255,0.04)}
+.hex.forest{background:rgba(68,100,60,0.15)}
+.hex.hill{background:rgba(120,100,50,0.12)}
+.hex.building{background:rgba(100,80,50,0.2)}
+.hex.hq{background:rgba(68,170,136,0.2);border:1px solid rgba(68,170,136,0.35);color:var(--color-ally);font-weight:bold}
+.hex.enemy-hq{background:rgba(204,68,68,0.12);border:1px solid rgba(204,68,68,0.2);color:var(--color-enemy)}
+.hex.deploy-zone{border:1px dashed rgba(68,170,136,0.25)}
+.hex.deploy-zone:hover{background:rgba(68,170,136,0.1);border-color:var(--color-ally);cursor:pointer}
+.hex.deployed{background:rgba(68,170,136,0.2);border:1px solid var(--color-ally);font-weight:bold;font-size:10px;cursor:pointer}
+.hex.deployed:hover{background:rgba(204,68,68,0.15);border-color:var(--color-enemy)}
+
+.legend{position:absolute;bottom:6px;left:10px;display:flex;gap:8px;font-size:7px;color:var(--text-dim)}
+.legend span{display:flex;align-items:center;gap:2px}
+
+/* 底部 */
+.panel-footer{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid var(--border-light);background:rgba(255,255,255,0.02)}
+.footer-info{font-size:9px;color:var(--text-dim);display:flex;align-items:center;gap:8px}
+.footer-info .hl{color:var(--color-ally)}
+.f-btn{padding:5px 14px;border-radius:var(--radius-card);font-size:9px;cursor:pointer;border:1px solid;transition:all 0.1s}
+.f-btn.confirm{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:var(--color-ally);opacity:0.4;pointer-events:none}
+.f-btn.confirm.ready{opacity:1;pointer-events:auto}
+.f-btn.confirm.ready:hover{background:rgba(68,170,136,0.15)}
+.f-btn.cancel{background:rgba(255,255,255,0.03);border-color:var(--border);color:var(--text-secondary)}
+.f-btn.cancel:hover{background:rgba(255,255,255,0.06);color:var(--text-highlight)}
+</style>
+</head>
+<body>
+<div class="overlay">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="h-left"><span class="h-title">部署 · 边境冲突</span></div>
+      <span class="h-close">✕</span>
+    </div>
+
+    <div class="panel-body">
+      <!-- 左: 部队总表 -->
+      <div class="roster-area">
+        <div class="rost-title">
+          <span>出战部队</span>
+          <span class="slot-info">出战 <span class="hl" id="deploy-count">0</span> / 4 · 增援 <span id="reserve-count">4</span></span>
+        </div>
+
+        <div class="unit-card" data-idx="0">
+          <div class="uc-icon">◆</div>
+          <div class="uc-body">
+            <div class="uc-name">指挥部 HQ</div>
+            <div class="uc-meta">视野4 · 部署中心</div>
+          </div>
+          <span class="uc-status onmap">已部署</span>
+        </div>
+
+        <div class="unit-card deployed" data-idx="1" onclick="clickUnit(1)">
+          <div class="uc-icon">I</div>
+          <div class="uc-body">
+            <div class="uc-name">步兵班39型 <span class="uc-badge">曼施坦因</span></div>
+            <div class="uc-meta">6人 · Kar98k×5+MG34</div>
+          </div>
+          <span class="uc-status onmap" id="us1">已部署</span>
+        </div>
+
+        <div class="unit-card" data-idx="2" onclick="clickUnit(2)">
+          <div class="uc-icon">I</div>
+          <div class="uc-body">
+            <div class="uc-name">步兵班39型 <span class="uc-badge">克鲁格</span></div>
+            <div class="uc-meta">6人 · Kar98k×5+MG34</div>
+          </div>
+          <span class="uc-status" id="us2">待部署</span>
+        </div>
+
+        <div class="unit-card" data-idx="3" onclick="clickUnit(3)">
+          <div class="uc-icon">V</div>
+          <div class="uc-body">
+            <div class="uc-name">Sd.Kfz 221 <span class="uc-badge">迈尔</span></div>
+            <div class="uc-meta">3人 · MG同轴 · 装甲3</div>
+          </div>
+          <span class="uc-status" id="us3">待部署</span>
+        </div>
+
+        <div class="unit-card" data-idx="4" onclick="clickUnit(4)">
+          <div class="uc-icon">A</div>
+          <div class="uc-body">
+            <div class="uc-name">81mm迫击炮班 <span class="uc-badge">贝克尔</span></div>
+            <div class="uc-meta">3人 · GrW34 · 射程1-2</div>
+          </div>
+          <span class="uc-status" id="us4">待部署</span>
+        </div>
+
+        <!-- 选中后操作 -->
+        <div class="action-strip" id="action-strip">
+          <span class="actn-btn prime" onclick="doDeploy()"><span class="ab-icon">↳</span> 部署到地图</span>
+          <span class="actn-btn" onclick="alert('编成: 查看/更换编制与装备')"><span class="ab-icon">⚙</span> 编成</span>
+          <span class="actn-btn" onclick="alert('打开部队详情')"><span class="ab-icon">☰</span> 详情</span>
+          <span class="actn-btn caution" onclick="toggleReserve()"><span class="ab-icon">▤</span> 设为增援</span>
+        </div>
+
+        <div class="rost-hint">
+          点选部队 → 操作按钮 → 部署到地图<br>
+          设增援 = 不入场，后续回合增援
+        </div>
+      </div>
+
+      <!-- 右: 战场地图 -->
+      <div class="map-area">
+        <div class="hex-grid" id="hex-grid"></div>
+        <div class="legend">
+          <span style="color:var(--color-ally)">◆ HQ</span>
+          <span>■ 森林</span>
+          <span>▨ 丘陵</span>
+          <span>▣ 建筑</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-footer">
+      <div class="footer-info">出战 <span class="hl" id="footer-count">0</span>/4 · 增援池 <span id="footer-reserve">4</span></div>
+      <div style="display:flex;gap:6px">
+        <div class="f-btn cancel" onclick="alert('返回')">返回</div>
+        <div class="f-btn confirm" id="btn-start">确认部署</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 地图 12×10
+var mapData = [
+  'FFFFFFFFFFFF','FPPPPPEPPPPF','PPPPPPPPPPPP','PPFFPPFFPPPP',
+  'PPPPBBPPPPPP','HHPPPPPPPPPP','PPPFFFFFFPPP','PPPPPPPPPPPP',
+  'FPPPPfPPPPPF','FFFFFFFFFFFF'
+]
+var grid = document.getElementById('hex-grid')
+var hexes = []
+for(var r=0;r<10;r++) for(var c=0;c<12;c++){
+  var ch=mapData[r][c], el=document.createElement('div')
+  el.className='hex'; el.dataset.r=r; el.dataset.c=c
+  if(ch==='F') el.classList.add('forest')
+  else if(ch==='H') el.classList.add('hill')
+  else if(ch==='B') el.classList.add('building')
+  else if(ch==='E'){ el.classList.add('enemy-hq'); el.textContent='█' }
+  else if(ch==='f'){ el.classList.add('hq'); el.textContent='◆'; el.dataset.hq='1' }
+  else el.classList.add('plain')
+  if(Math.abs(r-8)+Math.abs(c-5)==1 && !el.classList.contains('forest') && ch!=='E' && ch!=='F' && ch!=='B')
+    el.classList.add('deploy-zone')
+  el.addEventListener('click',function(){ onHexClick(this) })
+  grid.appendChild(el); hexes.push(el)
+}
+
+var units = [
+  {id:0,label:'◆',deployed:true, hex:null, reserve:false},
+  {id:1,label:'I',deployed:true, hex:null, reserve:false},
+  {id:2,label:'I',deployed:false,hex:null, reserve:false},
+  {id:3,label:'V',deployed:false,hex:null, reserve:false},
+  {id:4,label:'A',deployed:false,hex:null, reserve:false}
+]
+// 预设1个步兵在地图上做示例
+units[1].hex = hexes.find(h=>h.dataset.c=='4'&&h.dataset.r=='8')
+if(units[1].hex){ units[1].hex.classList.add('deployed'); units[1].hex.textContent='I' }
+
+var selectedUnit = null
+var slotLimit = 4
+
+function clickUnit(idx){
+  if(idx===0) return
+  document.getElementById('action-strip').classList.remove('show')
+  if(units[idx].reserve){ alert('该部队已被设为增援，点击[设为出战]可重新加入'); return }
+  selectedUnit = idx
+  document.querySelectorAll('.unit-card.selected').forEach(c=>c.classList.remove('selected'))
+  document.querySelectorAll('.unit-card')[idx].classList.add('selected')
+  document.getElementById('action-strip').classList.add('show')
+}
+
+function doDeploy(){
+  if(selectedUnit===null) return
+  var u=units[selectedUnit]
+  if(u.deployed){ alert('已在战场上'); return }
+  var onMap = units.filter(u=>u.deployed).length
+  if(onMap>=slotLimit){ alert('出战名额已满('+slotLimit+')'); return }
+  document.querySelectorAll('.hex.deploy-zone').forEach(function(h){
+    h.style.borderStyle='solid'
+    setTimeout(function(){ h.style.borderStyle='dashed' },300)
+  })
+}
+
+function toggleReserve(){
+  if(selectedUnit===null) return
+  var u=units[selectedUnit]
+  // 序章不可设增援
+  alert('序章关卡所有部队必须出战，请全部部署到地图上')
+}
+
+function onHexClick(hex){
+  if(hex.classList.contains('deployed')){
+    var found=units.find(u=>u.hex===hex)
+    if(found && found.id>0){ removeUnit(found.id); return }
+  }
+  if(selectedUnit===null || !hex.classList.contains('deploy-zone')) return
+  var u=units[selectedUnit]
+  if(!u || u.deployed || u.reserve) return
+  var onMap=units.filter(u=>u.deployed).length
+  if(onMap>=slotLimit){ alert('出战名额已满'); return }
+  u.deployed=true; u.hex=hex
+  hex.classList.add('deployed'); hex.textContent=u.label
+  document.getElementById('us'+selectedUnit).textContent='已部署'
+  document.getElementById('us'+selectedUnit).className='uc-status onmap'
+  document.querySelectorAll('.unit-card')[selectedUnit].classList.add('deployed')
+  document.querySelectorAll('.unit-card.selected').forEach(c=>c.classList.remove('selected'))
+  document.getElementById('action-strip').classList.remove('show')
+  selectedUnit=null
+  updateAll()
+}
+
+function removeUnit(idx){
+  var u=units[idx]
+  u.deployed=false
+  if(u.hex){ u.hex.classList.remove('deployed'); u.hex.textContent='' }
+  u.hex=null
+  document.getElementById('us'+idx).textContent='待部署'
+  document.getElementById('us'+idx).className='uc-status'
+  document.querySelectorAll('.unit-card')[idx].classList.remove('deployed')
+  updateAll()
+}
+
+function updateAll(){
+  var onMap=units.filter(u=>u.deployed).length
+  var reserve=units.length-1-onMap
+  document.getElementById('deploy-count').textContent=onMap
+  document.getElementById('reserve-count').textContent=reserve
+  document.getElementById('footer-count').textContent=onMap
+  document.getElementById('footer-reserve').textContent=reserve
+  var btn=document.getElementById('btn-start')
+  if(onMap>=4){ btn.classList.add('ready'); btn.textContent='开始战斗' }
+  else{ btn.classList.remove('ready') }
+}
+updateAll()
+</script>
+</body>
+</html>

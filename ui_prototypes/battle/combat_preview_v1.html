@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>战斗预览 v1 - UI原型</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.game{width:1280px;height:720px;background:#0f0f1a;position:relative;border-radius:8px;overflow:hidden}
+.battlefield{position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 30%, rgba(40,60,40,0.3) 0%, transparent 60%),
+  radial-gradient(circle at 80% 70%, rgba(40,40,60,0.2) 0%, transparent 50%),
+  linear-gradient(180deg,#14141e 0%,#1a1a28 50%,#121218 100%)}
+
+/* 底部操作栏 */
+.bottom-strip{position:absolute;bottom:10px;left:10px;right:70px;display:flex;flex-direction:row;align-items:flex-end;gap:6px;z-index:15}
+.action-module{background:rgba(10,10,25,0.94);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:4px 8px;display:flex;gap:3px;flex-wrap:wrap}
+.act-btn{padding:4px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#bbb;font-size:9px;cursor:pointer;white-space:nowrap}
+.act-btn:hover{background:rgba(100,170,255,0.08);color:#fff}
+.act-btn .ac{color:#4d4;font-size:8px;display:block}
+.act-btn.accent{border-color:rgba(68,170,136,0.2);color:#4a8}
+.act-btn.assault{border-color:rgba(68,170,136,0.2);color:#5a5}
+.act-btn.active{background:rgba(100,170,255,0.12);border-color:rgba(100,170,255,0.25);color:#fff}
+.act-btn.wait{color:#666;border-color:rgba(255,255,255,0.06)}
+
+/* 遮罩 */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55);z-index:50;display:flex;justify-content:center;align-items:center}
+
+/* ===== 预览面板 ===== */
+.preview-panel{width:600px;background:#0a0a19;border:1px solid rgba(255,255,255,0.2);border-radius:10px;box-shadow:0 0 60px rgba(0,0,0,0.8);overflow:hidden}
+
+.preview-header{background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.08);padding:7px 12px;display:flex;justify-content:space-between;align-items:center}
+.preview-header .h-left{display:flex;align-items:center;gap:8px}
+.preview-header .h-right{display:flex;align-items:center;gap:8px}
+.preview-header .h-title{color:#77aaff;font-size:13px;font-weight:bold}
+.preview-header .h-action-tag{padding:1px 6px;border-radius:3px;font-size:8px;font-weight:normal}
+.preview-header .h-action-tag.attack{background:rgba(68,170,136,0.12);border:1px solid rgba(68,170,136,0.2);color:#44aa88}
+.preview-header .h-action-tag.assault{background:rgba(68,170,68,0.12);border:1px solid rgba(68,170,68,0.2);color:#5a5}
+.preview-header .h-ap{color:#888;font-size:10px;background:rgba(255,255,255,0.04);padding:2px 8px;border-radius:3px;border:1px solid rgba(255,255,255,0.06)}
+.preview-header .h-close{color:#555;font-size:14px;cursor:pointer;padding:0 4px}
+.preview-header .h-close:hover{color:#fff}
+
+/* ===== 双方对排(中间带箭头标识) ===== */
+.duo-row{display:flex;align-items:stretch;padding:8px 12px 6px 12px;gap:0}
+.unit-panel{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+
+/* 中间标识 */
+.vs-column{width:44px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.vs-arrow{font-size:16px;color:#555;line-height:1}
+.vs-label{font-size:7px;color:#555}
+.vs-init{font-size:8px;color:#77aaff;cursor:default;padding:1px 6px;background:rgba(100,170,255,0.06);border-radius:3px}
+.vs-dist{font-size:8px;color:#888;cursor:default}
+
+.up-header{display:flex;align-items:center;gap:5px}
+.unit-panel.right .up-header{flex-direction:row-reverse}
+.up-icon{width:28px;height:36px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:7px;color:#444}
+.up-name-area{display:flex;flex-direction:column;overflow:hidden}
+.up-name{font-size:11px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.up-name.ally{color:#44aa88}
+.up-name.enemy{color:#cc4444}
+.up-name:hover{color:#77aaff}
+.up-icon{cursor:pointer}
+.up-icon:hover{border-color:rgba(100,170,255,0.3)}
+.up-sub{font-size:8px;color:#666;display:flex;gap:6px;flex-wrap:wrap}
+.unit-panel.right .up-sub{justify-content:flex-end}
+.up-sub .us-item{display:inline-flex;align-items:center;gap:2px}
+.up-sub .us-lbl{color:#555}
+.up-sub .us-val{color:#888}
+.up-sub .us-val.pos{color:#44aa88}
+
+/* 士气条(匹配现有风格) */
+.morale-block{display:flex;align-items:center;gap:4px}
+.bar-wrap{width:100px;height:12px;background:rgba(255,255,255,0.06);border-radius:3px;position:relative;overflow:hidden}
+.unit-panel.right .bar-wrap{margin-left:auto}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#338833,#55bb55)}
+.bar-text{position:absolute;inset:0;line-height:12px;font-size:7px;padding:0 4px;color:#fff;text-shadow:0 0 2px #000}
+.unit-panel.right .bar-text{text-align:right}
+
+/* HP条: 完全匹配 battle_main_v7 样式 */
+.hp-grid{display:flex;gap:3px;margin:1px 0}
+.unit-panel.right .hp-grid{flex-direction:row-reverse}
+.hp-cell{height:14px;background:rgba(255,255,255,0.06);border-radius:2px;position:relative;overflow:hidden;width:38px;flex-shrink:0}
+.hp-fill{height:100%;border-radius:2px}
+.hp-fill.good{background:linear-gradient(90deg,#338833,#55bb55)}
+.hp-fill.mid{background:linear-gradient(90deg,#aa8833,#ddaa44)}
+.hp-fill.low{background:linear-gradient(90deg,#993333,#cc5555)}
+.hp-fill.dead{background:rgba(60,60,60,0.4)}
+.hp-cell .txt{position:absolute;inset:0;line-height:14px;text-align:center;font-size:7px;color:#fff;text-shadow:0 0 2px #000}
+.hp-cell .txt.dead{color:#555}
+
+/* 预览统计 */
+.preview-stats{display:flex;gap:10px;margin-top:1px;flex-wrap:wrap}
+.unit-panel.right .preview-stats{justify-content:flex-end}
+.p-stat{white-space:nowrap}
+.p-stat .p-label{font-size:7px;color:#555;margin-right:3px}
+.p-stat .p-value{font-size:10px;font-weight:bold}
+.p-stat .p-value.pos{color:#44aa88}
+.p-stat .p-value.neg{color:#cc4444}
+.p-stat .p-value.highlight{color:#77aaff}
+.p-stat .p-value.dim{color:#666}
+.p-stat .p-value.dim2{color:#555}
+
+.result-bar-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin:1px 0;overflow:hidden}
+.result-bar-fill{height:100%;border-radius:2px}
+.result-bar-fill.green{background:#44aa88}
+.result-bar-fill.red{background:#cc4444}
+.result-bar-fill.gray{background:rgba(255,255,255,0.08)}
+
+/* ===== 武器选择(通栏) ===== */
+.weapon-section{padding:4px 12px 6px 12px}
+.w-table{width:100%;border-collapse:collapse}
+.w-table th{font-size:7px;color:#555;padding:1px 4px;text-align:center;font-weight:normal}
+.w-table th.left{text-align:left}
+.w-table td{padding:2px 4px;font-size:9px;text-align:center}
+.w-table tr.w-row{cursor:pointer;transition:background 0.1s}
+.w-table tr.w-row:hover{background:rgba(100,170,255,0.06)}
+.w-table tr.w-row.disabled{opacity:0.3;cursor:default}
+.w-table tr.w-row.disabled:hover{background:transparent}
+.w-table tr.w-row.selected{background:rgba(68,170,136,0.06)}
+.w-table tr.w-row.unselected{opacity:0.5}
+
+.w-check{display:inline-block;width:12px;height:12px;border:1px solid rgba(255,255,255,0.15);border-radius:2px;line-height:12px;text-align:center;font-size:7px;color:transparent}
+tr.selected .w-check{background:rgba(68,170,136,0.3);border-color:#44aa88;color:#44aa88}
+tr.unselected .w-check{background:transparent;border-color:rgba(255,255,255,0.1)}
+
+.w-type{color:#ccc;text-align:left!important}
+.w-count{color:#888}
+.w-ammo{color:#888}
+.w-ammo.low{color:#e88}
+.w-hit{color:#aaa}
+.w-dmg{color:#ddd}
+.w-pen{color:#888;font-size:8px}
+
+.weapon-meta{display:flex;justify-content:flex-end;align-items:center;margin-top:3px;gap:10px}
+
+/* 底部按钮 */
+.preview-footer{display:flex;justify-content:flex-end;gap:6px;padding:7px 12px;border-top:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)}
+.f-btn{padding:5px 14px;border-radius:4px;font-size:10px;cursor:pointer;border:1px solid;transition:all 0.1s}
+.f-btn.confirm{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:#44aa88}
+.f-btn.confirm:hover{background:rgba(68,170,136,0.15)}
+.f-btn.cancel{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.08);color:#888}
+.f-btn.cancel:hover{background:rgba(255,255,255,0.06);color:#ccc}
+
+/* Tooltip */
+.tt{display:none;position:fixed;background:rgba(0,0,0,0.96);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:5px 8px;font-size:9px;color:#ccc;white-space:nowrap;z-index:99999;line-height:1.4;pointer-events:none}
+.tt .tt-title{color:#fff;font-weight:bold;margin-bottom:2px}
+.tt .tt-row{display:flex;justify-content:space-between;gap:8px}
+.tt .tt-lbl{color:#888}
+.tt .tt-val.neg{color:#e88}
+.tt .tt-val.pos{color:#8e8}
+.tt .tt-desc{color:#aaa;font-size:8px;margin-top:1px}
+.tt .tt-sep{border-top:1px solid rgba(255,255,255,0.06);margin:3px 0}
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="battlefield"></div>
+
+  <div class="bottom-strip">
+    <div class="action-module">
+      <div class="act-btn wait">待机</div>
+      <div class="act-btn accent" id="btn-shoot">攻击<span class="ac">2AP</span></div>
+      <div class="act-btn accent" id="btn-assault" class="act-btn assault">突击<span class="ac">3AP</span></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="preview-overlay" style="display:none">
+    <div class="preview-panel">
+
+      <!-- 标题栏 -->
+      <div class="preview-header">
+        <div class="h-left">
+          <span class="h-title">战斗预览</span>
+          <span class="h-action-tag attack" id="tag-action">攻击</span>
+          <span class="h-ap" id="label-ap">消耗 2AP</span>
+        </div>
+        <div class="h-right">
+          <span class="h-close" id="btn-close">✕</span>
+        </div>
+      </div>
+
+      <!-- 模块1+2: 双方对排, 中间带箭头+先手率 -->
+      <div class="duo-row">
+        <!-- 攻击方(左) -->
+        <div class="unit-panel left">
+          <div class="up-header">
+            <div class="up-icon" onclick="alert('打开部队详情弹窗(已设计)')">?</div>
+            <div class="up-name-area">
+              <span class="up-name ally" onclick="alert('打开部队详情弹窗(已设计)')">第一步兵班</span>
+              <span class="up-sub">
+                <span class="us-item"><span class="us-lbl">基础命中</span><span class="us-val">60</span></span>
+                <span class="us-item"><span class="us-lbl">主动性</span><span class="us-val">6</span></span>
+              </span>
+            </div>
+          </div>
+          <div class="morale-block">
+            <div class="bar-wrap"><div class="bar-fill" style="width:85%"></div><span class="bar-text">士气 85</span></div>
+          </div>
+          <div class="hp-grid">
+            <div class="hp-cell"><div class="hp-fill good" style="width:80%"></div><span class="txt">8/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill mid" style="width:70%"></div><span class="txt">7/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill dead" style="width:0%"></div><span class="txt dead">阵亡</span></div>
+          </div>
+          <!-- 攻击方预览: 显示反击/反伤预期 -->
+          <div class="preview-stats" id="attacker-preview">
+            <span class="p-stat"><span class="p-label">承受伤害</span><span class="p-value neg" id="atk-dmg">22~34</span></span>
+            <span class="p-stat"><span class="p-label">预计阵亡</span><span class="p-value neg" id="atk-kill">0~2</span></span>
+          </div>
+          <div class="result-bar-wrap"><div class="result-bar-fill red" style="width:15%" id="atk-bar"></div></div>
+        </div>
+
+        <!-- 中间箭头+先手率 -->
+        <div class="vs-column">
+          <span class="vs-arrow" data-tip="t-vs">→</span>
+          <span class="vs-label" data-tip="t-vs">攻击</span>
+          <span class="vs-dist" data-tip="t-dist">距离 1</span>
+          <span class="vs-init" data-tip="t-init">⚡72%</span>
+        </div>
+
+        <!-- 防守方(右) -->
+        <div class="unit-panel right">
+          <div class="up-header">
+            <div class="up-name-area">
+              <span class="up-name enemy" onclick="alert('打开部队详情弹窗(已设计)')">步兵班39(苏联)</span>
+              <span class="up-sub">
+                <span class="us-item"><span class="us-lbl">基础命中</span><span class="us-val">60</span></span>
+                <span class="us-item"><span class="us-lbl">主动性</span><span class="us-val">4</span></span>
+                <span class="us-item"><span class="us-lbl">掩护</span><span class="us-val pos">+2</span></span>
+              </span>
+            </div>
+            <div class="up-icon" onclick="alert('打开部队详情弹窗(已设计)')">?</div>
+          </div>
+          <div class="morale-block">
+            <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div><span class="bar-text">士气 100</span></div>
+          </div>
+          <div class="hp-grid">
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+            <div class="hp-cell"><div class="hp-fill good" style="width:100%"></div><span class="txt">10/10</span></div>
+          </div>
+          <!-- 防守方预览: 显示我方的打击效果 -->
+          <div class="preview-stats" id="defender-preview">
+            <span class="p-stat"><span class="p-label">承受伤害</span><span class="p-value highlight" id="def-dmg">97~132</span></span>
+            <span class="p-stat"><span class="p-label">预计阵亡</span><span class="p-value pos" id="def-kill">4~6</span></span>
+            <span class="p-stat"><span class="p-label">压制</span><span class="p-value" id="def-sup" style="color:#aaa">72</span></span>
+          </div>
+          <div class="result-bar-wrap"><div class="result-bar-fill green" style="width:55%" id="def-bar"></div></div>
+        </div>
+      </div>
+
+      <!-- 模块3: 武器选择 -->
+      <div class="weapon-section">
+        <table class="w-table" id="shoot-weapons">
+          <thead>
+            <tr>
+              <th style="width:16px"></th>
+              <th class="left" style="width:50px">类型</th>
+              <th style="width:24px">数量</th>
+              <th style="width:28px">弹药</th>
+              <th style="width:36px">命中</th>
+              <th style="width:42px">伤害</th>
+              <th style="width:24px">穿透</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="w-row selected" data-tip="t-rifle">
+              <td><span class="w-check">✓</span></td>
+              <td class="w-type">步枪</td>
+              <td class="w-count">×5</td>
+              <td class="w-ammo">10</td>
+              <td class="w-hit">61%</td>
+              <td class="w-dmg">15~22</td>
+              <td class="w-pen">1</td>
+            </tr>
+            <tr class="w-row selected" data-tip="t-mg">
+              <td><span class="w-check">✓</span></td>
+              <td class="w-type">机枪</td>
+              <td class="w-count">×1</td>
+              <td class="w-ammo low">3</td>
+              <td class="w-hit">56%</td>
+              <td class="w-dmg">12~18</td>
+              <td class="w-pen">2</td>
+            </tr>
+            <tr class="w-row unselected" data-tip="t-mortar">
+              <td><span class="w-check"></span></td>
+              <td class="w-type" style="color:#666">迫击炮</td>
+              <td class="w-count">×1</td>
+              <td class="w-ammo">15</td>
+              <td class="w-hit" style="color:#555">—</td>
+              <td class="w-dmg" style="color:#555">—</td>
+              <td class="w-pen" style="color:#555">1</td>
+            </tr>
+            <tr class="w-row disabled" data-tip="t-at">
+              <td><span class="w-check"></span></td>
+              <td class="w-type" style="color:#444">反坦克枪</td>
+              <td class="w-count">×1</td>
+              <td class="w-ammo" style="color:#444">0</td>
+              <td class="w-hit" style="color:#333">—</td>
+              <td class="w-dmg" style="color:#333">—</td>
+              <td class="w-pen" style="color:#444">4</td>
+            </tr>
+            <tr class="w-row unselected" data-tip="t-pistol">
+              <td><span class="w-check"></span></td>
+              <td class="w-type" style="color:#666">手枪</td>
+              <td class="w-count">×2</td>
+              <td class="w-ammo">15</td>
+              <td class="w-hit" style="color:#555">—</td>
+              <td class="w-dmg" style="color:#555">—</td>
+              <td class="w-pen" style="color:#555">0</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="w-table" id="assault-weapons" style="display:none">
+          <thead>
+            <tr>
+              <th style="width:16px"></th>
+              <th class="left" style="width:50px">类型</th>
+              <th style="width:24px">数量</th>
+              <th style="width:28px">弹药</th>
+              <th style="width:36px">命中</th>
+              <th style="width:42px">伤害</th>
+              <th style="width:24px">穿透</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="w-row selected" data-tip="t-rifle-cqb">
+              <td><span class="w-check">✓</span></td>
+              <td class="w-type">步枪</td>
+              <td class="w-count">×5</td>
+              <td class="w-ammo">10</td>
+              <td class="w-hit">71%</td>
+              <td class="w-dmg">15~22</td>
+              <td class="w-pen">1</td>
+            </tr>
+            <tr class="w-row selected" data-tip="t-mg-cqb">
+              <td><span class="w-check">✓</span></td>
+              <td class="w-type">机枪</td>
+              <td class="w-count">×1</td>
+              <td class="w-ammo low">3</td>
+              <td class="w-hit">66%</td>
+              <td class="w-dmg">12~18</td>
+              <td class="w-pen">2</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="weapon-meta"></div>
+      </div>
+
+      <!-- 底部 -->
+      <div class="preview-footer">
+        <div class="f-btn cancel" id="btn-cancel">取消</div>
+        <div class="f-btn confirm" id="btn-confirm">确认攻击</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tooltips -->
+<div class="tt" id="t-rifle"><div class="tt-title">步枪</div><div class="tt-desc">Kar98k ×5</div><div class="tt-sep"></div><div class="tt-row"><span class="tt-lbl">伤害</span><span>22</span></div><div class="tt-row"><span class="tt-lbl">穿透</span><span>1</span></div><div class="tt-row"><span class="tt-lbl">命中修正</span><span class="tt-val pos">±0</span></div><div class="tt-row"><span class="tt-lbl">弹药</span><span>10/10</span></div></div>
+<div class="tt" id="t-mg"><div class="tt-title">机枪</div><div class="tt-desc">MG34 ×1 — 弹药低量</div><div class="tt-sep"></div><div class="tt-row"><span class="tt-lbl">伤害</span><span>18</span></div><div class="tt-row"><span class="tt-lbl">穿透</span><span>2</span></div><div class="tt-row"><span class="tt-lbl">命中修正</span><span class="tt-val neg">-5</span></div><div class="tt-row"><span class="tt-lbl">弹药</span><span class="tt-val" style="color:#e88">3/50</span></div></div>
+<div class="tt" id="t-mortar"><div class="tt-title">迫击炮(未选中)</div><div class="tt-desc">射程不足，无法对相邻目标开火</div></div>
+<div class="tt" id="t-at"><div class="tt-title">反坦克枪(弹药耗尽)</div><div class="tt-desc">弹药归零，无法使用</div></div>
+<div class="tt" id="t-pistol"><div class="tt-title">手枪(未选中)</div><div class="tt-desc">射程不足，仅CQB可用</div></div>
+<div class="tt" id="t-rifle-cqb"><div class="tt-title">步枪(CQB)</div><div class="tt-desc">CQB命中修正 +0</div></div>
+<div class="tt" id="t-mg-cqb"><div class="tt-title">机枪(CQB)</div><div class="tt-desc">CQB命中修正 -10</div></div>
+<div class="tt" id="t-dist"><div class="tt-title">距离</div><div class="tt-desc">攻击方与目标之间的格数</div><div class="tt-sep"></div><div class="tt-row"><span class="tt-lbl">当前距离</span><span>1</span></div><div class="tt-row"><span class="tt-lbl">命中减损</span><span class="tt-val neg">0%</span></div><div class="tt-desc">超过武器最大射程则不可攻击</div></div>
+<div class="tt" id="t-init"><div class="tt-title">先手率</div><div class="tt-desc">攻方主动性=6 vs 守方=4</div><div class="tt-sep"></div><div class="tt-row"><span class="tt-lbl">我方先手概率</span><span class="tt-val pos">72%</span></div><div class="tt-row"><span class="tt-lbl">敌方先手概率</span><span class="tt-val neg">28%</span></div></div>
+<div class="tt" id="t-vs"><div class="tt-title">突击</div><div class="tt-desc">仅步兵武器参战 · 双方同时开火 · 不触发反击</div><div class="tt-sep"></div><div class="tt-row"><span class="tt-lbl">消耗</span><span>3AP</span></div><div class="tt-row"><span class="tt-lbl">成功</span><span>消灭守方 → 占领目标格</span></div><div class="tt-desc" style="margin-top:2px">常规攻击, 反击方满足条件时会对射</div></div>
+
+<script>
+document.querySelectorAll('[data-tip]').forEach(function(el){
+  el.addEventListener('mouseenter',function(e){
+    var tip=document.getElementById(this.dataset.tip)
+    if(!tip)return
+    var r=this.getBoundingClientRect()
+    tip.style.display='block'
+    var tx=r.left+r.width/2-tip.offsetWidth/2
+    var ty=r.top-4-tip.offsetHeight
+    if(tx+tip.offsetWidth>window.innerWidth-4)tx=window.innerWidth-4-tip.offsetWidth
+    if(tx<4)tx=4
+    if(ty<4)ty=r.bottom+4
+    tip.style.left=tx+'px'
+    tip.style.top=ty+'px'
+  })
+  el.addEventListener('mouseleave',function(){
+    document.querySelectorAll('.tt').forEach(function(t){t.style.display='none'})
+  })
+})
+
+// 动作切换
+document.getElementById('btn-shoot').addEventListener('click',function(){
+  showPreview('shoot')
+  this.classList.add('active')
+  document.getElementById('btn-assault').classList.remove('active')
+})
+document.getElementById('btn-assault').addEventListener('click',function(){
+  showPreview('assault')
+  this.classList.add('active')
+  document.getElementById('btn-shoot').classList.remove('active')
+})
+
+function showPreview(mode){
+  var isAssault = mode==='assault'
+  document.getElementById('preview-overlay').style.display='flex'
+
+  document.getElementById('shoot-weapons').style.display = isAssault ? 'none' : ''
+  document.getElementById('assault-weapons').style.display = isAssault ? '' : 'none'
+  document.getElementById('assault-note').style.display = isAssault ? '' : 'none'
+
+  var tag = document.getElementById('tag-action')
+  tag.textContent = isAssault ? '突击' : '攻击'
+  tag.className = 'h-action-tag ' + (isAssault ? 'assault' : 'attack')
+  document.getElementById('label-ap').textContent = isAssault ? '消耗 3AP' : '消耗 2AP'
+
+  // 更新中间标识 tooltip
+  var vsTip = document.getElementById('t-vs')
+  vsTip.querySelector('.tt-title').textContent = '攻击'
+  vsTip.querySelector('.tt-desc').textContent = isAssault
+    ? '突击: 仅步兵武器参战 · 双方同时开火 · 不触发反击'
+    : '常规攻击: 反击方满足条件时会对射'
+  vsTip.querySelector('.tt-row:first-child span:last-child').textContent = isAssault ? '3AP' : '2AP'
+  vsTip.querySelector('.tt-row:last-child').style.display = 'none'
+
+  // 箭头始终左→右(攻击方→防御方), 不因突击而变
+  document.querySelector('.vs-arrow').textContent = '→'
+  document.querySelector('.vs-label').textContent = isAssault ? '突击' : '攻击'
+
+  if(isAssault){
+    // 突击: 双方同时开火, 攻击方也承受伤害, 无反手概念
+    document.getElementById('attacker-preview').innerHTML =
+      '<span class="p-stat"><span class="p-label">承受伤害</span><span class="p-value neg">45~62</span></span>' +
+      '<span class="p-stat"><span class="p-label">预计阵亡</span><span class="p-value neg">1~3</span></span>'
+    document.getElementById('atk-bar').style.width = '28%'
+    document.getElementById('atk-bar').className = 'result-bar-fill red'
+    // 防守方预览更新
+    document.getElementById('def-dmg').textContent = '85~115'
+    document.getElementById('def-kill').textContent = '3~5'
+    document.getElementById('def-sup').textContent = '65'
+    document.getElementById('def-bar').style.width = '48%'
+    document.getElementById('btn-confirm').textContent = '确认突击'
+  } else {
+    // 攻击: 攻击方只显示反击预期
+    document.getElementById('attacker-preview').innerHTML =
+      '<span class="p-stat"><span class="p-label">承受伤害</span><span class="p-value neg">22~34</span></span>' +
+      '<span class="p-stat"><span class="p-label">预计阵亡</span><span class="p-value neg">0~2</span></span>'
+    document.getElementById('atk-bar').style.width = '15%'
+    document.getElementById('atk-bar').className = 'result-bar-fill red'
+    // 防守方预览
+    document.getElementById('def-dmg').textContent = '97~132'
+    document.getElementById('def-kill').textContent = '4~6'
+    document.getElementById('def-sup').textContent = '72'
+    document.getElementById('def-bar').style.width = '55%'
+    document.getElementById('btn-confirm').textContent = '确认攻击'
+  }
+}
+
+function closePreview(){
+  document.getElementById('preview-overlay').style.display='none'
+  document.getElementById('btn-shoot').classList.remove('active')
+  document.getElementById('btn-assault').classList.remove('active')
+}
+document.getElementById('btn-close').addEventListener('click', closePreview)
+document.getElementById('btn-cancel').addEventListener('click', closePreview)
+
+// 武器行点击切换
+document.querySelectorAll('#shoot-weapons .w-row:not(.disabled)').forEach(function(r){
+  r.addEventListener('click',function(){
+    this.classList.toggle('selected')
+    this.classList.toggle('unselected')
+  })
+})
+</script>
+</body>
+</html>

@@ -14,10 +14,12 @@
 4. [核心架构](#4-核心架构)
 5. [数据定义](#5-数据定义)
 6. [游戏流程](#6-游戏流程)
-7. [开发规范与陷阱](#7-开发规范与陷阱)
-8. [测试指南](#8-测试指南)
-9. [已知问题与路线图](#9-已知问题与路线图)
-10. [变更记录](#10-变更记录)
+7. [UI 技术方案](#7-ui-技术方案)
+8. [美术资源工作流](#8-美术资源工作流)
+9. [开发规范与陷阱](#9-开发规范与陷阱)
+10. [测试指南](#10-测试指南)
+11. [第一阶段开发计划](#11-第一阶段开发计划)
+12. [变更记录](#12-变更记录)
 
 ---
 
@@ -38,17 +40,24 @@
 | 基础AI (就近攻击) | ✅ 完成 |
 | 镜头移动 (键盘/拖拽/缩放) | ✅ 完成 |
 | 单位E标识 (行动完成) | ✅ 完成 |
-| 3层战斗系统 (命中→穿透→伤害) | ⬜ 设计完成 |
-| 兵种→部队→成员三层结构 | ⬜ 设计完成 |
-| AP行动点系统 (4AP) | ⬜ 设计完成 |
-| ZOC控制区域 | ⬜ 设计完成 |
-| 士气/状态系统 | ⬜ 设计完成 |
-| 移动类型系统 (步行/轮式/履带等) | ⬜ 设计完成 |
-| 等级系统 (新兵→王牌) | ⬜ 设计完成 |
+| 3层战斗系统 (命中→穿透→伤害) | ✅ 完成 |
+| 兵种→部队→成员三层结构 | ✅ 完成 |
+| AP行动点系统 (3AP) | ✅ 完成 |
+| 士气/状态系统 (0-100, 5状态) | ✅ 完成 |
+| ZOC控制区域 | ✅ 完成 |
+| CQB突击 (3AP同时开火) | ✅ 完成 |
+| 工兵系统 (战壕/布雷/排雷) | ✅ 完成 |
+| 补给系统 (弹药/燃料) | ✅ 完成 |
+| 指挥官池骨架 | ✅ 完成 (基础生成/任命) |
+| 移动类型系统 (步行/轮式/履带等) | ✅ 完成 |
+| 等级系统 (新兵→王牌) | ⬜ 设计完成，未接入 |
+| 世界地图 | ✅ 完成 (占位场景) |
 | 经济/货币系统 | ⬜ 设计完成 |
 | 关卡系统/战役 | ⬜ 设计完成 |
+| 完整UI流程 (国家选择/指挥官创建/部署等) | ⬜ 待实现 (HTML原型完成) |
+| 第一关数据 (序章·边境冲突) | ⬜ 待配置 |
 
-> 详细设计见 `docs/DESIGN.md`
+> 详细设计见 `docs/DESIGN_0.1.md`
 
 ---
 
@@ -63,18 +72,36 @@
 - **战斗模式**: 回合制 (玩家全动 → 敌方全动)
 - **三层结构**: 兵种(模板) → 部队(战场实体) → 成员(个体)
 
-> 完整战斗系统设计见 `docs/DESIGN.md`
+> 完整战斗系统设计见 `docs/DESIGN_0.1.md`
 
 ### 2.2 胜利条件
 
-多种胜利条件 (全灭敌军/占领/特殊目标)，暂未完全实现，当前仅支持全灭判定。
+多种胜利条件 (全灭敌军/占领据点/坚守阵地/突破防线/摧毁目标/护送撤离)，当前仅实现全灭判定。
 
-### 2.3 指挥点与增援
+### 2.3 操作方式
 
-- 每回合获得固定指挥点
-- 可在己方部署区召唤增援
-- 剧情事件也可触发增援
-- **状态**: ⬜ 计划中
+| 操作 | 功能 |
+|------|------|
+| 鼠标左键点击单位 | 选中己方单位 |
+| 鼠标左键点击绿色格子 | 移动 |
+| 鼠标左键点击红色格子 | 攻击 |
+| 鼠标滚轮 | 缩放镜头 (0.5x~3x) |
+| 鼠标中键拖拽 | 平移镜头 |
+| WASD / 方向键 | 键盘平移 |
+| 「结束回合」按钮 | 结束玩家回合 |
+
+### 2.4 回合流程
+
+```
+己方回合:
+  [阶段1·回合开始]  条件增援部署→压制恢复判定→溃败timer-1→
+                     士气恢复+5→CD-1→重置AP为3→重置反应次数
+  [阶段2·行动阶段]  玩家依次操作各部队（移动/攻击/警戒/固守/补给等）
+  [阶段3·回合结束]  触发"回合末"效果→标记已行动→传递回合给对手
+
+AI回合:
+  [阶段1-3] 同己方回合，AI自动执行
+```
 
 ---
 
@@ -91,40 +118,103 @@
 │
 ├── scripts/
 │   ├── core/
-│   │   └── hex_util.gd                  # [autoload] 六边形数学
+│   │   ├── hex_util.gd                  # [autoload] 六边形数学
+│   │   ├── squad.gd                     # 部队类 (Node2D, 管理成员列表)
+│   │   ├── member.gd                    # 成员类 (RefCounted, HP/武器)
+│   │   ├── weapon_data.gd              # 武器数据
+│   │   ├── game_enums.gd               # 枚举常量
+│   │   └── unit_type_data.gd           # 兵种模板数据
 │   ├── map/
-│   │   └── hex_map.gd                   # 地图控制器
+│   │   └── hex_map.gd                   # 地图控制器 (Node2D)
 │   ├── units/
-│   │   └── unit.gd                      # 单位
+│   │   └── unit.gd                      # [旧] 旧单位类 (待废弃)
 │   ├── battle/
-│   │   ├── main_controller.gd           # 主控器 (输入/流程)
-│   │   └── battle_manager.gd            # 战斗系统
+│   │   ├── main_controller.gd           # 主控器 (输入/流程, Node2D)
+│   │   └── battle_manager.gd            # 战斗系统 (Node)
 │   ├── ai/
-│   │   └── ai_controller.gd             # 敌方AI
-│   └── ui/
-│       └── ui_manager.gd                # 界面
+│   │   └── ai_controller.gd             # 敌方AI (Node)
+│   ├── commander/
+│   │   └── commander.gd                 # 指挥官类 (RefCounted)
+│   ├── ui/
+│   │   ├── ui_manager.gd                # UI管理器 (CanvasLayer)
+│   │   ├── ui_style.gd                  # UI工具样式集 (RefCounted)
+│   │   └── squad_detail.gd              # 部队详情弹窗 (Panel)
+│   ├── deployment/                      # ⬜ 待创建
+│   │   └── deployment_controller.gd     # ⬜ 部署控制
+│   └── world/                           # ⬜ 待创建
+│       └── world_controller.gd          # ⬜ 世界地图控制
 │
 ├── resources/
 │   ├── terrain/
-│   │   └── terrain_data.gd              # 地形定义
-│   └── units/
-│       └── unit_data.gd                 # 兵种定义
+│   │   └── terrain_data.gd              # 地形定义 (11种)
+│   ├── units/
+│   │   └── unit_data.gd                 # 旧兵种定义
+│   └── levels/                          # ⬜ 关卡数据
 │
 ├── scenes/
-│   └── battle/
-│       └── main_scene.tscn              # 主场景
+│   ├── battle/
+│   │   └── main_scene.tscn              # 战斗主场景
+│   ├── world/
+│   │   └── world_map.tscn               # 世界地图场景
+│   ├── deployment/                      # ⬜ 部署场景
+│   └── ui/                              # ⬜ UI场景 (逐步创建)
+│       ├── main_menu.tscn               # ⬜ 主菜单
+│       ├── nation_select.tscn           # ⬜ 国家选择
+│       ├── commander_create.tscn        # ⬜ 指挥官创建
+│       ├── deployment.tscn              # ⬜ 部署界面
+│       ├── combat_preview.tscn          # ⬜ 战斗预览
+│       ├── combat_log.tscn              # ⬜ 战斗日志
+│       ├── victory.tscn                 # ⬜ 胜利结算
+│       └── battle_hud.tscn              # ⬜ 战场HUD
+│
+├── assets/
+│   ├── sprites/                         # ⬜ 精灵图 (美术素材)
+│   ├── tiles/                           # ⬜ 地形瓦片
+│   ├── portraits/                       # ⬜ 指挥官头像
+│   └── icons/                           # ⬜ UI图标
+│
+├── data/
+│   ├── germany/                         # 德国编制树数据
+│   ├── soviet/                          # 苏联编制树数据
+│   ├── skills.json                      # 技能定义
+│   ├── _gen_all.py                     # 数据生成脚本
+│   ├── _update_pen.py                  # PEN数据更新
+│   └── _verify_pen.py                  # PEN数据验证
 │
 ├── tests/
 │   ├── test_runner.gd                   # 测试运行器
 │   ├── test_scene.tscn                  # 测试场景
-│   ├── test_minimal.gd / .tscn          # 最小测试
-│   └── test_result.log                  # (运行时生成)
+│   ├── test_smoke.gd / .tscn           # 烟雾测试
+│   ├── test_full.gd / .tscn            # 全量测试
+│   └── test_minimal.gd / .tscn         # 最小测试
+│
+├── ui_prototypes/                       # HTML UI原型
+│   ├── index.html                       # 导航入口
+│   ├── shared.css                       # 共享CSS
+│   ├── UI_STYLE.md                      # UI风格指南
+│   ├── main_menu/                       # 主菜单原型
+│   ├── new_game/                        # 新游戏原型
+│   ├── battle/                          # 战场原型
+│   └── deployment/                      # 部署原型
+│
+├── resources/
+│   └── units/
+│       └── unit_data.gd                 # 兵种数据
 │
 ├── docs/
+│   ├── DESIGN_0.1.md                    # 完整设计规格书 (3507行)
+│   ├── ROADMAP.md                       # 开发路线图
+│   ├── DEVELOPMENT.md                   # 本文件
+│   ├── SESSION_SUMMARY.md              # 会话进度摘要
 │   ├── ISSUES.md                        # 问题备忘录
-│   ├── DESIGN.md                        # 完整设计规格书(24章)
-│   ├── ROADMAP.md                       # 开发路线图(9步)
-│   └── DEVELOPMENT.md                   # 开发文档
+│   └── DESIGN_METHODOLOGY.md            # 设计方法论
+│
+├── addons/                              # Godot编辑器插件
+│   ├── auto_reload/
+│   ├── godot_mcp_editor/
+│   └── godot_mcp_runtime/
+│
+└── 功能框架.xmind                       # 功能思维导图
 ```
 
 ---
@@ -135,7 +225,7 @@
 
 | 名称 | 文件 | 职责 |
 |------|------|------|
-| `GameManager` | `autoload/game_manager.gd` | 全局状态、单位注册、回合管理、指挥点 |
+| `GameManager` | `autoload/game_manager.gd` | 全局状态、部队注册、回合管理、指挥点、补给池、指挥官池 |
 | `HexUtil` | `scripts/core/hex_util.gd` | 六边形数学工具 (坐标转换/寻路/距离) |
 
 **注意**: 不使用 `class_name`。所有类型通过 `load()` / `preload()` 获取。
@@ -144,93 +234,58 @@
 
 | 模块 | 文件 | 核心职责 |
 |------|------|---------|
-| hex_map | `scripts/map/hex_map.gd` | 地图生成、地形数据、可达范围、攻击范围、高亮、坐标转换 |
-| unit | `scripts/units/unit.gd` | 单位属性、视觉(颜色/文字/E标识)、移动、受伤/死亡、攻击判定 |
-| battle_manager | `scripts/battle/battle_manager.gd` | 战斗结算、反击、调用AI |
-| ai_controller | `scripts/ai/ai_controller.gd` | 敌方AI: 就近攻击逻辑 |
-| main_controller | `scripts/battle/main_controller.gd` | 输入处理(点击/键盘/镜头)、选中→移动→攻击流程、回合检查 |
-| ui_manager | `scripts/ui/ui_manager.gd` | UI面板、信息显示、消息提示、待机按钮、结束回合按钮 |
+| hex_map | `scripts/map/hex_map.gd` | 地图生成、地形数据、可达范围、攻击范围、高亮、ZOC检测、overlay层 |
+| squad | `scripts/core/squad.gd` | 部队属性、视觉(颜色/文字/E标识)、移动、士气/压制、补给、战斗状态 |
+| member | `scripts/core/member.gd` | 成员个体HP/武器/属性、弹药管理 |
+| battle_manager | `scripts/battle/battle_manager.gd` | 战斗结算(命中→穿透→伤害)、反击、CQB、缴获 |
+| ai_controller | `scripts/ai/ai_controller.gd` | 敌方AI: 就近攻击逻辑、ZOC感知 |
+| main_controller | `scripts/battle/main_controller.gd` | 输入处理、选中→移动→攻击流程、工兵操作、胜利条件 |
+| ui_manager | `scripts/ui/ui_manager.gd` | 所有UI面板、信息显示、行动按钮、日志、储备库 |
+| commander | `scripts/commander/commander.gd` | 指挥官类: 生成、技能、经验升级 |
+| ui_style | `scripts/ui/ui_style.gd` | UI工具样式集: 色彩/字体/面板统一风格 |
 
-### 4.3 回合流程
-
-```
-┌─────────────────────┐
-│  玩家回合开始        │
-│  Phase 0             │
-└─────────┬───────────┘
-          ▼
-┌─────────────────────┐
-│  选择己方单位        │
-│  → 显示移动范围      │
-└─────────┬───────────┘
-          ▼
-┌─────────────────────┐
-│  点击绿色格子移动    │
-│  → 显示攻击范围      │
-└─────────┬───────────┘
-          ▼
-   ┌─────────────┐
-   │  有可攻击目标? │
-   └──────┬──────┘
-     是↓        ↓否
-   ┌──────┐ ┌──────────┐
-   │攻击  │ │点击"待机"│
-   │→结算 │ │→标记已行动│
-   └──┬───┘ └────┬─────┘
-      ↓          ↓
-   ┌─────────────────────┐
-   │  标记 has_acted=true  │
-   │  显示黄色 "E"       │
-   └─────────┬───────────┘
-             ▼
-   ┌─────────────────────┐
-   │  检查是否全部行动    │
-   │  是→自动结束回合    │
-   │  否→等待操作        │
-   └─────────┬───────────┘
-             ▼
-   ┌─────────────────────┐
-   │  敌方回合开始        │
-   │  Phase 1             │
-   │  AI自动行动         │
-   └─────────┬───────────┘
-             ▼
-   ┌─────────────────────┐
-   │  AI全部行动完毕     │
-   │  增加指挥点         │
-   │  重置 has_acted     │
-   │  → 回到玩家回合     │
-   └─────────────────────┘
-```
-
-### 4.4 战斗公式
+### 4.3 主场景结构 (战斗)
 
 ```
-伤害 = max(1, 攻击力 - max(0, 防御力 - 地形加成))
-
-反击 = 攻击者是近战(attack_range<=1)且防御者有近战能力
-反击伤害 = max(1, 防御者攻击力 - 攻击者防御力)
+Main (Node2D) - main_controller.gd
+├── HexMap (Node2D) - hex_map.gd
+│   ├── Camera2D
+│   ├── Tile_0_0 ~ Tile_14_9 (Polygon2D, 地形色块)
+│   ├── PlayerSquad_* (Squad, Node2D)
+│   │   ├── Polygon2D (部队色块)
+│   │   ├── Label (部队名+人数)
+│   │   └── Label ("E" 标识)
+│   └── EnemySquad_* (Squad, Node2D)
+│       └── ...
+├── BattleManager (Node) - battle_manager.gd
+├── AI (Node) - ai_controller.gd
+└── UIManager (CanvasLayer) - ui_manager.gd
 ```
 
 ---
 
 ## 5. 数据定义
 
-### 5.1 地形表
+### 5.1 地形表 (11种)
 
-| ID | 名称 | 移动消耗 | 防御加成 |
-|----|------|---------|---------|
-| plain | 平地 | 1 | 0 |
-| forest | 森林 | 2 | 2 |
-| mountain | 山地 | 3 | 4 |
-| river | 河流 | 2 | 0 |
-| road | 道路 | 1 | 0 |
-| city | 城市 | 1 | 3 |
-| hq | 指挥部 | 1 | 3 |
+| ID | 名称 | 移动消耗 | 防御加成 | CQB |
+|----|------|---------|---------|-----|
+| plain | 平地 | 1 | 0 | ❌ |
+| forest | 森林 | 2 | 2 | ✅ |
+| mountain | 山地 | 3 | 4 | ❌ |
+| river | 河流 | 2 | 0 | ❌ |
+| road | 道路 | 1 | 0 | ❌ |
+| city | 城市 | 1 | 3 | ✅ |
+| hq | 指挥部 | 1 | 3 | ❌ |
+| factory | 工厂 | 1 | 2 | ❌ |
+| ruins | 废墟 | 2 | 3 | ✅ |
+| trench | 战壕 | 1 | 4 | ✅ |
+| bunker | 堡垒 | 1 | 6 | ✅ |
+| minefield | 雷区 | 1 | 0 | ❌ |
 
 定义文件: `resources/terrain/terrain_data.gd`
 
-### 5.2 兵种表
+### 5.2 兵种模板 (7种)
 
 | ID | 名称 | HP | 攻击 | 防御 | 移动 | 射程 | 消耗 |
 |----|------|----|------|------|------|------|------|
@@ -244,54 +299,158 @@
 
 定义文件: `resources/units/unit_data.gd`
 
+> **注意**: 当前 `unit_data.gd` 是旧版单层数据。真正的三层数据（成员编制、武器分配）在 `scripts/core/unit_type_data.gd` 中定义。
+
 ---
 
 ## 6. 游戏流程
 
-### 6.1 操作方式
-
-| 操作 | 功能 |
-|------|------|
-| 鼠标左键点击单位 | 选中己方单位 |
-| 鼠标左键点击绿色格子 | 移动 |
-| 鼠标左键点击红色格子 | 攻击 |
-| 鼠标滚轮 | 缩放镜头 (0.5x~3x) |
-| 鼠标中键拖拽 | 平移镜头 |
-| WASD / 方向键 | 键盘平移 |
-| 「结束回合」按钮 | 结束玩家回合 |
-
-### 6.2 单位视觉规范
-
-| 状态 | 外观 |
-|------|------|
-| 我方单位 | 原色 (绿色系) |
-| 敌方单位 | 红色偏暗 |
-| 已行动 | 黄色 "E" 标识 |
-| 被选中 | 绿色/红色高亮格子 |
-
-### 6.3 主场景结构
+### 6.1 完整UI流程 (新游戏→第一关结束)
 
 ```
-Main (Node2D)
-├── HexMap (Node2D)
-│   ├── Camera2D
-│   ├── Tile_0_0 ~ Tile_14_9 (Polygon2D, 地形色块)
-│   ├── PlayerUnit_* (Unit, Node2D)
-│   │   ├── Polygon2D (单位色块)
-│   │   ├── Label (兵种名+HP)
-│   │   └── Label ("E" 标识)
-│   └── EnemyUnit_* (Unit, Node2D)
-│       └── ...
-├── BattleManager (Node)
-├── AI (Node)
-└── UIManager (CanvasLayer)
+主菜单 → [新游戏]
+         → [国家选择] 轮播选国家
+         → [指挥官创建] 4卡横排, 可重掷/编成/改名
+         → [部署] 左栏部队列表→选中→操作按钮→点地图放置
+         → [战场主界面]
+              ├→ [部队详情] 点击己方部队
+              ├→ [战斗预览] 选动作→点目标→期望值
+              │   → [战斗过程] 确认→自动结算
+              │       → [战斗详情] 战斗日志弹窗
+              └→ [胜利结算] 达成胜利条件
+                  → 返回基地 (后续设计)
+```
+
+### 6.2 战场操作流程
+
+```
+选中己方部队 → 显示移动范围(绿色) + 攻击范围(红色)
+  ├→ 点击绿色格子 → 移动(消耗1AP)
+  │   → 显示攻击范围 → 点击红色格子 → 攻击(消耗2AP)
+  │   → 或点击[待机] → 结束行动
+  ├→ 点击红色格子 → 直接攻击(消耗2AP)
+  ├→ 点击[突击] → 选择CQB目标(消耗3AP)
+  ├→ 点击[补给] → 补充弹药(消耗1AP)
+  └→ 右键/ESC → 取消选中
 ```
 
 ---
 
-## 7. 开发规范与陷阱
+## 7. UI 技术方案
 
-### 7.1 GDScript 语法限制 (Godot 4.6.2 Steam 版)
+### 7.1 方案选择: Scene-Based UI
+
+所有UI界面使用 **.tscn 场景文件**（Control节点树）实现，而非纯代码创建。
+
+**优势:**
+| 对比 | 纯代码 (.new()) | Scene式 (.tscn) |
+|------|----------------|-----------------|
+| 编辑器中可见 | ❌ | ✅ |
+| 拖拽调整位置 | ❌ | ✅ |
+| 实时预览颜色/字号 | ❌ | ✅ |
+| 对美术/策划友好 | ❌ | ✅ |
+
+**工作流:**
+1. 我创建 `.tscn` 文件（Control节点层级）
+2. 你在 Godot 编辑器中打开 `.tscn`
+3. 拖拽/调整位置/颜色/大小 → 保存 → 立即生效
+4. 运行游戏 → 场景被加载 → 显示调整后的UI
+
+### 7.2 场景文件组织
+
+```
+scenes/ui/
+├── main_menu.tscn           # 主菜单 (全屏)
+├── nation_select.tscn       # 国家选择 (弹窗)
+├── commander_create.tscn    # 指挥官创建 (弹窗)
+├── deployment.tscn          # 部署界面 (全屏)
+├── combat_preview.tscn      # 战斗预览 (弹窗)
+├── combat_log.tscn          # 战斗日志 (弹窗)
+├── victory.tscn             # 胜利结算 (弹窗)
+└── battle_hud.tscn          # 战场HUD (底部栏+顶部栏)
+```
+
+### 7.3 代码引用方式
+
+```gdscript
+# 加载场景
+@onready var preview_scene = preload("res://scenes/ui/combat_preview.tscn")
+
+# 实例化
+var preview = preview_scene.instantiate()
+add_child(preview)
+
+# 引用场景中的节点 (通过 @onready 和 % 唯一名称)
+@onready var squad_name_label = %SquadNameLabel
+@onready var attack_btn = %AttackBtn
+```
+
+### 7.4 迁移策略 (渐进式)
+
+- **新界面**（主菜单、国家选择、指挥官创建、部署、战斗预览、胜利结算）→ 全部用 `.tscn`
+- **现有战场UI**（`ui_manager.gd` 的1171行代码创建）→ 分阶段迁移:
+  - 第一步: 弹窗类 (战斗预览/日志/胜利结算) 拆为独立 `.tscn`
+  - 第二步: 底部栏 (Squad Module / Action Buttons) 拆为独立 `.tscn`
+  - 第三步: 顶部栏 + HUD 组件 拆为独立 `.tscn`
+
+### 7.5 布局原则
+
+| 原则 | 说明 |
+|------|------|
+| **锚点布局** | 使用 Control 节点的 anchor 实现分辨率自适应 |
+| **Container** | 用 HBoxContainer/VBoxContainer 做弹性布局，避免写死坐标 |
+| **Theme** | 统一引用 `.theme` 资源文件，定义字体/颜色/面板样式 |
+| **ui_style.gd** | 已有的颜色/字体常量 (`COLOR_PANEL_BG`, `COLOR_FRIENDLY` 等) 继续保持引用 |
+| **Size Flags** | 用 `size_flags_horizontal/vertical` 控制伸缩行为 |
+
+---
+
+## 8. 美术资源工作流
+
+### 8.1 资源分类
+
+| 类别 | 我能生成的 | 你需要提供的 | 格式 | 存放位置 |
+|------|-----------|------------|------|---------|
+| **地形瓦片** | 纯色 Polygon2D（当前方案） | 六边形纹理贴图 | PNG 256×256 | `assets/tiles/` |
+| **部队图标** | 简单几何形+文字 | 兵种Sprite图 | PNG 64×64 | `assets/sprites/` |
+| **UI面板/按钮** | 纯色圆角 Panel (StyleBoxFlat) | 背景图/按钮纹理/9-patch | PNG | `assets/ui/` |
+| **指挥官头像** | ❌ 无法生成 | 头像图片（统一尺寸） | PNG 80×120 | `assets/portraits/` |
+| **战场装饰** | 纯色背景 | 树木/建筑Sprite | PNG | `assets/env/` |
+| **图标** | 文字+圆圈 | 精致的图标集 | PNG 32×32 | `assets/icons/` |
+
+### 8.2 分阶段美术策略
+
+| 阶段 | 内容 | 依赖 |
+|------|------|------|
+| **第一阶段 (当前)** | 纯色几何图形 + 文字标签（无需任何美术资源） | 无 |
+| **第二阶段** | 你提供少量核心兵种图（坦克、步兵、火炮、侦察车各1张），我替换到Squad显示 | `assets/sprites/` |
+| **第三阶段** | 全面替换UI背景、地形纹理、头像 | `assets/tiles/`, `assets/portraits/`, `assets/icons/` |
+
+### 8.3 导入流程
+
+```
+1. 你准备好图片（PNG格式，透明背景）
+2. 放入 assets/ 对应子目录
+3. Godot 自动生成 .png.import 文件
+4. 代码中引用: preload("res://assets/sprites/tank.png")
+5. 或你在 .tscn 编辑器中直接拖入 Sprite2D 的 Texture 属性
+```
+
+### 8.4 格式规范
+
+| 规范 | 要求 |
+|------|------|
+| 格式 | PNG（Godot原生支持最好） |
+| 背景 | 透明 |
+| 命名 | 英文小写 + 下划线 (如 `tank_pz4.png`) |
+| 尺寸 | 基础尺寸 + `@2x` 备用 (如 `tank.png` 64px + `tank@2x.png` 128px) |
+| 编码 | UTF-8 无 BOM 文件名 |
+
+---
+
+## 9. 开发规范与陷阱
+
+### 9.1 GDScript 语法限制 (Godot 4.6.2 Steam 版)
 
 | 语法 | 状态 | 替代方案 |
 |------|------|---------|
@@ -305,13 +464,13 @@ Main (Node2D)
 
 完整列表见 `docs/ISSUES.md` 第 1-4、7 节。
 
-### 7.2 文件编码
+### 9.2 文件编码
 
 - 所有 `.gd` / `.tscn` 文件使用 **UTF-8 无 BOM**
 - 不要用 PowerShell `Set-Content` 操作含中文的文件
 - 用 `.NET` 方法: `[System.IO.File]::WriteAllText($path, $content, [System.Text.UTF8Encoding]::new($false))`
 
-### 7.3 类型安全策略
+### 9.3 类型安全策略
 
 因为 class_name 不可用，代码中使用 **鸭子类型 (duck typing)**:
 ```gdscript
@@ -320,14 +479,30 @@ func resolve_combat(attacker, defender):
     attacker.has_acted = true   # 按属性名访问，不依赖类型
 
 # 创建实例用 load()
-var u = load("res://scripts/units/unit.gd").new()
+var u = load("res://scripts/core/squad.gd").new()
 ```
+
+### 9.4 UI 场景开发规则
+
+| 规则 | 说明 |
+|------|------|
+| **节点命名** | 使用 `%UniqueName` 唯一名称，便于代码 `@onready var xxx = %Xxx` 引用 |
+| **锚点** | 弹窗类用居中锚点 (0.5, 0.5); 全屏类用四角拉伸 |
+| **theme** | 场景引用全局 theme，不写死字体颜色 |
+| **ui_style.gd** | 颜色从 `ui_style.gd` 常量取，不硬编码 |
+| **预加载** | `preload()` 频繁使用的场景，`load()` 按需加载的场景 |
+
+### 9.5 版本控制
+
+- 每步完成后确保烟雾测试通过
+- 不提交未通过测试的代码
+- `.tscn` 文件是文本格式，可正常 diff
 
 ---
 
-## 8. 测试指南
+## 10. 测试指南
 
-### 8.1 运行测试
+### 10.1 运行测试
 
 ```powershell
 # 烟雾测试 (快速，每次修改后跑)
@@ -339,7 +514,7 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 
 **注意**: 不要使用 `RedirectStandardOutput + ReadToEnd()`，否则进程阻塞。
 
-### 8.2 测试覆盖
+### 10.2 测试覆盖
 
 | 层级 | 文件 | 用例数 | 耗时 | 时机 |
 |------|------|--------|------|------|
@@ -355,46 +530,120 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 | 战斗系统 | 8 |
 | HexMap | 13 |
 
-### 8.3 添加新测试
+### 10.3 测试规范
 
-在 `tests/test_runner.gd` 中添加:
-1. 在 `run_all_tests()` 中添加调用
-2. 编写 `func test_xxx():` 使用 `assert_eq` / `assert_true` / `assert_false`
-
----
-
-## 9. 已知问题与路线图
-
-### 9.1 当前问题
-
-| 问题 | 优先级 | 状态 |
-|------|--------|------|
-| Steam 版 CLI 不支持 `--quit-after` | 低 | ⬜ 已知 |
-| 退出时 "ObjectDB instances leaked" 警告 | 低 | ✅ 无害，headless 模式正常现象 |
-| 无雾霾/视野系统 (全图可见) | 中 | ⬜ 按设计跳过 |
-| 无经验/升级系统 | 中 | ⬜ 按设计跳过 |
-
-### 9.2 路线图
-
-完整开发路线见 `docs/ROADMAP.md`（9步分Phase A-E）。
-
-当前状态：
-
-| 步骤 | 内容 | 状态 |
-|------|------|------|
-| Phase 1 | 项目搭建 + Hex地图 + 基础回合 + 基础AI + UI | ✅ 完成 |
-| Phase A 步1 | 三层结构重构(兵种→部队→成员) | ✅ 完成 |
-| Phase A 步2+3 | AP行动点 + 三层战斗公式 | ✅ 完成 |
-| Phase B 步4+5 | 士气/压制 + ZOC | ⬜ 待开始 |
-| Phase B 步6 | CQB + 工兵 | ⬜ 待开始 |
-| Phase C 步8 | 指挥官系统 | ⬜ 待开始 |
-| Phase C 步7+9 | 装备 + 补给 | ⬜ 待开始 |
-| Phase D 步10+11 | 世界地图 + 部署 | ⬜ 待开始 |
-| Phase D 步12+13 | 空中单位/铁路 + 视野迷雾 | ⬜ 待开始 |
+| 规则 | 说明 |
+|------|------|
+| 烟雾测试 | 快速验证核心功能，每次修改后必跑 |
+| 全量测试 | 包含所有用例，提交前必跑 |
+| 新增功能 | 必须附带至少2个测试用例 |
+| 旧用例 | 必须保持通过，不降级 |
 
 ---
 
-## 10. 变更记录
+## 11. 第一阶段开发计划
+
+### 11.1 范围定义
+
+**目标**: 可完整游玩"新游戏 → 第一关胜利"的完整循环。
+
+```
+主菜单 → 国家选择 → 指挥官创建 → 部署(放部队到地图) →
+战场(选部队→移动→攻击→战斗预览→战斗过程→战斗日志) → 胜利结算 → 返回基地(占位)
+```
+
+### 11.2 任务拆解 (8步)
+
+#### 步1: 项目基础建设
+- 更新测试套件适配新三层结构（squad/member，废弃旧unit引用）
+- 确保烟雾+全量测试通过
+- 确认所有编码规范生效
+- 创建 `scenes/ui/` 目录结构
+
+#### 步2: 主菜单 + 场景管理框架
+- 实现主菜单场景 `scenes/ui/main_menu.tscn`
+  - 标题 + [新游戏] [载入] [设置] [退出] 按钮
+  - dark military 风格（参照 `main_menu_v1.html`）
+- 实现场景管理器（主菜单→新游戏→战场→胜利→返回菜单）
+- 创建 `scripts/ui/scene_manager.gd` (autoload)
+
+#### 步3: 国家选择 + 指挥官创建
+- 实现国家选择界面 `scenes/ui/nation_select.tscn`
+  - 轮播式选国家（德国/苏联）
+  - 确定后锁定初始国家
+- 实现指挥官创建界面 `scenes/ui/commander_create.tscn`
+  - 4卡横排（1主角英雄 + 3随机）
+  - 背景/天赋/品质技能按 §11 规则生成
+  - 重掷/改名功能
+  - 确认后进入部署
+
+#### 步4: 部署界面
+- 实现部署场景 `scenes/ui/deployment.tscn`
+- 左栏: 已选部队列表（4支初始编制）
+- 地图: 己方HQ放置 → 显示部署区范围
+- 点击部队 → 点击HQ相邻格放置
+- 确认 → 进入战斗场景
+
+#### 步5: 战场主界面升级
+- 底部操作栏 `scenes/ui/battle_hud.tscn`
+  - 选中部队后显示: 射击/突击/待机/补给按钮
+  - 部队信息卡片 (名称/士气/AP/HP网格/武器)
+  - 地形信息条
+- 选部队 → 显示移动范围(绿) + 攻击范围(红)
+- ZOC 橙色标记
+- 顶部栏: 回合数/阶段/货币
+
+#### 步6: 战斗预览 + 战斗过程 + 战斗日志
+- 战斗预览 `scenes/ui/combat_preview.tscn`
+  - 左: 武器列表(按类型分组, 可取消特定组)
+  - 右: 命中率/伤害范围/压制值/反击预期
+  - 底: [确认] [取消]
+- 战斗过程动画 (resolve_fire 逐发动画)
+- 战斗日志 `scenes/ui/combat_log.tscn`
+  - 按攻击分组显示
+  - 武器分组命中数/击杀/压制
+  - 目标状态变化
+  - 士气事件
+
+#### 步7: 第一关数据配置
+- 12×10 地图地形配置 (DESIGN §21.5)
+- 德国/苏联双方初始编制（DESIGN §21.4）
+- HQ放置 + 胜利条件(全灭敌军)
+- 关卡配置文件 `resources/levels/prologue.gd`
+
+#### 步8: 胜利结算 + 整体测试
+- 胜利/失败结算 `scenes/ui/victory.tscn`
+- 战后统计数据
+- 返回基地占位场景
+- 全局测试通过（烟雾+全量）
+- 新功能配套测试用例
+
+### 11.3 时间线建议
+
+```
+步1 (基础)     → 步2 (主菜单)
+                         ↘
+                步3 (国家选择+指挥官创建) → 步4 (部署)
+                                                  ↘
+                    步5 (战场HUD) → 步6 (战斗预览) → 步7 (第一关数据)
+                                                              ↘
+                                                        步8 (胜利+测试)
+```
+
+步1-2 可并行, 步5-6 依赖步4, 步7 依赖步5-6。
+
+### 11.4 完成标准
+
+| 条件 | 说明 |
+|------|------|
+| 烟雾测试 | 全部通过 (新增用例覆盖新功能) |
+| 全量测试 | 全部通过 |
+| 完整流程 | 主菜单 → 选国家 → 创指挥官 → 部署 → 打第一关 → 胜利 |
+| 编辑器可调 | 所有UI场景可在Godot编辑器中打开并调整 |
+
+---
+
+## 12. 变更记录
 
 > 所有开发过程中的需求变更和 Bug 修复需在此记录。
 
@@ -408,7 +657,7 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 | 2026-04-28 | 修复 | Issue 3: 单位可多次移动 (流程漏洞) | main_controller.gd |
 | 2026-04-28 | 功能 | Issue 4: 行动完成 E 标识 | unit.gd |
 | 2026-04-28 | 修复 | Issue 5: 无法结束回合 (has_acted 未正确置位) | main_controller.gd + ui_manager.gd |
-| 2026-04-28 | 文档 | 创建 ISSUES.md 和 开发文档 | docs/ |
+| 2026-04-28 | 文档 | 创建 ISSUES.md 和 DEVELOPMENT.md | docs/ |
 | 2026-04-28 | 修复 | Issue 1: 中键松开后退出拖拽 | main_controller.gd |
 | 2026-04-28 | 修复 | Issue 2: 单位Label视觉居中 | unit.gd (size+position) |
 | 2026-04-28 | 修复 | Issue 3a: 操作中禁止deselect导致连续移动 | main_controller.gd |
@@ -423,12 +672,12 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 | 2026-04-28 | 功能 | 右键+空白+ESC取消选中 | main_controller.gd |
 | 2026-04-28 | 功能 | 回合切换大字淡入淡出 | ui_manager.gd |
 | 2026-04-28 | 修复 | 攻击时移动到目标格子 (valid_hexes/attack_hexes分离) | main_controller.gd |
-| 2026-04-28 | 重构 | 拆分烟雾/全量测试: smoke(36例/4s) + full(102例/10s) | tests/ |
-| 2026-04-28 | 修复 | 选中时可直接攻击(去掉action_mode检查) | main_controller.gd |
-| 2026-04-28 | 功能 | 敌方AI逐行动画(0.6s间隔) | ai_controller.gd |
-| 2026-04-28 | 修复 | 移动范围被攻击高亮覆盖 (highlight_hexes清空逻辑) | hex_map.gd, main_controller.gd |
-| 2026-04-28 | 功能 | 胜利提示改为居中大字 (show_victory) | ui_manager.gd, main_controller.gd |
-| 2026-04-28 | 步1 | 三层结构重构: Squad+Member+UnitType，替换旧Unit系统。45+78测试通过 | 新建squad.gd/member.gd/unit_type_data.gd，重写game_manager/main_controller/ui_manager/battle_manager/ai_controller |
+| 2026-04-28 | 重构 | 拆分烟雾/全量测试: smoke + full | tests/ |
+| 2026-04-28 | 功能 | 敌方AI逐行动画 | ai_controller.gd |
+| 2026-04-28 | 修复 | 移动范围被攻击高亮覆盖 | hex_map.gd, main_controller.gd |
+| 2026-04-28 | 功能 | 胜利提示改为居中大字 | ui_manager.gd, main_controller.gd |
+| 2026-04-28 | 步1 | 三层结构重构: Squad+Member+UnitType | 新建 squad/member/unit_type_data，重写 game_manager/main_controller/ui_manager/battle_manager/ai_controller |
+| 2026-05-05 | 文档 | 完整重写 DEVELOPMENT.md: 新增UI方案/美术资源工作流/第一阶段计划/项目结构更新 | 全部 docs/ |
 
 ### 变更记录规范
 

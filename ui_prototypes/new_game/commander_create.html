@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>指挥官创建 - UI原型</title>
+<link rel="stylesheet" href="../shared.css">
+<style>
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;justify-content:center;align-items:center;z-index:50}
+
+.panel{width:760px;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);overflow:hidden}
+
+.panel-header{padding:10px 14px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+.panel-header .h-left{display:flex;align-items:center;gap:8px}
+.panel-header .h-title{color:var(--color-highlight);font-size:var(--fs-title);font-weight:bold}
+.panel-header .h-step{color:var(--text-dim);font-size:var(--fs-small)}
+.panel-header .h-close{color:var(--text-dim);font-size:14px;cursor:pointer;padding:0 4px}
+.panel-header .h-close:hover{color:var(--text-highlight)}
+
+.panel-desc{padding:8px 14px;font-size:var(--fs-small);color:var(--text-secondary);border-bottom:1px solid var(--border-light)}
+
+/* 横排4列 */
+.cmd-row{display:flex;gap:8px;padding:10px 14px}
+
+.cmd-card{flex:1;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-box);padding:10px;display:flex;flex-direction:column;gap:5px;position:relative;min-height:190px}
+
+/* 稀有度边框 */
+.cmd-card.r0{border-color:rgba(255,255,255,0.06)}
+.cmd-card.r1{border-color:rgba(255,255,255,0.12)}
+.cmd-card.r2{border-color:rgba(100,170,255,0.15);box-shadow:inset 0 0 16px rgba(100,170,255,0.04)}
+.cmd-card.r3{border-color:rgba(255,170,102,0.3);box-shadow:inset 0 0 16px rgba(255,170,102,0.06)}
+
+.cmd-avatar{width:36px;height:48px;background:rgba(255,255,255,0.04);border:1px solid var(--border-light);border-radius:var(--radius-card);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-dim);margin:0 auto 4px}
+
+.cmd-name-input{background:transparent;border:none;color:var(--text-highlight);font-size:var(--fs-body);font-weight:bold;padding:0;width:100%;outline:none;text-align:center}
+.cmd-name-input:focus{color:var(--color-highlight)}
+
+.cmd-rarity{font-size:var(--fs-micro);padding:1px 5px;border-radius:3px;display:inline-block;margin:2px auto 0}
+.cmd-rarity.r0{background:rgba(255,255,255,0.04);color:var(--text-dim)}
+.cmd-rarity.r1{background:rgba(100,170,255,0.08);color:var(--color-highlight)}
+.cmd-rarity.r2{background:rgba(255,170,102,0.08);color:var(--color-quality)}
+.cmd-rarity.r3{background:rgba(255,170,102,0.15);color:#ffcc66}
+
+.cmd-lv{font-size:var(--fs-tiny);color:var(--text-dim);text-align:center}
+
+.protagonist-badge{position:absolute;top:-1px;left:-1px;font-size:7px;padding:2px 8px;border-radius:var(--radius-box) 0 var(--radius-card) 0;background:linear-gradient(135deg,rgba(255,170,102,0.15),rgba(255,200,100,0.1));border:1px solid rgba(255,170,102,0.2);color:var(--color-quality)}
+
+/* 技能标签区 */
+.cmd-skills{display:flex;flex-direction:column;gap:2px;margin:2px 0;flex:1}
+.cmd-skill{font-size:7px;padding:2px 6px;border-radius:3px;text-align:center}
+.cmd-skill.bg{background:rgba(102,255,102,0.06);color:var(--color-bg)}
+.cmd-skill.talent{background:rgba(102,136,255,0.06);color:var(--color-talent)}
+.cmd-skill.quality{background:rgba(255,170,102,0.06);color:var(--color-quality)}
+
+.cmd-desc{font-size:7px;color:var(--text-dim);line-height:1.3;text-align:center;margin-top:auto}
+
+/* 重掷按钮 */
+.reroll-btn{padding:2px 6px;border-radius:var(--radius-card);font-size:7px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text-dim);cursor:pointer;text-align:center;margin-top:4px}
+.reroll-btn:hover{background:rgba(100,170,255,0.08);color:var(--text-highlight);border-color:var(--color-highlight)}
+
+/* 底部 */
+.panel-footer{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid var(--border-light);background:rgba(255,255,255,0.02)}
+.footer-left{font-size:var(--fs-small);color:var(--text-dim)}
+.footer-left .hl{color:var(--color-highlight)}
+.f-btn{padding:5px 14px;border-radius:var(--radius-card);font-size:var(--fs-small);cursor:pointer;border:1px solid;transition:all 0.1s}
+.f-btn.confirm{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:var(--color-ally)}
+.f-btn.confirm:hover{background:rgba(68,170,136,0.15)}
+.f-btn.cancel{background:rgba(255,255,255,0.03);border-color:var(--border);color:var(--text-secondary)}
+.f-btn.cancel:hover{background:rgba(255,255,255,0.06);color:var(--text-highlight)}
+</style>
+</head>
+<body>
+<div class="overlay">
+  <div class="panel">
+
+    <div class="panel-header">
+      <div class="h-left">
+        <span class="h-title">创建指挥官</span>
+        <span class="h-step">第2步/共2步</span>
+      </div>
+      <span class="h-close" onclick="alert('返回国家选择')">✕</span>
+    </div>
+
+    <div class="panel-desc">创建初始指挥官。主角固定英雄稀有度，其余按概率生成。可分别点击【↻】重掷。</div>
+
+    <!-- 横排4列 -->
+    <div class="cmd-row">
+
+      <!-- 卡1: 主角 -->
+      <div class="cmd-card r3">
+        <span class="protagonist-badge">主角</span>
+        <div class="cmd-avatar">★</div>
+        <input class="cmd-name-input" value="埃里希·冯·曼施坦因" spellcheck="false">
+        <span class="cmd-rarity r3">英雄</span>
+        <span class="cmd-lv">Lv1</span>
+        <div class="cmd-skills">
+          <span class="cmd-skill bg" data-tip="t-bg">背景: 装甲兵</span>
+          <span class="cmd-skill talent" data-tip="t-talent">天赋: 洞察 Lv2</span>
+          <span class="cmd-skill quality" data-tip="t-q1">穿甲专精</span>
+          <span class="cmd-skill quality" data-tip="t-q2">先发制人</span>
+          <span class="cmd-skill quality" data-tip="t-q3">致命一击</span>
+        </div>
+        <div class="cmd-desc">装甲兵出身，洞察预判</div>
+        <div class="reroll-btn" onclick="reroll(this)">↻ 重掷</div>
+      </div>
+
+      <!-- 卡2: 老兵 -->
+      <div class="cmd-card r2">
+        <div class="cmd-avatar">◆</div>
+        <input class="cmd-name-input" value="维尔纳·克鲁格" spellcheck="false">
+        <span class="cmd-rarity r2">老兵</span>
+        <span class="cmd-lv">Lv1</span>
+        <div class="cmd-skills">
+          <span class="cmd-skill bg" data-tip="t-bg">背景: 步兵指挥官</span>
+          <span class="cmd-skill talent" data-tip="t-talent">天赋: 坚韧 Lv2</span>
+          <span class="cmd-skill quality" data-tip="t-q1">快速响应</span>
+          <span class="cmd-skill quality" data-tip="t-q2">稳定射击</span>
+        </div>
+        <div class="cmd-desc">步兵指挥，坚韧不溃</div>
+        <div class="reroll-btn" onclick="reroll(this)">↻ 重掷</div>
+      </div>
+
+      <!-- 卡3: 预备军官 -->
+      <div class="cmd-card r1">
+        <div class="cmd-avatar">◇</div>
+        <input class="cmd-name-input" value="汉斯·迈尔" spellcheck="false">
+        <span class="cmd-rarity r1">预备军官</span>
+        <span class="cmd-lv">Lv1</span>
+        <div class="cmd-skills">
+          <span class="cmd-skill bg" data-tip="t-bg">背景: 炮术</span>
+          <span class="cmd-skill talent" data-tip="t-talent">天赋: 勤勉 Lv1</span>
+          <span class="cmd-skill quality" data-tip="t-q1">弹药管理</span>
+        </div>
+        <div class="cmd-desc">炮术训练，勤勉成长</div>
+        <div class="reroll-btn" onclick="reroll(this)">↻ 重掷</div>
+      </div>
+
+      <!-- 卡4: 菜鸟 -->
+      <div class="cmd-card r0">
+        <div class="cmd-avatar">○</div>
+        <input class="cmd-name-input" value="弗里茨·贝克尔" spellcheck="false">
+        <span class="cmd-rarity r0">菜鸟</span>
+        <span class="cmd-lv">Lv1</span>
+        <div class="cmd-skills">
+          <span class="cmd-skill bg" data-tip="t-bg">背景: 侦察</span>
+          <span class="cmd-skill talent" data-tip="t-talent">天赋: 谨慎 Lv1</span>
+        </div>
+        <div class="cmd-desc">侦察兵，谨慎行事</div>
+        <div class="reroll-btn" onclick="reroll(this)">↻ 重掷</div>
+      </div>
+
+    </div>
+
+    <div class="panel-footer">
+      <span class="footer-left">国家: <span class="hl">德国</span></span>
+      <div style="display:flex;gap:6px">
+        <div class="f-btn cancel" onclick="alert('返回国家选择')">返回</div>
+        <div class="f-btn confirm" onclick="alert('进入第一关(部署阶段)')">确认编成</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function reroll(btn){
+  if(!confirm('重掷该指挥官？手动修改的名称将保留。')) return
+  var card = btn.closest('.cmd-card')
+  var nameInput = card.querySelector('.cmd-name-input')
+  var isProtagonist = !!card.querySelector('.protagonist-badge')
+  var names = ['海因茨·古德里安','埃尔温·隆美尔','卡尔·邓尼茨','赫尔曼·巴尔克','库尔特·迈尔',
+               '埃里希·雷德尔','瓦尔特·莫德尔','阿尔贝特·凯塞林','弗里德里希·保卢斯','埃瓦尔德·冯·克莱斯特']
+  var rarities = ['菜鸟','预备军官','老兵','英雄']
+  var rarClasses = ['r0','r1','r2','r3']
+  var backgrounds = ['步兵指挥官','装甲兵','炮术','工程','侦察','后勤','空战指挥官','山地步兵','城市作战','机枪指挥官']
+  var talents = ['英勇 Lv2','果断 Lv1','铁血 Lv2','洞察 Lv1','领袖 Lv1','坚韧 Lv2','谨慎 Lv2','勤勉 Lv1']
+  var qSkills = ['穿甲专精','掩体利用','隐蔽行动','弹药管理','强壮','压制抵抗','先发制人','快速响应','硬汉','致命一击','稳定射击','韧性防御','稳定阵型']
+
+  var ri = isProtagonist ? 3 : Math.floor(Math.random()*4)
+  card.className = 'cmd-card r'+ri
+  card.querySelector('.cmd-rarity').textContent = rarities[ri]
+  card.querySelector('.cmd-rarity').className = 'cmd-rarity r'+ri
+  if(!nameInput.dataset.edited) nameInput.value = names[Math.floor(Math.random()*names.length)]
+
+  var skills = card.querySelectorAll('.cmd-skill')
+  skills[0].textContent = '背景: '+backgrounds[Math.floor(Math.random()*backgrounds.length)]
+  skills[1].textContent = '天赋: '+talents[Math.floor(Math.random()*talents.length)]
+  var qCount = [0,1,2,3][ri]
+  var usedQ = []
+  for(var i=0;i<3;i++){
+    if(i<qCount){
+      var pick
+      do{ pick = qSkills[Math.floor(Math.random()*qSkills.length)] } while(usedQ.includes(pick))
+      usedQ.push(pick)
+      skills[2+i].textContent = pick
+      skills[2+i].style.display = ''
+    } else {
+      skills[2+i].style.display = 'none'
+    }
+  }
+}
+
+document.querySelectorAll('.cmd-name-input').forEach(function(inp){
+  inp.addEventListener('input',function(){ this.dataset.edited = 'true' })
+})
+</script>
+</body>
+</html>

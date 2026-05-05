@@ -1,0 +1,93 @@
+/* 大战略 UI 共享样式
+   引用: <link rel="stylesheet" href="../shared.css">
+   所有原型统一使用此文件中的 CSS 变量和基础样式 */
+
+:root {
+  /* 基础色板 */
+  --bg-panel: #0a0a19;
+  --bg-body: #1a1a2e;
+  --bg-game: #0f0f1a;
+  --border: rgba(255,255,255,0.12);
+  --border-light: rgba(255,255,255,0.06);
+  --border-hover: rgba(100,170,255,0.2);
+
+  /* 文字 */
+  --text-primary: #cccccc;
+  --text-highlight: #ffffff;
+  --text-secondary: #888888;
+  --text-dim: #555555;
+  --text-muted: #333333;
+
+  /* 功能色 */
+  --color-ally: #44aa88;
+  --color-enemy: #cc4444;
+  --color-highlight: #77aaff;
+  --color-warning: #ffaa44;
+  --color-cqb: #44aa44;
+
+  /* 品质色 */
+  --color-bg: #66ff66;
+  --color-talent: #6688ff;
+  --color-quality: #ffaa66;
+  --color-upgrade: #ffff66;
+
+  /* 士气色 */
+  --moral-rout: #884444;
+  --moral-shaken: #886644;
+  --moral-normal: #448844;
+  --moral-high: #888844;
+  --moral-fanatic: #cc8800;
+
+  /* HP条 */
+  --hp-good: linear-gradient(90deg,#338833,#55bb55);
+  --hp-mid: linear-gradient(90deg,#aa8833,#ddaa44);
+  --hp-low: linear-gradient(90deg,#993333,#cc5555);
+  --hp-dead: rgba(60,60,60,0.4);
+
+  /* 字号 */
+  --fs-title: 14px;
+  --fs-section: 12px;
+  --fs-body: 11px;
+  --fs-small: 10px;
+  --fs-tiny: 9px;
+  --fs-micro: 8px;
+
+  /* 间距 */
+  --spacing-panel: 8px;
+  --spacing-block: 4px;
+  --spacing-element: 2px;
+
+  /* 边框 */
+  --radius-panel: 10px;
+  --radius-box: 6px;
+  --radius-card: 4px;
+
+  /* 阴影 */
+  --shadow-panel: 0 0 60px rgba(0,0,0,0.8);
+  --shadow-tooltip: 0 0 8px rgba(0,0,0,0.5);
+
+  /* 字体 */
+  --font-family: 'Microsoft YaHei','PingFang SC',sans-serif;
+}
+
+/* 全局重置 */
+* { margin:0; padding:0; box-sizing:border-box; font-family:var(--font-family); }
+body { background:var(--bg-body); color:var(--text-primary); }
+
+/* 通用 tooltip (fixed 定位避免裁剪) */
+.tt { display:none; position:fixed; background:rgba(0,0,0,0.96); border:1px solid var(--border); border-radius:var(--radius-card); padding:5px 8px; font-size:var(--fs-tiny); color:var(--text-secondary); white-space:nowrap; z-index:99999; line-height:1.4; pointer-events:none; }
+.tt .tt-title { color:var(--text-highlight); font-weight:bold; margin-bottom:2px; }
+.tt .tt-row { display:flex; justify-content:space-between; gap:8px; }
+.tt .tt-lbl { color:var(--text-secondary); }
+.tt .tt-val.neg { color:var(--color-enemy); }
+.tt .tt-val.pos { color:var(--color-ally); }
+.tt .tt-desc { color:#aaa; font-size:var(--fs-micro); margin-top:1px; }
+.tt .tt-sep { border-top:1px solid var(--border-light); margin:3px 0; }
+
+/* 通用按钮 */
+.btn { padding:4px 12px; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:var(--radius-card); color:var(--text-secondary); font-size:var(--fs-small); cursor:pointer; white-space:nowrap; }
+.btn:hover { background:rgba(100,170,255,0.08); color:var(--text-highlight); }
+.btn.confirm { background:rgba(68,170,136,0.08); border-color:rgba(68,170,136,0.2); color:var(--color-ally); }
+.btn.confirm:hover { background:rgba(68,170,136,0.15); }
+.btn.cancel { background:rgba(255,255,255,0.03); border-color:var(--border); color:var(--text-secondary); }
+.btn.cancel:hover { background:rgba(255,255,255,0.06); color:var(--text-highlight); }

@@ -12,8 +12,8 @@ var is_alive: bool = true
 var morale: int = 70
 var max_morale: int = 100
 var suppression: int = 0
-var ap: int = 4
-var max_ap: int = 4
+var ap: int = 3
+var max_ap: int = 3
 
 const STATE_BROKEN = 0
 const STATE_CONFUSED = 1

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>指挥官创建 v6 - UI原型</title>
+<link rel="stylesheet" href="../shared.css">
+<style>
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;justify-content:center;align-items:center;z-index:50}
+.panel{width:840px;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);overflow:hidden}
+
+.panel-header{padding:12px 16px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center}
+.panel-header .h-left{display:flex;align-items:center;gap:10px}
+.panel-header .h-title{color:var(--color-highlight);font-size:15px;font-weight:bold}
+.panel-header .h-step{color:var(--text-dim);font-size:10px}
+.panel-header .h-close{color:var(--text-dim);font-size:15px;cursor:pointer;padding:0 4px}
+.panel-header .h-close:hover{color:var(--text-highlight)}
+.panel-desc{padding:8px 16px;font-size:10px;color:var(--text-secondary);border-bottom:1px solid var(--border-light)}
+
+.cmd-row{display:flex;gap:8px;padding:12px 16px;justify-content:center}
+.cmd-wrapper{display:flex;flex-direction:column;align-items:center;width:196px;flex-shrink:0}
+
+.cmd-card{width:196px;min-height:310px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-box);padding:12px;position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
+
+.cmd-card.r0{border-color:rgba(255,255,255,0.06)}
+.cmd-card.r1{border-color:rgba(255,255,255,0.12)}
+.cmd-card.r2{border-color:rgba(100,170,255,0.2);background:linear-gradient(135deg,rgba(100,170,255,0.02),transparent)}
+.cmd-card.r3{border-color:rgba(255,170,102,0.35);background:linear-gradient(135deg,rgba(255,170,102,0.04),transparent)}
+
+.prot-badge{position:absolute;top:-4px;left:-4px;font-size:7px;padding:2px 7px;border-radius:4px 0 6px 0;background:linear-gradient(135deg,rgba(255,170,102,0.2),rgba(255,200,100,0.12));border:1px solid rgba(255,170,102,0.25);color:#fc6;z-index:2}
+
+/* 头像区 */
+.avatar-wrap{position:relative;display:inline-block}
+.avatar{width:80px;height:100px;background:rgba(255,255,255,0.03);border:1px solid var(--border-light);border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text-dim)}
+.cmd-card.r3 .avatar-wrap .avatar{border-color:rgba(255,170,102,0.2)}
+.prot-badge{position:absolute;top:-4px;left:-4px;font-size:7px;padding:2px 7px;border-radius:4px 0 6px 0;background:linear-gradient(135deg,rgba(255,170,102,0.2),rgba(255,200,100,0.12));border:1px solid rgba(255,170,102,0.25);color:#fc6;z-index:2;line-height:1.2}
+
+/* 文字区(头像下方) */
+.id-info{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%}
+.id-name{font-size:12px;font-weight:bold;color:var(--text-highlight);cursor:text;text-align:center;line-height:1.2;width:100%}
+.id-name:focus{outline:none;color:var(--color-highlight)}
+.id-meta{display:flex;align-items:center;gap:4px}
+.rarity-tag{font-size:8px;padding:1px 5px;border-radius:3px;line-height:1.4}
+.rarity-tag.r3{background:rgba(255,170,102,0.15);color:#fc6}
+.rarity-tag.r2{background:rgba(100,170,255,0.1);color:var(--color-highlight)}
+.rarity-tag.r1{background:rgba(255,255,255,0.04);color:var(--text-secondary)}
+.rarity-tag.r0{background:rgba(255,255,255,0.03);color:var(--text-dim)}
+.lv-text{font-size:8px;color:var(--text-dim)}
+
+.desc-box{font-size:8px;color:var(--text-secondary);line-height:1.5;padding:4px 6px;background:rgba(255,255,255,0.02);border:1px solid var(--border-light);border-radius:3px;text-align:center;width:100%;min-height:64px}
+
+/* 技能区2列 */
+.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;margin-top:2px}
+
+.skill-box{display:flex;align-items:center;gap:3px;padding:3px 6px;border-radius:4px;cursor:pointer;transition:all 0.08s;min-height:24px;border:1px solid transparent;justify-content:space-between}
+.skill-box:hover{filter:brightness(1.2)}
+.skill-box.bg{background:rgba(102,255,102,0.08);border-color:rgba(102,255,102,0.12)}
+.skill-box.talent{background:rgba(102,136,255,0.08);border-color:rgba(102,136,255,0.12)}
+.skill-box.quality{background:rgba(255,170,102,0.08);border-color:rgba(255,170,102,0.12)}
+.skill-box.empty{border-color:rgba(255,255,255,0.04);background:transparent;cursor:default}
+.skill-box.fill-empty{border-color:transparent;background:transparent;cursor:default;min-height:24px}
+.skill-box.fill-empty:hover{filter:none}
+
+.sb-name{font-size:9px;font-weight:bold}
+.skill-box.bg .sb-name{color:var(--color-bg)}
+.skill-box.talent .sb-name{color:var(--color-talent)}
+.skill-box.quality .sb-name{color:var(--color-quality)}
+.skill-box.empty .sb-name{color:var(--text-muted);font-size:8px;font-weight:normal}
+
+.sb-levels{display:flex;gap:2px;flex-shrink:0}
+.sb-dot{width:5px;height:5px;border-radius:50%;border:1px solid}
+.sb-dot.filled.bg{border-color:var(--color-bg);background:var(--color-bg)}
+.sb-dot.filled.talent{border-color:var(--color-talent);background:var(--color-talent)}
+.sb-dot.filled.quality{border-color:var(--color-quality);background:var(--color-quality)}
+.sb-dot.hollow{border-color:rgba(255,255,255,0.1);background:transparent}
+
+.reroll-wrapper{display:flex;justify-content:center;margin-top:5px}
+.reroll-btn{padding:3px 12px;border-radius:4px;font-size:8px;border:1px solid var(--border-light);background:rgba(255,255,255,0.03);color:var(--text-dim);cursor:pointer}
+.reroll-btn:hover{background:rgba(100,170,255,0.08);color:var(--text-highlight);border-color:var(--color-highlight)}
+
+.panel-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid var(--border-light);background:rgba(255,255,255,0.02)}
+.footer-left{font-size:10px;color:var(--text-dim)}
+.footer-left .hl{color:var(--color-highlight)}
+.f-btn{padding:6px 16px;border-radius:var(--radius-card);font-size:10px;cursor:pointer;border:1px solid;transition:all 0.1s}
+.f-btn.confirm{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:var(--color-ally)}
+.f-btn.confirm:hover{background:rgba(68,170,136,0.15)}
+.f-btn.cancel{background:rgba(255,255,255,0.03);border-color:var(--border);color:var(--text-secondary)}
+.f-btn.cancel:hover{background:rgba(255,255,255,0.06);color:var(--text-highlight)}
+
+.stt{display:none;position:fixed;background:rgba(0,0,0,0.96);border:1px solid var(--border);border-radius:var(--radius-card);padding:5px 8px;z-index:99999;pointer-events:none;white-space:nowrap;line-height:1.4}
+.stt .st-title{color:var(--text-highlight);font-size:9px;font-weight:bold;margin-bottom:2px}
+.stt .st-type{font-size:7px;margin-bottom:2px}
+.stt .st-type.bg{color:var(--color-bg)}
+.stt .st-type.talent{color:var(--color-talent)}
+.stt .st-type.quality{color:var(--color-quality)}
+.stt .st-desc{color:var(--text-secondary);font-size:8px}
+.stt .st-sep{border-top:1px solid var(--border-light);margin:3px 0}
+</style>
+</head>
+<body>
+<div class="overlay">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="h-left">
+        <span class="h-title">创建指挥官</span>
+        <span class="h-step">第2步/共2步</span>
+      </div>
+      <span class="h-close" onclick="alert('返回国家选择')">✕</span>
+    </div>
+    <div class="panel-desc">创建初始指挥官。主角固定英雄，其余按概率生成。点击【↻】重掷，悬浮技能查看详情。</div>
+
+    <div class="cmd-row">
+
+      <!-- 主角 -->
+      <div class="cmd-wrapper">
+        <div class="cmd-card r3">
+          <div class="avatar-wrap">
+            <span class="prot-badge">主角</span>
+            <div class="avatar">★</div>
+          </div>
+          <div class="id-info">
+            <div class="id-name" contenteditable="true">曼施坦因</div>
+            <div class="id-meta">
+              <span class="rarity-tag r3">英雄</span>
+              <span class="lv-text">Lv1</span>
+            </div>
+            <div class="desc-box">精通闪电战的装甲兵名将</div>
+          </div>
+          <div class="skill-grid">
+            <div class="skill-box bg" data-sid="bg_armor"><span class="sb-name">装甲兵</span><span class="sb-levels"><span class="sb-dot filled bg"></span></span></div>
+            <div class="skill-box talent" data-sid="tal_insight"><span class="sb-name">洞察 Lv2</span><span class="sb-levels"><span class="sb-dot filled talent"></span><span class="sb-dot filled talent"></span><span class="sb-dot hollow"></span></span></div>
+            <div class="skill-box quality" data-sid="q_penetrate"><span class="sb-name">穿甲专精</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span></div>
+            <div class="skill-box quality" data-sid="q_first"><span class="sb-name">先发制人</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span></div>
+            <div class="skill-box quality" data-sid="q_deadly"><span class="sb-name">致命一击</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span></div>
+            <div class="fill-empty"></div>
+          </div>
+        </div>
+        <div class="reroll-wrapper"><span class="reroll-btn" onclick="reroll(this)">↻ 重掷</span></div>
+      </div>
+
+      <!-- 老兵 -->
+      <div class="cmd-wrapper">
+        <div class="cmd-card r2">
+          <div class="avatar">◆</div>
+          <div class="id-info">
+            <div class="id-name" contenteditable="true">克鲁格</div>
+            <div class="id-meta">
+              <span class="rarity-tag r2">老兵</span>
+              <span class="lv-text">Lv1</span>
+            </div>
+            <div class="desc-box">东线历练的坚韧步兵指挥</div>
+          </div>
+          <div class="skill-grid">
+            <div class="skill-box bg" data-sid="bg_infantry"><span class="sb-name">步兵指挥官</span><span class="sb-levels"><span class="sb-dot filled bg"></span></span></div>
+            <div class="skill-box talent" data-sid="tal_tough"><span class="sb-name">坚韧 Lv2</span><span class="sb-levels"><span class="sb-dot filled talent"></span><span class="sb-dot filled talent"></span><span class="sb-dot hollow"></span></span></div>
+            <div class="skill-box quality" data-sid="q_reactive"><span class="sb-name">快速响应</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span></div>
+            <div class="skill-box quality" data-sid="q_stable"><span class="sb-name">稳定射击</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span></div>
+            <div class="skill-box empty"><span class="sb-name">—</span></div>
+            <div class="fill-empty"></div>
+          </div>
+        </div>
+        <div class="reroll-wrapper"><span class="reroll-btn" onclick="reroll(this)">↻ 重掷</span></div>
+      </div>
+
+      <!-- 预备军官 -->
+      <div class="cmd-wrapper">
+        <div class="cmd-card r1">
+          <div class="avatar">◇</div>
+          <div class="id-info">
+            <div class="id-name" contenteditable="true">迈尔</div>
+            <div class="id-meta">
+              <span class="rarity-tag r1">预备军官</span>
+              <span class="lv-text">Lv1</span>
+            </div>
+            <div class="desc-box">炮兵学院高材生，理论扎实</div>
+          </div>
+          <div class="skill-grid">
+            <div class="skill-box bg" data-sid="bg_artillery"><span class="sb-name">炮术</span><span class="sb-levels"><span class="sb-dot filled bg"></span></span></div>
+            <div class="skill-box talent" data-sid="tal_diligent"><span class="sb-name">勤勉 Lv1</span><span class="sb-levels"><span class="sb-dot filled talent"></span><span class="sb-dot hollow"></span><span class="sb-dot hollow"></span></span></div>
+            <div class="skill-box quality" data-sid="q_ammo"><span class="sb-name">弹药管理</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span></div>
+            <div class="skill-box empty"><span class="sb-name">—</span></div>
+            <div class="skill-box empty"><span class="sb-name">—</span></div>
+            <div class="fill-empty"></div>
+          </div>
+        </div>
+        <div class="reroll-wrapper"><span class="reroll-btn" onclick="reroll(this)">↻ 重掷</span></div>
+      </div>
+
+      <!-- 菜鸟 -->
+      <div class="cmd-wrapper">
+        <div class="cmd-card r0">
+          <div class="avatar">○</div>
+          <div class="id-info">
+            <div class="id-name" contenteditable="true">贝克尔</div>
+            <div class="id-meta">
+              <span class="rarity-tag r0">菜鸟</span>
+              <span class="lv-text">Lv1</span>
+            </div>
+            <div class="desc-box">新兵侦察兵，反应敏捷</div>
+          </div>
+          <div class="skill-grid">
+            <div class="skill-box bg" data-sid="bg_recon"><span class="sb-name">侦察</span><span class="sb-levels"><span class="sb-dot filled bg"></span></span></div>
+            <div class="skill-box talent" data-sid="tal_cautious"><span class="sb-name">谨慎 Lv1</span><span class="sb-levels"><span class="sb-dot filled talent"></span><span class="sb-dot hollow"></span><span class="sb-dot hollow"></span></span></div>
+            <div class="skill-box empty"><span class="sb-name">—</span></div>
+            <div class="skill-box empty"><span class="sb-name">—</span></div>
+            <div class="skill-box empty"><span class="sb-name">—</span></div>
+            <div class="fill-empty"></div>
+          </div>
+        </div>
+        <div class="reroll-wrapper"><span class="reroll-btn" onclick="reroll(this)">↻ 重掷</span></div>
+      </div>
+
+    </div>
+
+    <div class="panel-footer">
+      <span class="footer-left">已选: <span class="hl">德国</span></span>
+      <div style="display:flex;gap:6px">
+        <div class="f-btn cancel" onclick="alert('返回国家选择')">返回</div>
+        <div class="f-btn confirm" onclick="alert('进入第一关')">确认编成</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stt" id="stt"></div>
+
+<script>
+var skillDB={
+  bg_armor:{name:'装甲兵',type:'bg',desc:'指挥装甲部队时全技能生效'},
+  bg_infantry:{name:'步兵指挥官',type:'bg',desc:'步兵部队士气恢复+2'},
+  bg_artillery:{name:'炮术',type:'bg',desc:'间接火力命中+5%'},
+  bg_recon:{name:'侦察',type:'bg',desc:'所属部队视野+1'},
+  bg_engineer:{name:'工程',type:'bg',desc:'工兵建造速度+1'},
+  bg_logistics:{name:'后勤',type:'bg',desc:'补给效率+20%'},
+  tal_insight:{name:'洞察 Lv2',type:'talent',desc:'视野+2，可预判敌方移动'},
+  tal_tough:{name:'坚韧 Lv2',type:'talent',desc:'被命中后压制获得-20%'},
+  tal_diligent:{name:'勤勉 Lv1',type:'talent',desc:'经验获取+15%'},
+  tal_cautious:{name:'谨慎 Lv1',type:'talent',desc:'被命中率-5%'},
+  tal_valiant:{name:'英勇 Lv2',type:'talent',desc:'士气下降速度-20%'},
+  tal_leader:{name:'领袖 Lv1',type:'talent',desc:'相邻友军士气恢复+1'},
+  q_penetrate:{name:'穿甲专精',type:'quality',desc:'PEN+1'},
+  q_first:{name:'先发制人',type:'quality',desc:'主动性+2'},
+  q_deadly:{name:'致命一击',type:'quality',desc:'暴击率+10%'},
+  q_reactive:{name:'快速响应',type:'quality',desc:'反应次数+1'},
+  q_stable:{name:'稳定射击',type:'quality',desc:'波动下限+5%'},
+  q_ammo:{name:'弹药管理',type:'quality',desc:'弹药上限+20%'},
+  q_strong:{name:'强壮',type:'quality',desc:'HP+10%'},
+  q_hard:{name:'硬汉',type:'quality',desc:'压制抵抗+15%'}
+}
+
+document.querySelectorAll('.skill-box:not(.empty):not(.fill-empty)').forEach(function(el){
+  el.addEventListener('mouseenter',function(e){
+    var sk=skillDB[this.dataset.sid]; if(!sk)return
+    var stt=document.getElementById('stt')
+    var tl={bg:'背景技能',talent:'天赋技能',quality:'品质技能'}
+    stt.innerHTML='<div class="st-title">'+sk.name+'</div><div class="st-type '+sk.type+'">'+tl[sk.type]+'</div><div class="st-sep"></div><div class="st-desc">'+sk.desc+'</div>'
+    stt.style.display='block'
+    var r=this.getBoundingClientRect()
+    var tx=r.left+r.width/2-stt.offsetWidth/2, ty=r.top-4-stt.offsetHeight
+    if(tx<4)tx=4; if(tx+stt.offsetWidth>window.innerWidth-4)tx=window.innerWidth-4-stt.offsetWidth
+    if(ty<4)ty=r.bottom+4
+    stt.style.left=tx+'px'; stt.style.top=ty+'px'
+  })
+  el.addEventListener('mouseleave',function(){document.getElementById('stt').style.display='none'})
+})
+
+function reroll(btn){
+  if(!confirm('重掷该指挥官？手动修改的名称将保留。'))return
+  var wrapper=btn.closest('.cmd-wrapper')
+  var card=wrapper.querySelector('.cmd-card')
+  var isPro=!!card.querySelector('.prot-badge')
+  var nameEl=card.querySelector('.id-name')
+  if(!nameEl.dataset.edited){
+    var ns=['古德里安','隆美尔','邓尼茨','巴尔克','莫德尔','凯塞林','保卢斯','曼陀菲尔','舍尔纳']
+    nameEl.textContent=ns[Math.floor(Math.random()*ns.length)]
+  }
+  var ri=isPro?3:Math.floor(Math.random()*4)
+  card.className='cmd-card r'+ri
+  card.querySelector('.rarity-tag').textContent=['菜鸟','预备军官','老兵','英雄'][ri]
+  card.querySelector('.rarity-tag').className='rarity-tag r'+ri
+
+  var bgList=[['装甲兵','bg_armor'],['步兵指挥官','bg_infantry'],['炮术','bg_artillery'],['侦察','bg_recon'],['工程','bg_engineer'],['后勤','bg_logistics']]
+  var talList=[['洞察 Lv2','tal_insight',2],['坚韧 Lv2','tal_tough',2],['勤勉 Lv1','tal_diligent',1],['谨慎 Lv1','tal_cautious',1],['英勇 Lv2','tal_valiant',2],['领袖 Lv1','tal_leader',1]]
+  var qList=[['穿甲专精','q_penetrate'],['先发制人','q_first'],['致命一击','q_deadly'],['快速响应','q_reactive'],['稳定射击','q_stable'],['弹药管理','q_ammo'],['强壮','q_strong'],['硬汉','q_hard']]
+  var qCount=[0,1,2,3][ri]
+
+  var boxes=card.querySelectorAll('.skill-grid .skill-box, .skill-grid .fill-empty')
+  var boxArr=[]; boxes.forEach(function(b){if(b.classList.contains('skill-box')||b.classList.contains('fill-empty'))boxArr.push(b)})
+
+  var bp=bgList[Math.floor(Math.random()*bgList.length)]
+  boxArr[0].dataset.sid=bp[1]; boxArr[0].className='skill-box bg'
+  boxArr[0].innerHTML='<span class="sb-name">'+bp[0]+'</span><span class="sb-levels"><span class="sb-dot filled bg"></span></span>'
+
+  var tp=talList[Math.floor(Math.random()*talList.length)]
+  boxArr[1].dataset.sid=tp[1]; boxArr[1].className='skill-box talent'
+  var lv=tp[2]; var dots=''
+  for(var d=0;d<3;d++) dots+='<span class="sb-dot '+(d<lv?'filled talent':'hollow')+'"></span>'
+  boxArr[1].innerHTML='<span class="sb-name">'+tp[0]+'</span><span class="sb-levels">'+dots+'</span>'
+
+  var usedQ=[]
+  for(var i=0;i<4;i++){
+    var b=boxArr[2+i]
+    if(i<qCount){
+      var pick; do{pick=qList[Math.floor(Math.random()*qList.length)]}while(usedQ.includes(pick))
+      usedQ.push(pick)
+      b.dataset.sid=pick[1]; b.className='skill-box quality'
+      b.innerHTML='<span class="sb-name">'+pick[0]+'</span><span class="sb-levels"><span class="sb-dot filled quality"></span></span>'
+    }else{
+      b.dataset.sid=''; b.className='skill-box empty'
+      b.innerHTML='<span class="sb-name">—</span>'
+    }
+  }
+}
+document.querySelectorAll('.id-name').forEach(function(el){
+  el.addEventListener('input',function(){this.dataset.edited='true'})
+})
+</script>
+</body>
+</html>

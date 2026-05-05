@@ -210,35 +210,35 @@ func test_squad_get_hp():
 func test_squad_has_acted():
 	print("  Squad 已行动")
 	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
-	assert_eq(sq.get_move_range(), 4, "未行动可移动4格")
+	assert_eq(sq.get_move_range(), 3, "未行动可移动3格")
 	sq.has_acted = true
 	assert_eq(sq.get_move_range(), 0, "已行动不可移动")
 
 func test_squad_ap_basic():
 	print("  Squad AP基础")
 	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
-	assert_eq(sq.ap, 4, "初始AP=4")
-	assert_eq(sq.max_ap, 4, "最大AP=4")
+	assert_eq(sq.ap, 3, "初始AP=3")
+	assert_eq(sq.max_ap, 3, "最大AP=3")
 	assert_true(sq.can_afford(2), "够攻击")
-	assert_true(sq.can_afford(4), "够移动4格")
-	assert_false(sq.can_afford(5), "不够5AP")
+	assert_true(sq.can_afford(3), "够移动3格")
+	assert_false(sq.can_afford(4), "不够4AP")
 
 func test_squad_ap_spend():
 	print("  Squad AP消耗")
 	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
 	sq.spend_ap(2)
-	assert_eq(sq.ap, 2, "攻击后剩2AP")
-	sq.spend_ap(2)
-	assert_eq(sq.ap, 0, "再花2AP=0")
+	assert_eq(sq.ap, 1, "攻击后剩1AP")
+	sq.spend_ap(1)
+	assert_eq(sq.ap, 0, "再花1AP=0")
 	assert_false(sq.can_afford(1), "0AP不能行动")
 
 func test_squad_ap_reset():
 	print("  Squad AP重置")
 	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
-	sq.spend_ap(3)
-	assert_eq(sq.ap, 1, "花3AP剩1")
+	sq.spend_ap(2)
+	assert_eq(sq.ap, 1, "花2AP剩1")
 	sq.reset_ap()
-	assert_eq(sq.ap, 4, "重置后满AP")
+	assert_eq(sq.ap, 3, "重置后满AP")
 
 func test_squad_move_with_ap():
 	print("  Squad 移动+AP")
@@ -249,12 +249,12 @@ func test_squad_move_with_ap():
 	sq.move_to(Vector2i(2,0))
 	sq.spend_ap(dist)
 	assert_eq(sq.hex_coord, Vector2i(2,0), "移动到(2,0)")
-	assert_eq(sq.ap, 2, "花2AP剩2")
+	assert_eq(sq.ap, 1, "花2AP剩1")
 
 func test_squad_move_not_enough_ap():
 	print("  Squad AP不足不能移动")
 	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
-	sq.spend_ap(3)
+	sq.spend_ap(2)
 	assert_eq(sq.ap, 1, "仅剩1AP")
 	var dist = HexUtil.hex_distance(Vector2i(0,0), Vector2i(2,0))
 	assert_eq(dist, 2, "到(2,0)需2AP")
@@ -273,7 +273,7 @@ func test_battle_with_weapons():
 	
 	assert_true(result.damage_to_defender >= 0, "造成伤害≥0")
 	assert_true(atk.has_acted, "攻击后标记已行动")
-	assert_true(atk.ap < 4, "攻击消耗AP")
+	assert_true(atk.ap < 3, "攻击消耗AP")
 
 func test_battle_tank_vs_infantry():
 	print("  Squad 坦克vs步兵")

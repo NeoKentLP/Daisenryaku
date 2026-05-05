@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>胜利结算 - UI原型</title>
+<link rel="stylesheet" href="../shared.css">
+<style>
+:root{
+  --bg-panel:#0a0a19;--border:rgba(255,255,255,0.12);--border-light:rgba(255,255,255,0.06);
+  --text-primary:#ccc;--text-highlight:#fff;--text-secondary:#888;--text-dim:#555;
+  --color-ally:#44aa88;--color-enemy:#cc4444;--color-highlight:#77aaff;
+  --radius-panel:10px;--radius-box:6px;--radius-card:4px;
+  --shadow-panel:0 0 60px rgba(0,0,0,0.8);
+  font-family:'Microsoft YaHei','PingFang SC',sans-serif
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a1a2e;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--text-primary)}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;justify-content:center;align-items:center;z-index:50}
+.panel{width:480px;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);overflow:hidden}
+
+/* 胜利/失败横幅 */
+.banner{text-align:center;padding:20px 0 14px;position:relative}
+.banner .b-icon{font-size:36px}
+.banner .b-title{font-size:18px;font-weight:bold;margin-top:4px}
+.banner .b-title.victory{color:var(--color-ally)}
+.banner .b-title.defeat{color:var(--color-enemy)}
+.banner .b-sub{font-size:10px;color:var(--text-dim);margin-top:2px}
+
+/* 战场统计 */
+.stats{display:flex;gap:0;padding:8px 16px;border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);background:rgba(255,255,255,0.01)}
+.stat-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.stat-col .sc-lbl{font-size:8px;color:var(--text-dim)}
+.stat-col .sc-val{font-size:16px;font-weight:bold}
+.stat-col .sc-val.ally{color:var(--color-ally)}
+.stat-col .sc-val.enemy{color:var(--color-enemy)}
+
+/* 战斗报告 */
+.report{padding:8px 14px}
+.r-section{margin-bottom:8px}
+.rs-title{font-size:9px;color:var(--color-highlight);font-weight:bold;margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid var(--border-light)}
+.rs-row{display:flex;justify-content:space-between;font-size:8px;padding:2px 0}
+.rs-row .rs-lbl{color:var(--text-secondary)}
+.rs-row .rs-val{color:var(--text-primary)}
+.rs-row .rs-val.ally{color:var(--color-ally)}
+.rs-row .rs-val.enemy{color:var(--color-enemy)}
+.rs-row .rs-val.hl{color:var(--color-highlight)}
+
+/* 战后获取 */
+.rewards{display:flex;gap:6px;padding:4px 14px 10px;flex-wrap:wrap}
+.rw-item{display:flex;align-items:center;gap:4px;padding:4px 10px;background:rgba(68,170,136,0.04);border:1px solid rgba(68,170,136,0.1);border-radius:var(--radius-card);font-size:8px}
+.rw-item .rw-icon{font-size:10px}
+.rw-item .rw-val{color:var(--color-ally);font-weight:bold}
+.rw-item .rw-lbl{color:var(--text-dim)}
+
+/* 底部 */
+.panel-footer{display:flex;justify-content:flex-end;gap:6px;padding:8px 14px;border-top:1px solid var(--border-light);background:rgba(255,255,255,0.02)}
+.f-btn{padding:6px 16px;border-radius:var(--radius-card);font-size:10px;cursor:pointer;border:1px solid;transition:all 0.1s}
+.f-btn.prime{background:rgba(68,170,136,0.08);border-color:rgba(68,170,136,0.2);color:var(--color-ally)}
+.f-btn.prime:hover{background:rgba(68,170,136,0.15)}
+.f-btn.cancel{background:rgba(255,255,255,0.03);border-color:var(--border);color:var(--text-secondary)}
+.f-btn.cancel:hover{background:rgba(255,255,255,0.06);color:var(--text-highlight)}
+</style>
+</head>
+<body>
+<div class="overlay">
+  <div class="panel">
+
+    <!-- 胜利横幅 -->
+    <div class="banner">
+      <div class="b-icon">🏆</div>
+      <div class="b-title victory">胜利</div>
+      <div class="b-sub">全灭敌军 · 序章·边境冲突 完成</div>
+    </div>
+
+    <!-- 战场统计 -->
+    <div class="stats">
+      <div class="stat-col"><span class="sc-lbl">己方存活</span><span class="sc-val ally">5/6</span></div>
+      <div class="stat-col"><span class="sc-lbl">敌方消灭</span><span class="sc-val enemy">3/3</span></div>
+      <div class="stat-col"><span class="sc-lbl">回合数</span><span class="sc-val" style="color:#aaa">5</span></div>
+      <div class="stat-col"><span class="sc-lbl">评价</span><span class="sc-val" style="color:var(--color-highlight);font-size:13px">B</span></div>
+    </div>
+
+    <!-- 战斗报告 -->
+    <div class="report">
+      <div class="r-section">
+        <div class="rs-title">战斗报告</div>
+        <div class="rs-row"><span class="rs-lbl">击杀敌军</span><span class="rs-val hl">16</span></div>
+        <div class="rs-row"><span class="rs-lbl">己方阵亡</span><span class="rs-val enemy">1</span></div>
+        <div class="rs-row"><span class="rs-lbl">弹药消耗</span><span class="rs-val" style="color:#aaa">23</span></div>
+        <div class="rs-row"><span class="rs-lbl">战后补给</span><span class="rs-val ally">自动补满</span></div>
+      </div>
+      <div class="r-section">
+        <div class="rs-title">部队经验</div>
+        <div class="rs-row"><span class="rs-lbl">第一步兵班</span><span class="rs-val hl">+45XP</span></div>
+        <div class="rs-row"><span class="rs-lbl">第二步兵班</span><span class="rs-val hl">+38XP</span></div>
+        <div class="rs-row"><span class="rs-lbl">Sd.Kfz 221</span><span class="rs-val hl">+22XP</span></div>
+        <div class="rs-row"><span class="rs-lbl">81mm迫击炮班</span><span class="rs-val hl">+30XP</span></div>
+      </div>
+    </div>
+
+    <!-- 战后获取(序章首次) -->
+    <div class="rewards">
+      <span class="rw-item"><span class="rw-icon">$</span><span class="rw-val">+200</span><span class="rw-lbl">货币</span></span>
+      <span class="rw-item"><span class="rw-icon">⛏</span><span class="rw-val">+50</span><span class="rw-lbl">钢铁</span></span>
+      <span class="rw-item"><span class="rw-icon">⛽</span><span class="rw-val">+30</span><span class="rw-lbl">石油</span></span>
+      <span class="rw-item"><span class="rw-icon">●</span><span class="rw-val">+40</span><span class="rw-lbl">弹药</span></span>
+      <span class="rw-item"><span class="rw-icon">★</span><span class="rw-val">序章</span><span class="rw-lbl">已通关</span></span>
+    </div>
+
+    <div class="panel-footer">
+      <div class="f-btn cancel" onclick="alert('查看详细统计')">详细统计</div>
+      <div class="f-btn prime" onclick="alert('进入基地')">进入基地</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

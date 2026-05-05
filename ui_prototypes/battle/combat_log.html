@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>战斗详情 - 流水账</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Microsoft YaHei','PingFang SC',sans-serif}
+body{background:#0a0a19;display:flex;justify-content:center;align-items:center;min-height:100vh;color:#ccc}
+.panel{width:480px;background:#0a0a19;border:1px solid rgba(255,255,255,0.2);border-radius:10px;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,0.8)}
+.header{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.header .title{color:#77aaff;font-size:11px;font-weight:bold}
+.header .close{color:#555;font-size:14px;cursor:pointer;padding:0 4px}
+.body{padding:6px 12px;max-height:340px;overflow-y:auto}
+
+.line{display:flex;gap:4px;padding:2px 0;font-size:8px;border-bottom:1px solid rgba(255,255,255,0.02);line-height:1.5}
+.line .tag{min-width:30px;padding:0 5px;border-radius:2px;text-align:center;font-size:7px;flex-shrink:0}
+.line .tag.hit{background:rgba(68,170,136,0.08);color:#44aa88}
+.line .tag.miss{background:rgba(255,255,255,0.03);color:#555}
+.line .tag.kill{background:rgba(204,68,68,0.08);color:#cc4444}
+.line .tag.info{color:#888}
+.line .desc{color:#aaa;flex:1}
+.line .arrow{color:#444;margin:0 2px}
+.line .dmg{color:#fff;font-weight:bold}
+.line .dmg.neg{color:#cc4444}
+.line .dmg.pos{color:#44aa88}
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="header">
+    <span class="title">战斗详情</span>
+    <span class="close">✕</span>
+  </div>
+  <div class="body">
+
+    <div class="line"><span class="tag info">先手</span><span class="desc">攻方主动性6 ≥ 守方4 → 攻方先开火</span></div>
+    <div class="line"><span class="tag info">武器</span><span class="desc">步枪×5 · 机枪×1 参与攻击</span></div>
+
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">命中61% → d100=47</span><span class="arrow">→</span><span class="dmg">命中</span></div>
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">穿透 PEN1 vs Armor0 → diff=+3</span><span class="arrow">→</span><span class="dmg">穿透</span></div>
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">伤害 22×1.05(波动)×0.9(cover)</span><span class="arrow">→</span><span class="dmg">21</span></div>
+    <div class="line"><span class="tag kill">击杀</span><span class="desc">步枪手 10HP-21=0</span><span class="arrow">→</span><span class="dmg neg">阵亡</span></div>
+
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">命中61% → d100=32</span><span class="arrow">→</span><span class="dmg">命中</span></div>
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">伤害 22×0.95×0.9</span><span class="arrow">→</span><span class="dmg">19</span></div>
+    <div class="line"><span class="tag kill">击杀</span><span class="desc">步枪手 10HP-19=0</span><span class="arrow">→</span><span class="dmg neg">阵亡</span></div>
+
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">命中61% → d100=85</span><span class="arrow">→</span><span class="dmg" style="color:#555">未命中</span></div>
+
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">命中61% → d100=18</span><span class="arrow">→</span><span class="dmg">命中</span></div>
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">伤害 22×1.10×0.9</span><span class="arrow">→</span><span class="dmg">22</span></div>
+    <div class="line"><span class="tag kill">击杀</span><span class="desc">步枪手 10HP-22=0</span><span class="arrow">→</span><span class="dmg neg">阵亡</span></div>
+
+    <div class="line"><span class="tag hit">机枪</span><span class="desc">命中56% → d100=44</span><span class="arrow">→</span><span class="dmg">命中</span></div>
+    <div class="line"><span class="tag hit">机枪</span><span class="desc">伤害 18×0.95×0.9</span><span class="arrow">→</span><span class="dmg">16</span></div>
+    <div class="line"><span class="tag hit">机枪</span><span class="desc">压制20×1</span><span class="arrow">→</span><span class="dmg" style="color:#aaa">压制+20</span></div>
+    <div class="line"><span class="tag kill">击杀</span><span class="desc">步枪手 10HP-16=0</span><span class="arrow">→</span><span class="dmg neg">阵亡</span></div>
+
+    <div style="border-top:1px solid rgba(255,255,255,0.06);margin:4px 0"></div>
+
+    <div class="line"><span class="tag info">反击</span><span class="desc">守方士气≥正常, 剩余反应>0 → 触发</span></div>
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">守方反击 命中58% → d100=23</span><span class="arrow">→</span><span class="dmg">命中</span></div>
+    <div class="line"><span class="tag hit">步枪</span><span class="desc">伤害 22×0.90×0.9</span><span class="arrow">→</span><span class="dmg">18</span></div>
+    <div class="line"><span class="tag kill">击杀</span><span class="desc">攻方·步枪手 10HP-18=0</span><span class="arrow">→</span><span class="dmg neg">阵亡</span></div>
+
+    <div style="border-top:1px solid rgba(255,255,255,0.06);margin:4px 0"></div>
+
+    <div class="line"><span class="tag info">结束</span><span class="desc">目标 6→2 人 · 士气100→68</span></div>
+    <div class="line"><span class="tag info">结束</span><span class="desc">攻方 6→5 人 · 士气85→75</span></div>
+    <div class="line"><span class="tag info">压制</span><span class="desc">目标压制累计65 (超过50 → 回合末额外-5士气)</span></div>
+
+  </div>
+</div>
+</body>
+</html>
