@@ -22,6 +22,9 @@ const CAM_ZOOM_MAX: float = 3.0
 func _ready():
 	map = load("res://scripts/map/hex_map.gd").new()
 	map.name = "HexMap"
+	if GameManager.mission_placed_squads and not GameManager.mission_placed_squads.is_empty():
+		map.map_width = 12
+		map.map_height = 10
 	add_child(map)
 	battle = load("res://scripts/battle/battle_manager.gd").new()
 	battle.name = "BattleManager"
@@ -30,15 +33,20 @@ func _ready():
 	ai.name = "AI"
 	add_child(ai)
 	_cam = Camera2D.new()
-	_cam.name = "Camera2D"
 	_cam.zoom = Vector2(1.0, 1.0)
 	_cam.enabled = true
 	map.add_child(_cam)
+
+	# Center camera on map center (matches deployment overview position)
+	_cam.position = map.hex_to_pixel(Vector2i(map.map_width / 2, map.map_height / 2))
 	ui = load("res://scripts/ui/ui_manager.gd").new()
 	ui.name = "UIManager"
 	add_child(ui)
 	await get_tree().process_frame
-	if GameManager.world_selected_squads.is_empty():
+	if GameManager.mission_placed_squads and not GameManager.mission_placed_squads.is_empty():
+		_spawn_mission_squads()
+		GameManager.mission_placed_squads.clear()
+	elif GameManager.world_selected_squads.is_empty():
 		_spawn_test_squads()
 	else:
 		_spawn_world_squads()
@@ -81,11 +89,13 @@ func _on_map_clicked():
 			_execute_assault(hex); return
 		if action_mode == "clear_mine":
 			_execute_mine_clear(hex); return
-		_execute_attack(hex); return
+		_show_combat_preview(hex); return
 	if action_mode == "move" and valid_hexes.has(hex) and not valid_attack_hexes.has(hex): _execute_move(hex); return
 
 	if clicked and clicked.is_alive:
-		if clicked.team == 0 and not clicked.has_acted and clicked.get_state() != 0:
+		if clicked.team == 0 and clicked.unit_type_id == "command" and not clicked.has_acted:
+			_view_squad(clicked)
+		elif clicked.team == 0 and not clicked.has_acted and clicked.get_state() != 0:
 			if selected_squad != clicked: _select_squad(clicked)
 		else: _view_squad(clicked)
 	elif selected_squad: _deselect_squad()
@@ -97,20 +107,43 @@ func _select_squad(squad):
 	ui.show_squad_info(squad)
 	var mn = GameManager.hex_map
 	if not mn: return
-	var move_hexes = mn.get_reachable_hexes(squad.hex_coord, squad.get_remaining_movement_ap())
+
+	# 按AP层级计算可达范围，用边框区分
+	var tiered_hexes = {}  # hex -> ap_cost
+	var all_valid = []
+
+	# AP层级1: move_range格内 (1AP)
+	if squad.can_afford(1):
+		for h in mn.get_reachable_hexes(squad.hex_coord, squad.move_range):
+			tiered_hexes[h] = 1
+			all_valid.append(h)
+
+	# AP层级2: move_range×2格内 (2AP)
+	if squad.can_afford(2):
+		for h in mn.get_reachable_hexes(squad.hex_coord, squad.move_range * 2):
+			if not tiered_hexes.has(h):
+				tiered_hexes[h] = 2
+				all_valid.append(h)
+
+	# AP层级3: move_range×3格内 (3AP)
+	if squad.can_afford(3):
+		for h in mn.get_reachable_hexes(squad.hex_coord, squad.move_range * 3):
+			if not tiered_hexes.has(h):
+				tiered_hexes[h] = 3
+				all_valid.append(h)
+
 	valid_attack_hexes = _find_attackable_hexes(squad)
 
-	# 过滤ZOC格子：进入ZOC的会停，标记它们
+	# 过滤ZOC格子
 	var zoc_blocked = []
-	for h in move_hexes:
+	for h in all_valid:
 		if mn.has_enemy_zoc(h, squad.team):
 			zoc_blocked.append(h)
 
-	if move_hexes.size() > 0:
+	if all_valid.size() > 0:
 		action_mode = "move"
-		valid_hexes = move_hexes
-		mn.highlight_hexes(move_hexes, Color(0.3, 0.8, 0.3, 0.4))
-		# ZOC格子用橙色标记
+		valid_hexes = all_valid
+		mn.highlight_hexes_tiered(tiered_hexes)
 		if zoc_blocked.size() > 0:
 			for hx in zoc_blocked:
 				mn.add_highlight(hx, Color(1.0, 0.6, 0.0, 0.4))
@@ -128,11 +161,11 @@ func _select_squad(squad):
 		ui.show_engineer_buttons(squad.ap)
 	if _can_supply(squad):
 		ui.show_supply_button(true)
-	var msg = "AP:%d" % squad.ap
+	var msg = "AP:%d  移%d格/次" % [squad.ap, squad.move_range]
 	if _can_supply(squad): msg += " 可补给(1AP)"
 	elif _can_assault(squad): msg += " 可突击(3AP)"
 	elif zoc_blocked.size() > 0: msg += " 橙色=ZOC(进入即停)"
-	else: msg += " 选移动或攻击"
+	else: msg += " 选格子移动(边框=消耗多AP)"
 	ui.show_message(msg)
 
 func _can_supply(squad) -> bool:
@@ -167,11 +200,22 @@ func _view_squad(squad):
 func _find_attackable_hexes(squad):
 	var mn = GameManager.hex_map
 	if not mn or not squad.can_afford(2) or not squad.has_ammo(): return []
+	var max_range = _get_squad_max_range(squad)
 	var r = []
-	for h in mn.get_attackable_hexes(squad.hex_coord, 3):
+	for h in mn.get_attackable_hexes(squad.hex_coord, max_range):
 		var t = GameManager.get_squad_at(h)
 		if t and t.team != squad.team and t.is_alive: r.append(h)
 	return r
+
+func _get_squad_max_range(squad) -> int:
+	var mr = 0
+	for m in squad.members:
+		if not m.is_alive: continue
+		for w in m.weapons:
+			if w.get("ammo", 0) <= 0: continue
+			var r = w.get("range_max", 1)
+			if r > mr: mr = r
+	return mr
 
 func _deselect_squad():
 	selected_squad = null; action_mode = ""; valid_hexes.clear(); valid_attack_hexes.clear()
@@ -355,28 +399,29 @@ func _execute_move(hex):
 	var mn = GameManager.hex_map
 	if not mn or not selected_squad: return
 
+	# 计算移动需要的AP数
+	var dist = HexUtil.hex_distance(selected_squad.hex_coord, hex)
+	var ap_needed = max(1, int(ceil(float(dist) / selected_squad.move_range)))
+	if not selected_squad.can_afford(ap_needed): return
+
 	# 计算完整路径
 	var path = mn.find_path(selected_squad.hex_coord, hex, selected_squad)
 	if path.size() < 2: return
-
-	# 跳过起点(path[0])，从第一步开始
-	var total_cost = 0
-	for i in range(1, path.size()):
-		total_cost += mn.get_movement_cost(path[i])
-	if not selected_squad.can_afford(total_cost): return
+	# 路径格数不能超过move_range×AP
+	if path.size() - 1 > selected_squad.move_range * ap_needed: return
 
 	mn.clear_highlights()
 
-	# 逐步移动动画
+	# 逐步移动动画，每 move_range 格计为1次移动动作
 	var prev_hex = selected_squad.hex_coord
+	var steps_in_action = 0
 	for i in range(1, path.size()):
 		var step = path[i]
-		var step_cost = mn.get_movement_cost(step)
+		steps_in_action += 1
 
-		# 离开ZOC: 双倍AP消耗 + 借机攻击
+		# ZOC脱离检查
 		if mn.has_enemy_zoc(prev_hex, selected_squad.team):
 			if not mn.has_enemy_zoc(step, selected_squad.team):
-				step_cost *= 2
 				if battle and battle.has_method("resolve_zoc_attack"):
 					var zoc_result = battle.resolve_zoc_attack(selected_squad)
 					if zoc_result:
@@ -384,9 +429,11 @@ func _execute_move(hex):
 						ui.add_log(zmsg)
 
 		selected_squad.move_to(step)
-		selected_squad.spend_ap(step_cost)
 		prev_hex = step
 		await get_tree().create_timer(0.12).timeout
+
+	# 移动消耗对应AP
+	selected_squad.spend_ap(ap_needed)
 
 	# 更新信息面板
 	ui.show_squad_info(selected_squad)
@@ -401,7 +448,13 @@ func _execute_move(hex):
 			_check_win_condition()
 			return
 
-	_show_attack_options(selected_squad)
+	# 还有AP则继续选中显示范围
+	if selected_squad.ap > 0 and not selected_squad.has_acted:
+		var sq = selected_squad
+		_deselect_squad()
+		_select_squad(sq)
+	else:
+		_show_attack_options(selected_squad)
 
 func _show_attack_options(squad):
 	var mn = GameManager.hex_map
@@ -409,7 +462,7 @@ func _show_attack_options(squad):
 	var attack_hexes = _find_attackable_hexes(squad)
 	if attack_hexes.size() > 0:
 		action_mode = "attack"; valid_hexes = attack_hexes; valid_attack_hexes = attack_hexes
-		mn.highlight_hexes(attack_hexes, Color(0.9, 0.2, 0.2, 0.4))
+		mn.highlight_hexes(attack_hexes, Color(0.9, 0.2, 0.2, 0.5))
 		ui.show_message("AP:%d 选目标攻击或待机" % squad.ap)
 	else:
 		ui.show_message("AP:%d 无攻击目标" % squad.ap)
@@ -431,25 +484,40 @@ func _end_squad_action():
 func _on_squad_wait():
 	if selected_squad: _end_squad_action()
 
+func _show_combat_preview(hex):
+	var target = GameManager.get_squad_at(hex)
+	if not target or not target.is_alive or target.team == selected_squad.team: return
+	var preview = preload("res://scenes/ui/combat_preview.tscn").instantiate()
+	add_child(preview)
+	preview.open(selected_squad, target, func(selected_types):
+		_execute_attack(hex)
+	)
+
 func _execute_attack(hex):
 	var mn = GameManager.hex_map
 	if not mn or not selected_squad: return
 	mn.clear_highlights()
 	var target = GameManager.get_squad_at(hex)
 	if target and target.is_alive and target.team != selected_squad.team:
-		# 检查ZOC:在ZOC内攻击有命中惩罚(已在内置射手公式),但允许攻击
 		var result = battle.resolve_combat(selected_squad, target)
-		var msg = "[攻击] " + selected_squad.squad_name + " → " + target.squad_name
-		msg += " 命中" + str(result.num_hits) + "次 伤" + str(result.damage_to_defender)
-		if result.damage_to_attacker > 0: msg += " (反击" + str(result.num_counter_hits) + "次 伤" + str(result.damage_to_attacker) + ")"
-		if result.defender_destroyed:
-			msg += " 目标被摧毁!"
-			_try_loot(target)
-		ui.add_log(msg)
-		ui.show_message(msg)
-	_deselect_squad()
-	_check_win_condition()
-	_check_all_acted()
+
+		result["attacker_name"] = selected_squad.squad_name
+		result["defender_name"] = target.squad_name
+
+		# Show combat flow panel
+		var flow = preload("res://scenes/ui/combat_flow.tscn").instantiate()
+		add_child(flow)
+		flow.open(result, func():
+			if result.defender_destroyed:
+				_try_loot(target)
+			_deselect_squad()
+			_check_win_condition()
+			_check_all_acted()
+		)
+	else:
+		_deselect_squad()
+		_check_win_condition()
+		_check_all_acted()
 
 func _check_all_acted():
 	if GameManager.current_phase != 0: return
@@ -613,13 +681,177 @@ func _return_to_world():
 	var scene = load("res://scenes/world/world_map.tscn")
 	get_tree().change_scene_to_packed(scene)
 
+func _spawn_mission_squads():
+	var mn = GameManager.hex_map
+	if not mn: return
+
+	_setup_prologue_terrain(mn)
+
+	var ss = load("res://scripts/core/squad.gd")
+	var ms = preload("res://scripts/core/member.gd")
+
+	var nation_enemy = {"germany": "soviet", "soviet": "germany"}
+	var _enemy_nat = nation_enemy.get(GameManager.selected_nation, "soviet")
+
+	# Create HQ as special squad unit (not terrain)
+	var hq_member = ms.new("HQ", "command", 50, 60)
+	hq_member.armor = 5
+	var hq = ss.new()
+	hq.setup("command", 0, Vector2i(5, 8), [hq_member])
+	hq.name = "HQ"
+	hq.squad_name = "己方指挥部"
+	hq.morale = 100
+	hq.max_morale = 100
+	mn.add_child(hq)
+	hq.update_visual()
+	GameManager.register_squad(hq)
+
+	# Spawn player squads from deployment data
+	var placed = GameManager.mission_placed_squads
+	if placed and not placed.is_empty():
+		var cmd_idx = 0
+		for hex in placed:
+			var sd = placed[hex]
+			var sq = ss.new()
+			var members = []
+			for m_data in sd.members:
+				var m = ms.new(m_data.member_name, m_data.member_type, m_data.hp, m_data.bs)
+				for w in m_data.weapons:
+					m.weapons.append(w.duplicate())
+				m.armor = m_data.armor
+				m.evasion = m_data.evasion
+				m.concealment = m_data.concealment
+				m.is_alive = m_data.is_alive
+				m.hp = m_data.hp
+				m.max_hp = m_data.max_hp
+				members.append(m)
+			sq.setup(sd.type, 0, hex, members)
+			sq.name = "P_" + sd.name
+			mn.add_child(sq)
+			sq.update_visual()
+			GameManager.register_squad(sq)
+
+			# Assign commander
+			if cmd_idx < GameManager.initial_commanders.size():
+				var cmd = GameManager.initial_commanders[cmd_idx]
+				GameManager.assign_commander(sq, cmd)
+			cmd_idx += 1
+
+	# Spawn enemy squads around enemy HQ at (5, 1)
+	var enemy_units = _get_enemy_squads()
+	var enemy_hexes = [Vector2i(5, 2), Vector2i(4, 1), Vector2i(6, 1)]
+	for i in range(min(enemy_units.size(), enemy_hexes.size())):
+		var hex = enemy_hexes[i]
+		var eu = enemy_units[i]
+		var sq = ss.new()
+		var members = eu.members.duplicate()
+		sq.setup(eu.type, 1, hex, members)
+		sq.name = "E_" + str(i)
+		mn.add_child(sq)
+		sq.update_visual()
+		GameManager.register_squad(sq)
+
+	# Enemy HQ squad at (5, 1)
+	var enemy_hq_member = ms.new("HQ", "command", 50, 60)
+	enemy_hq_member.armor = 5
+	var enemy_hq = ss.new()
+	enemy_hq.setup("command", 1, Vector2i(5, 1), [enemy_hq_member])
+	enemy_hq.name = "HQ_E"
+	enemy_hq.squad_name = "敌方指挥部"
+	enemy_hq.morale = 100
+	enemy_hq.max_morale = 100
+	mn.add_child(enemy_hq)
+	enemy_hq.update_visual()
+	GameManager.register_squad(enemy_hq)
+
+	# Redraw terrain visuals
+	mn.clear_highlights()
+	for q in range(12):
+		for r in range(10):
+			var hex = Vector2i(q, r)
+			if mn.tile_nodes.has(hex):
+				var tid = mn.terrain_grid.get(hex, "plain")
+				var td = GameManager.TERRAIN_DB.get(tid, GameManager.TERRAIN_DB["plain"])
+				mn.tile_nodes[hex].color = td.color
+
+	# Clear mission data
+	GameManager.mission_placed_squads.clear()
+	GameManager.initial_commanders.clear()
+
+func _get_enemy_squads() -> Array:
+	var loader = preload("res://scripts/core/unit_loader.gd").new()
+	loader.ensure_loaded()
+	return loader.get_enemy_units(GameManager.selected_nation)
+
+func _setup_prologue_terrain(mn):
+	for q in range(12):
+		for r in range(10):
+			mn.terrain_grid[Vector2i(q, r)] = "plain"
+
+	# Row 0: all forest (map border)
+	for q in range(12):
+		mn.terrain_grid[Vector2i(q, 0)] = "forest"
+
+	# Row 1: side forests + center plain for HQ
+	mn.terrain_grid[Vector2i(0, 1)] = "forest"
+	mn.terrain_grid[Vector2i(11, 1)] = "forest"
+
+	# Row 3: forest clusters
+	mn.terrain_grid[Vector2i(2, 3)] = "forest"
+	mn.terrain_grid[Vector2i(3, 3)] = "forest"
+	mn.terrain_grid[Vector2i(6, 3)] = "forest"
+	mn.terrain_grid[Vector2i(7, 3)] = "forest"
+
+	# Row 4: village (2 hexes)
+	mn.terrain_grid[Vector2i(4, 4)] = "city"
+	mn.terrain_grid[Vector2i(5, 4)] = "city"
+
+	# Row 5: hills
+	mn.terrain_grid[Vector2i(0, 5)] = "mountain"
+	mn.terrain_grid[Vector2i(1, 5)] = "mountain"
+
+	# Row 6: forest cluster
+	mn.terrain_grid[Vector2i(3, 6)] = "forest"
+	mn.terrain_grid[Vector2i(4, 6)] = "forest"
+	mn.terrain_grid[Vector2i(5, 6)] = "forest"
+
+	# Row 8: side forests
+	mn.terrain_grid[Vector2i(0, 8)] = "forest"
+	mn.terrain_grid[Vector2i(11, 8)] = "forest"
+
+	# Row 9: all forest (map border)
+	for q in range(12):
+		mn.terrain_grid[Vector2i(q, 9)] = "forest"
+
 func _check_win_condition():
 	var ae = 0
+	var ap = 0
 	for sq in GameManager.enemy_squads:
 		if is_instance_valid(sq) and sq.is_alive: ae += 1
+	for sq in GameManager.player_squads:
+		if is_instance_valid(sq) and sq.is_alive: ap += 1
 	if ae == 0:
-		ui.add_log("[系统] 胜利!所有敌人被消灭!")
-		ui.show_victory("胜利!所有敌人被消灭!")
-		if GameManager.world_controller:
-			await get_tree().create_timer(2.0).timeout
-			_return_to_world()
+		var stats = {
+			"kills": _count_enemy_killed(),
+			"remaining": ap,
+			"turns": GameManager.turn_count,
+		}
+		GameManager.enemy_squads.clear()
+		GameManager.player_squads.clear()
+		GameManager.all_squads.clear()
+		_show_victory(true, stats)
+	elif ap == 0:
+		var stats = {"kills": _count_enemy_killed(), "remaining": 0, "turns": GameManager.turn_count}
+		GameManager.enemy_squads.clear()
+		GameManager.player_squads.clear()
+		GameManager.all_squads.clear()
+		_show_victory(false, stats)
+
+func _count_enemy_killed() -> int:
+	return 3  # Placeholder: prologue has 3 enemy squads max
+
+func _show_victory(is_win: bool, stats: Dictionary):
+	ui.show_message("")
+	var victory_scene = preload("res://scenes/ui/victory.tscn").instantiate()
+	add_child(victory_scene)
+	victory_scene.open(is_win, stats)

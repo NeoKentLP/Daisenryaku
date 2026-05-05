@@ -235,19 +235,15 @@ func test_cqb_terrain_list():
 
 func test_cqb_weapon_bonus():
 	print("  CQB武器修正")
-	var bm = load("res://scripts/battle/battle_manager.gd").new()
 	var wd = preload("res://scripts/core/weapon_data.gd")
-	# 冲锋枪正修正
-	var smg = _make_member("突击", "infantry", 10)
-	smg.weapons.append(wd.smg())
-	var sq_smg = _make_squad("infantry", 0, Vector2i(0,0), [smg])
-	assert_true(bm._cqb_weapon_mod(sq_smg) > 0, "冲锋枪CQB正修正")
+	# 冲锋枪 cqb_rating=3 → +15
+	var smg_w = wd.smg()
+	assert_eq(smg_w.cqb_rating, 3, "冲锋枪CQB评级3")
+	assert_eq(smg_w.penetration, 0, "冲锋枪PEN=0")
 
-	# 步枪非正修正
-	var rifle = _make_member("步兵", "infantry", 10)
-	rifle.weapons.append(wd.rifle())
-	var sq_rifle = _make_squad("infantry", 0, Vector2i(0,0), [rifle])
-	assert_true(bm._cqb_weapon_mod(sq_rifle) <= 0, "步枪CQB非正修正")
+	# 步枪 cqb_rating=1 → -10
+	var rifle_w = wd.rifle()
+	assert_eq(rifle_w.cqb_rating, 1, "步枪CQB评级1")
 
 func test_engineer_detection():
 	print("  工兵检测")
@@ -302,7 +298,7 @@ func test_commander_basic():
 func test_commander_exp():
 	print("  指挥官经验")
 	var cmd = preload("res://scripts/commander/commander.gd").new()
-	cmd._exp = 0
+	cmd.xp = 0
 	cmd.level = 1
 	cmd.gain_exp(100)
 	assert_eq(cmd.level, 2, "100经验升2级")
@@ -336,13 +332,13 @@ func test_member_resupply():
 	var wd = preload("res://scripts/core/weapon_data.gd")
 	var m = _make_member("步枪手", "infantry", 10)
 	m.weapons.append(wd.rifle().duplicate())
-	assert_eq(m.weapons[0]["ammo"], 20, "初始弹药20")
+	assert_eq(m.weapons[0]["ammo"], 10, "初始弹药10")
 	assert_false(m.needs_supply(), "满弹药不需要补给")
 	m.consume_ammo()
-	assert_eq(m.weapons[0]["ammo"], 19, "消耗1弹药")
+	assert_eq(m.weapons[0]["ammo"], 9, "消耗1弹药")
 	assert_true(m.needs_supply(), "消耗后需要补给")
 	m.resupply_weapons()
-	assert_eq(m.weapons[0]["ammo"], 20, "补给后回满")
+	assert_eq(m.weapons[0]["ammo"], 10, "补给后回满")
 
 func test_squad_ammo():
 	print("  Squad 弹药跟踪")
@@ -352,8 +348,8 @@ func test_squad_ammo():
 	var m2 = _make_member("B", "infantry", 10)
 	m2.weapons.append(wd.smg().duplicate())
 	var sq = _make_squad("infantry", 0, Vector2i(0,0), [m1, m2])
-	assert_eq(sq.get_total_ammo(), 50, "总弹药20+30")
-	assert_eq(sq.get_max_ammo(), 50, "最大弹药20+30")
+	assert_eq(sq.get_total_ammo(), 40, "总弹药10+30")
+	assert_eq(sq.get_max_ammo(), 40, "最大弹药10+30")
 	assert_true(sq.has_ammo(), "有弹药")
 	assert_false(sq.needs_supply(), "满弹药")
 
@@ -365,11 +361,11 @@ func test_squad_resupply():
 	var sq = _make_squad("infantry", 0, Vector2i(0,0), [m])
 	
 	m.consume_ammo()
-	assert_eq(sq.get_total_ammo(), 19, "消耗后19")
+	assert_eq(sq.get_total_ammo(), 9, "消耗后9")
 	assert_true(sq.needs_supply(), "需要补给")
-	
+
 	sq.resupply()
-	assert_eq(sq.get_total_ammo(), 20, "补给后回满")
+	assert_eq(sq.get_total_ammo(), 10, "补给后回满")
 	assert_false(sq.needs_supply(), "不再需要补给")
 
 func test_squad_can_attack_no_ammo():

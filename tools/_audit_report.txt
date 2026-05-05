@@ -1,0 +1,175 @@
+=== 步兵系 (infantry) ===
+配置: 12基础 + 8道具 = 20
+  T0: 1基础 + 1道具
+  T1: 5基础 + 3道具
+  T2: 4基础 + 3道具
+  T3: 2基础 + 1道具
+
+【基础节点】:
+  T0 步兵班39型                    XP:0  
+  T1 步兵班41型                    XP:10 
+  T1 冲锋枪班                      XP:15 
+  T1 机枪班                       XP:20 
+  T1 工兵班                       XP:25 
+  T1 AT班(PTRD)                 XP:30 
+  T2 步兵班42型                    XP:35 
+  T2 机枪班43型                    XP:40 
+  T2 工兵班43型                    XP:45 
+  T2 AT班43型                    XP:50 
+  T3 步兵班44型                    XP:55 
+  T3 冲锋枪班44型                   XP:60 
+
+【道具节点】:
+  T0 拖拉机民兵                     XP:5   parent=ger_inf_sq39
+  T1 侦察步兵                      XP:10  parent=ger_inf_sq39
+  T1 狙击班                       XP:15  parent=ger_inf_sq39
+  T1 海军步兵                      XP:20  parent=ger_inf_sq39
+  T2 突击工兵                      XP:30  parent=ger_eng_sq
+  T2 侦察骑兵                      XP:35  parent=ger_recce_inf
+  T2 空降猎兵                      XP:40  parent=ger_eng_sq
+  T3 近卫步兵                      XP:65  parent=ger_inf_sq44
+
+
+=== 载具系 (vehicle) ===
+配置: 15基础 + 26道具 = 41
+  T1: 7基础 + 0道具
+  T2: 5基础 + 16道具
+  T3: 3基础 + 10道具
+
+【基础节点】:
+  T1 一号坦克A型                    XP:0  
+  T1 35t                       XP:5  
+  T1 二号F型                      XP:10 
+  T1 38t                       XP:15 
+  T1 三号E型                      XP:20 
+  T1 四号D型                      XP:25 
+  T1 StuG III B(短)             XP:30 
+  T2 三号J型                      XP:30 
+  T2 四号G型(长)                   XP:35 
+  T2 StuG III G(长)             XP:40 
+  T2 东风37mm                    XP:45 
+  T2 虎式E型                      XP:60 
+  T3 豹式D型                      XP:50 
+  T3 猎豹                        XP:55 
+  T3 虎王                        XP:70 
+
+【道具节点】:
+  T2 黄鼠狼II                     XP:25  parent=ger_pz2f
+  T2 Luchs侦察车                  XP:25  parent=ger_pz2f
+  T2 黄鼠狼III                    XP:30  parent=ger_pz38t
+  T2 追猎者38(t)                  XP:30  parent=ger_pz38t
+  T2 喷火坦克III                   XP:35  parent=ger_pz3e
+  T2 黄蜂105mm自行炮                XP:35  parent=ger_pz2f
+  T2 Grille(蟋蟀)                XP:40  parent=ger_pz4d
+  T2 胡蜂150mm自行炮                XP:40  parent=ger_pz4d
+  T2 StuH 42                   XP:45  parent=ger_stug3b
+  T2 Jagdpanzer IV             XP:45  parent=ger_pz4d
+  T2 StuG IV                   XP:45  parent=ger_stug3b
+  T2 东风四联20mm                  XP:50  parent=ger_pz4d
+  T2 灰熊突击炮                     XP:50  parent=ger_pz4d
+  T2 家具货车防空                    XP:50  parent=ger_pz4d
+  T2 四号突击坦克                    XP:55  parent=ger_pz4d
+  T2 虎(P)式                     XP:65  parent=ger_pz6e
+  T3 犀牛88mm                    XP:55  parent=ger_pz4g
+  T3 四号坦克/70                   XP:55  parent=ger_pz4g
+  T3 豹式回收车                     XP:60  parent=ger_pz5d
+  T3 猎虎128mm                   XP:65  parent=ger_pz5d
+  T3 球形闪电                      XP:65  parent=ger_ostwind
+  T3 突击虎380mm                  XP:70  parent=ger_pz6e
+  T3 豹II原型车                    XP:70  parent=ger_pz5d
+  T3 38(t)K型号                  XP:70  parent=ger_pz38t
+  T3 象式重坦歼                     XP:75  parent=ger_pz6e
+  T3 鼠式                        XP:80  parent=ger_pz6b
+
+
+=== 火炮系 (artillery) ===
+配置: 10基础 + 5道具 = 15
+  T0: 2基础 + 0道具
+  T1: 3基础 + 0道具
+  T2: 4基础 + 1道具
+  T3: 1基础 + 4道具
+
+【基础节点】:
+  T0 81mm迫击炮班                  XP:0  
+  T0 105mm leFH18              XP:5  
+  T1 20mm防空班                   XP:10 
+  T1 50mm Pak38                XP:15 
+  T1 88mm Flak18               XP:20 
+  T2 75mm Pak40                XP:25 
+  T2 150mm sFH18               XP:30 
+  T2 37mm防空                    XP:35 
+  T2 火箭炮                       XP:40 
+  T3 120mm重迫击炮                 XP:45 
+
+【道具节点】:
+  T2 四联20mm防空                  XP:35  parent=ger_flak38_20mm
+  T3 Nebelwerfer 42 210mm      XP:50  parent=ger_rocket_mlrs
+  T3 88mm Pak43                XP:55  parent=ger_flak36_88mm
+  T3 210mm Mrs18               XP:60  parent=ger_sfh18
+  T3 128mm Pak44               XP:65  parent=ger_flak36_88mm
+
+
+=== 支援系 (support) ===
+配置: 7基础 + 5道具 = 12
+  T0: 2基础 + 0道具
+  T1: 2基础 + 1道具
+  T2: 2基础 + 3道具
+  T3: 1基础 + 1道具
+
+【基础节点】:
+  T0 Sd.Kfz 221侦察车             XP:0  
+  T0 骡马补给                      XP:5  
+  T1 Sd.Kfz 222                XP:10 
+  T1 卡车补给                      XP:15 
+  T2 Sd.Kfz 234/2美洲狮           XP:20 
+  T2 半履带补给                     XP:25 
+  T3 重型补给卡车                    XP:30 
+
+【道具节点】:
+  T1 摩托化补给                     XP:18  parent=ger_truck_supply
+  T2 Sd.Kfz 250/9侦察            XP:20  parent=ger_sdkfz222
+  T2 架桥工兵                      XP:22  parent=ger_eng_sq
+  T2 Sd.Kfz 234/4美洲狮           XP:28  parent=ger_sdkfz222
+  T3 重型架桥工兵                    XP:28  parent=ger_bridge_eng
+
+
+=== 空中系 (air) ===
+配置: 14基础 + 15道具 = 29
+  T0: 1基础 + 1道具
+  T1: 4基础 + 2道具
+  T2: 5基础 + 3道具
+  T3: 4基础 + 9道具
+
+【基础节点】:
+  T0 Fi156斯多奇                  XP:0  
+  T1 Bf109E-3                  XP:0  
+  T1 Ju87B-2斯图卡                XP:5  
+  T1 Fw189A-1                  XP:5  
+  T1 Bf110C-4                  XP:10 
+  T2 Fw189A-2                  XP:10 
+  T2 Bf109F-4                  XP:15 
+  T2 Ju88A-4                   XP:20 
+  T2 Do217E-4                  XP:25 
+  T2 Bf110G-2                  XP:25 
+  T3 Fw190A-5                  XP:30 
+  T3 He177A-5                  XP:40 
+  T3 Me410A-1                  XP:40 
+  T3 Me262                     XP:45 
+
+【道具节点】:
+  T0 Hs123A                    XP:3   parent=ger_fi156
+  T1 Do17Z                     XP:8   parent=ger_ju87b2
+  T1 Ju52/3m运输机                XP:8   parent=ger_ju87b2
+  T2 He111H                    XP:20  parent=ger_ju88a4
+  T2 Ju87D-3                   XP:25  parent=ger_ju87b2
+  T2 Hs129B-2                  XP:25  parent=ger_ju87b2
+  T3 Ju87G-3                   XP:35  parent=ger_ju87d
+  T3 Fw190F                    XP:35  parent=ger_fw190a5
+  T3 He219                     XP:40  parent=ger_bf110g2
+  T3 Ar234B                    XP:45  parent=ger_he177a5
+  T3 Ju288                     XP:45  parent=ger_he177a5
+  T3 Bf109K-4                  XP:50  parent=ger_bf109f4
+  T3 He162                     XP:50  parent=ger_me262
+  T3 Ta152H                    XP:55  parent=ger_fw190a5
+  T3 Me163彗星                   XP:60  parent=ger_me262
+

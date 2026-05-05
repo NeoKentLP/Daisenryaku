@@ -444,43 +444,6 @@
     ]
   },
   {
-    "id": "ger_recce_inf",
-    "name": "侦察步兵",
-    "nation": "germany",
-    "type": "infantry",
-    "tech_tier": 1,
-    "cost": 250,
-    "move_type": "foot",
-    "initiative": 6,
-    "vision": 4,
-    "members": [
-      {
-        "role": "侦察兵",
-        "count": 2,
-        "hp": 10,
-        "bs": 65,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 2,
-        "weapons": [
-          "kar98k"
-        ]
-      },
-      {
-        "role": "步枪手",
-        "count": 2,
-        "hp": 10,
-        "bs": 60,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 0,
-        "weapons": [
-          "kar98k"
-        ]
-      }
-    ]
-  },
-  {
     "id": "ger_sniper_sq",
     "name": "狙击班",
     "nation": "germany",
@@ -518,125 +481,26 @@
     ]
   },
   {
-    "id": "ger_assault_eng",
-    "name": "突击工兵",
-    "nation": "germany",
-    "type": "infantry",
-    "tech_tier": 2,
-    "cost": 350,
-    "move_type": "foot",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "突击工兵",
-        "count": 5,
-        "hp": 10,
-        "bs": 65,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 0,
-        "weapons": [
-          "mp40"
-        ]
-      },
-      {
-        "role": "喷火兵",
-        "count": 1,
-        "hp": 12,
-        "bs": 60,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 0,
-        "weapons": [
-          "flammenwerfer35"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_navy_inf",
-    "name": "海军步兵",
+    "id": "ger_mountain_inf",
+    "name": "山地猎兵",
     "nation": "germany",
     "type": "infantry",
     "tech_tier": 1,
-    "cost": 220,
-    "move_type": "foot",
-    "initiative": 4,
-    "vision": 2,
-    "members": [
-      {
-        "role": "步兵",
-        "count": 6,
-        "hp": 10,
-        "bs": 60,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 0,
-        "weapons": [
-          "kar98k"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_tractor_militia",
-    "name": "拖拉机民兵",
-    "nation": "germany",
-    "type": "infantry",
-    "tech_tier": 0,
-    "cost": 80,
-    "move_type": "foot",
-    "initiative": 2,
-    "vision": 1,
-    "members": [
-      {
-        "role": "民兵",
-        "count": 6,
-        "hp": 8,
-        "bs": 40,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 0,
-        "weapons": [
-          "gewehr98"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_guard_inf",
-    "name": "近卫步兵",
-    "nation": "germany",
-    "type": "infantry",
-    "tech_tier": 3,
-    "cost": 320,
+    "cost": 300,
     "move_type": "foot",
     "initiative": 5,
     "vision": 2,
     "members": [
       {
-        "role": "警卫",
-        "count": 4,
-        "hp": 12,
-        "bs": 70,
-        "armor": 0,
-        "evasion": 0,
-        "conceal": 0,
-        "weapons": [
-          "stg44"
-        ]
-      },
-      {
-        "role": "机枪手",
-        "count": 1,
-        "hp": 12,
+        "role": "山地步兵",
+        "count": 6,
+        "hp": 10,
         "bs": 65,
         "armor": 0,
         "evasion": 0,
-        "conceal": 0,
+        "conceal": 1,
         "weapons": [
-          "mg42"
+          "g43"
         ]
       }
     ]
@@ -679,30 +543,30 @@
     ]
   },
   {
-    "id": "ger_recce_cav",
-    "name": "侦察骑兵",
+    "id": "ger_panzerschreck_sq",
+    "name": "坦克杀手班",
     "nation": "germany",
     "type": "infantry",
     "tech_tier": 2,
-    "cost": 280,
+    "cost": 300,
     "move_type": "foot",
-    "initiative": 6,
-    "vision": 5,
+    "initiative": 3,
+    "vision": 2,
     "members": [
       {
-        "role": "骑兵侦察",
-        "count": 2,
+        "role": "反坦克手",
+        "count": 3,
         "hp": 10,
-        "bs": 65,
+        "bs": 60,
         "armor": 0,
         "evasion": 0,
-        "conceal": 2,
+        "conceal": 0,
         "weapons": [
-          "kar98k"
+          "panzerschreck"
         ]
       },
       {
-        "role": "步枪手",
+        "role": "护卫",
         "count": 2,
         "hp": 10,
         "bs": 60,
@@ -710,7 +574,82 @@
         "evasion": 0,
         "conceal": 0,
         "weapons": [
-          "kar98k"
+          "mp40"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ger_stormtrooper",
+    "name": "风暴突击队",
+    "nation": "germany",
+    "type": "infantry",
+    "tech_tier": 3,
+    "cost": 350,
+    "move_type": "foot",
+    "initiative": 6,
+    "vision": 2,
+    "members": [
+      {
+        "role": "突击兵",
+        "count": 4,
+        "hp": 12,
+        "bs": 70,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "stg44"
+        ]
+      },
+      {
+        "role": "冲锋枪手",
+        "count": 2,
+        "hp": 12,
+        "bs": 65,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "mp40"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ger_volkssturm",
+    "name": "国民冲锋队",
+    "nation": "germany",
+    "type": "infantry",
+    "tech_tier": 3,
+    "cost": 60,
+    "move_type": "foot",
+    "initiative": 2,
+    "vision": 1,
+    "members": [
+      {
+        "role": "民兵(铁拳)",
+        "count": 4,
+        "hp": 7,
+        "bs": 35,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "gewehr98",
+          "panzerfaust"
+        ]
+      },
+      {
+        "role": "民兵",
+        "count": 4,
+        "hp": 7,
+        "bs": 35,
+        "armor": 0,
+        "evasion": 0,
+        "conceal": 0,
+        "weapons": [
+          "gewehr98"
         ]
       }
     ]
@@ -1103,61 +1042,11 @@
     ]
   },
   {
-    "id": "ger_marder2",
-    "name": "黄鼠狼II",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 900,
-    "move_type": "track",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 15,
-        "bs": 65,
-        "armor": 4,
-        "evasion": 5,
-        "conceal": 0,
-        "weapons": [
-          "kwk40_75mm_L43"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_marder3",
-    "name": "黄鼠狼III",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 950,
-    "move_type": "track",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 15,
-        "bs": 65,
-        "armor": 4,
-        "evasion": 5,
-        "conceal": 0,
-        "weapons": [
-          "kwk40_75mm_L43"
-        ]
-      }
-    ]
-  },
-  {
     "id": "ger_grille",
     "name": "Grille(蟋蟀)",
     "nation": "germany",
     "type": "vehicle",
-    "tech_tier": 2,
+    "tech_tier": 1,
     "cost": 1100,
     "move_type": "track",
     "initiative": 4,
@@ -1173,6 +1062,31 @@
         "conceal": 0,
         "weapons": [
           "sfh18"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ger_marder3",
+    "name": "黄鼠狼III",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 950,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 65,
+        "armor": 4,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "kwk40_75mm_L43"
         ]
       }
     ]
@@ -1203,37 +1117,11 @@
     ]
   },
   {
-    "id": "ger_wirbelwind",
-    "name": "东风四联20mm",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 1400,
-    "move_type": "track",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 25,
-        "bs": 65,
-        "armor": 7,
-        "evasion": 3,
-        "conceal": 0,
-        "weapons": [
-          "flak38_20mm",
-          "mg34_coaxial"
-        ]
-      }
-    ]
-  },
-  {
     "id": "ger_nashorn",
     "name": "犀牛88mm",
     "nation": "germany",
     "type": "vehicle",
-    "tech_tier": 3,
+    "tech_tier": 2,
     "cost": 1700,
     "move_type": "track",
     "initiative": 5,
@@ -1249,56 +1137,6 @@
         "conceal": 0,
         "weapons": [
           "flak36_88mm"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_sturmtiger",
-    "name": "突击虎380mm",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 3,
-    "cost": 2200,
-    "move_type": "track",
-    "initiative": 3,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 30,
-        "bs": 60,
-        "armor": 12,
-        "evasion": 1,
-        "conceal": 0,
-        "weapons": [
-          "sfh18"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_bergepanther",
-    "name": "豹式回收车",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 3,
-    "cost": 1200,
-    "move_type": "track",
-    "initiative": 4,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 20,
-        "bs": 60,
-        "armor": 8,
-        "evasion": 3,
-        "conceal": 0,
-        "weapons": [
-          "mg34_coaxial"
         ]
       }
     ]
@@ -1380,6 +1218,82 @@
     ]
   },
   {
+    "id": "ger_wirbelwind",
+    "name": "东风四联20mm",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 2,
+    "cost": 1400,
+    "move_type": "track",
+    "initiative": 5,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 25,
+        "bs": 65,
+        "armor": 7,
+        "evasion": 3,
+        "conceal": 0,
+        "weapons": [
+          "flak38_20mm",
+          "mg34_coaxial"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ger_sturmtiger",
+    "name": "突击虎380mm",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 3,
+    "cost": 2200,
+    "move_type": "track",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 30,
+        "bs": 60,
+        "armor": 12,
+        "evasion": 1,
+        "conceal": 0,
+        "weapons": [
+          "sfh18"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ger_bison_spg",
+    "name": "野牛自行火炮",
+    "nation": "germany",
+    "type": "vehicle",
+    "tech_tier": 1,
+    "cost": 1000,
+    "move_type": "track",
+    "initiative": 3,
+    "vision": 2,
+    "members": [
+      {
+        "role": "车组",
+        "count": 3,
+        "hp": 15,
+        "bs": 55,
+        "armor": 2,
+        "evasion": 5,
+        "conceal": 0,
+        "weapons": [
+          "sfh18"
+        ]
+      }
+    ]
+  },
+  {
     "id": "ger_jagdpanzer38t",
     "name": "追猎者38(t)",
     "nation": "germany",
@@ -1430,32 +1344,6 @@
     ]
   },
   {
-    "id": "ger_panzer_iv_70",
-    "name": "四号坦克/70",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 3,
-    "cost": 1600,
-    "move_type": "track",
-    "initiative": 6,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 25,
-        "bs": 75,
-        "armor": 10,
-        "evasion": 3,
-        "conceal": 0,
-        "weapons": [
-          "kwk42_75mm_L70",
-          "mg34_coaxial"
-        ]
-      }
-    ]
-  },
-  {
     "id": "ger_brummbar",
     "name": "灰熊突击炮",
     "nation": "germany",
@@ -1481,56 +1369,6 @@
     ]
   },
   {
-    "id": "ger_stug_iv",
-    "name": "StuG IV",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 1200,
-    "move_type": "track",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 25,
-        "bs": 65,
-        "armor": 8,
-        "evasion": 3,
-        "conceal": 0,
-        "weapons": [
-          "stuk40_75mm"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_mobelwagen",
-    "name": "家具货车防空",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 1200,
-    "move_type": "track",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 25,
-        "bs": 65,
-        "armor": 7,
-        "evasion": 3,
-        "conceal": 0,
-        "weapons": [
-          "flak37_37mm"
-        ]
-      }
-    ]
-  },
-  {
     "id": "ger_kugelblitz",
     "name": "球形闪电",
     "nation": "germany",
@@ -1551,32 +1389,6 @@
         "conceal": 0,
         "weapons": [
           "flak38_20mm",
-          "mg34_coaxial"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_pz2_luchs",
-    "name": "Luchs侦察车",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 1100,
-    "move_type": "track",
-    "initiative": 7,
-    "vision": 5,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 20,
-        "bs": 65,
-        "armor": 4,
-        "evasion": 6,
-        "conceal": 0,
-        "weapons": [
-          "kwk30_2cm",
           "mg34_coaxial"
         ]
       }
@@ -1705,56 +1517,6 @@
         "conceal": 0,
         "weapons": [
           "flak36_88mm"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_hetzer_75",
-    "name": "38(t)K型号",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 3,
-    "cost": 1200,
-    "move_type": "track",
-    "initiative": 5,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 20,
-        "bs": 70,
-        "armor": 5,
-        "evasion": 4,
-        "conceal": 0,
-        "weapons": [
-          "kwk40_75mm_L48"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "ger_sturmpanzer4",
-    "name": "四号突击坦克",
-    "nation": "germany",
-    "type": "vehicle",
-    "tech_tier": 2,
-    "cost": 1500,
-    "move_type": "track",
-    "initiative": 4,
-    "vision": 2,
-    "members": [
-      {
-        "role": "车组",
-        "count": 3,
-        "hp": 30,
-        "bs": 65,
-        "armor": 8,
-        "evasion": 3,
-        "conceal": 0,
-        "weapons": [
-          "sfh18"
         ]
       }
     ]
@@ -2138,7 +1900,7 @@
     "id": "ger_sdkfz221",
     "name": "Sd.Kfz 221侦察车",
     "nation": "germany",
-    "type": "vehicle",
+    "type": "support",
     "tech_tier": 0,
     "cost": 850,
     "move_type": "track",
@@ -2163,7 +1925,7 @@
     "id": "ger_sdkfz222",
     "name": "Sd.Kfz 222",
     "nation": "germany",
-    "type": "vehicle",
+    "type": "support",
     "tech_tier": 1,
     "cost": 1000,
     "move_type": "track",
@@ -2189,7 +1951,7 @@
     "id": "ger_sdkfz234_2",
     "name": "Sd.Kfz 234/2美洲狮",
     "nation": "germany",
-    "type": "vehicle",
+    "type": "support",
     "tech_tier": 2,
     "cost": 1700,
     "move_type": "track",
@@ -3163,7 +2925,7 @@
     "id": "ger_sdkfz250_9",
     "name": "Sd.Kfz 250/9侦察",
     "nation": "germany",
-    "type": "vehicle",
+    "type": "support",
     "tech_tier": 2,
     "cost": 900,
     "move_type": "track",
@@ -3189,7 +2951,7 @@
     "id": "ger_sdkfz234_4",
     "name": "Sd.Kfz 234/4美洲狮",
     "nation": "germany",
-    "type": "vehicle",
+    "type": "support",
     "tech_tier": 2,
     "cost": 1600,
     "move_type": "track",
@@ -3261,26 +3023,26 @@
     ]
   },
   {
-    "id": "ger_mot_supply",
-    "name": "摩托化补给",
+    "id": "ger_heavy_engineer",
+    "name": "重型工兵",
     "nation": "germany",
-    "type": "support",
-    "tech_tier": 1,
-    "cost": 200,
-    "move_type": "wheel",
-    "initiative": 2,
-    "vision": 2,
+    "type": "infantry",
+    "tech_tier": 3,
+    "cost": 400,
+    "move_type": "foot",
+    "initiative": 5,
+    "vision": 3,
     "members": [
       {
-        "role": "后勤",
-        "count": 2,
-        "hp": 10,
-        "bs": 50,
+        "role": "重工兵",
+        "count": 6,
+        "hp": 12,
+        "bs": 65,
         "armor": 0,
         "evasion": 0,
         "conceal": 0,
         "weapons": [
-          "kar98k"
+          "g43"
         ]
       }
     ]

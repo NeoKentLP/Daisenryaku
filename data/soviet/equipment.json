@@ -120,18 +120,6 @@
     "source": "market"
   },
   {
-    "id": "sov_yak9r",
-    "name": "Yak-9R侦察型",
-    "rarity": "green",
-    "nation": "soviet",
-    "applicable_branches": [
-      "air"
-    ],
-    "replaces_unit_type": "sov_yak9r",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
     "id": "sov_sniper_sq",
     "name": "狙击班",
     "rarity": "purple",
@@ -430,30 +418,6 @@
     ],
     "replaces_unit_type": "sov_mot_recce",
     "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
-    "id": "sov_heavy_bridge",
-    "name": "重型架桥工兵",
-    "rarity": "purple",
-    "nation": "soviet",
-    "applicable_branches": [
-      "support"
-    ],
-    "replaces_unit_type": "sov_heavy_bridge",
-    "cost_formula": "base × 3.0",
-    "source": "market"
-  },
-  {
-    "id": "sov_arv_recovery",
-    "name": "ARV回收",
-    "rarity": "purple",
-    "nation": "soviet",
-    "applicable_branches": [
-      "support"
-    ],
-    "replaces_unit_type": "sov_arv_recovery",
-    "cost_formula": "base × 3.0",
     "source": "market"
   },
   {

@@ -21,7 +21,16 @@ static func create_defaults() -> Dictionary:
 	db["recon"] = _make_recon()
 	db["anti_air"] = _make_anti_air()
 	db["transport"] = _make_transport()
+	db["command"] = _make_command()
 	return db
+
+static func _make_command():
+	var t = new()
+	t.id = "command"
+	t.display_name = "指挥部"
+	t.cost = 0
+	t.member_types = ["指挥"]
+	return t
 
 static func _make_infantry():
 	var t = new()

@@ -5,12 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b881f38-6124-4dbb-807d-4c4a383d2099" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.godot/editor/editor_layout.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/editor_layout.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/editor/project_metadata.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/project_metadata.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/editor/script_editor_cache.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/script_editor_cache.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/uid_cache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/uid_cache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoload/game_manager.gd" beforeDir="false" afterPath="$PROJECT_DIR$/autoload/game_manager.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/_gen_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/_gen_all.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/germany/equipment.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/germany/equipment.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/germany/tree.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/germany/tree.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/germany/units.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/germany/units.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/germany/weapons.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/germany/weapons.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/skills.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/skills.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/soviet/weapons.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/soviet/weapons.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/soviet/equipment.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/soviet/equipment.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/soviet/tree.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/soviet/tree.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/soviet/units.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/soviet/units.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/DESIGN_0.1.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DESIGN_0.1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/DEVELOPMENT.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DEVELOPMENT.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/ISSUES.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/ISSUES.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/SESSION_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/SESSION_SUMMARY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/units/unit_data.gd" beforeDir="false" afterPath="$PROJECT_DIR$/resources/units/unit_data.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/ai/ai_controller.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/ai/ai_controller.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/battle/battle_manager.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/battle/battle_manager.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/battle/main_controller.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/battle/main_controller.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/commander/commander.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/commander/commander.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/core/hex_util.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/core/hex_util.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/core/member.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/core/member.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/core/squad.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/core/squad.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/core/unit_type_data.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/core/unit_type_data.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/core/weapon_data.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/core/weapon_data.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/map/hex_map.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/map/hex_map.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/ui/squad_detail.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/ui/squad_detail.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/ui/ui_manager.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/ui/ui_manager.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_full.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_full.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_smoke.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_smoke.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/org_viewer.html" beforeDir="false" afterPath="$PROJECT_DIR$/tools/org_viewer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/org_viewer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/org_viewer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

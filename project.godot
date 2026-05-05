@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="大战略"
 config/description="二战战棋游戏"
-run/main_scene="res://scenes/world/world_map.tscn"
+run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://autoload/game_manager.gd"
 HexUtil="*res://scripts/core/hex_util.gd"
+SceneManager="*res://scripts/ui/scene_manager.gd"
 MCPRuntime="*uid://dq3camkqobpnr"
 
 [display]

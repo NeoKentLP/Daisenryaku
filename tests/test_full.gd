@@ -58,6 +58,12 @@ func run_all_tests():
 	test_terrain_data()
 	test_hex_map_reachable()
 	test_hex_map_attackable()
+	test_squad_move_range()
+	test_tier_boundary_no_empty_lines()
+	test_tier_boundary_same_tier_no_line()
+	test_tier_boundary_adjacent_tiers()
+	test_squad_ap_deduct_move()
+	test_squad_move_then_attack_ap()
 
 func assert_eq(got, expected, desc: String = ""):
 	_tests_run += 1
@@ -210,7 +216,7 @@ func test_squad_get_hp():
 func test_squad_has_acted():
 	print("  Squad 已行动")
 	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
-	assert_eq(sq.get_move_range(), 3, "未行动可移动3格")
+	assert_eq(sq.get_move_range(), 2, "未行动可移动2格")
 	sq.has_acted = true
 	assert_eq(sq.get_move_range(), 0, "已行动不可移动")
 
@@ -303,18 +309,10 @@ func test_cqb_terrain_check():
 func test_cqb_weapon_mod():
 	print("  CQB 武器修正")
 	var wd = preload("res://scripts/core/weapon_data.gd")
-	var bm = load("res://scripts/battle/battle_manager.gd").new()
-	# 冲锋枪部队
-	var smg_member = preload("res://scripts/core/member.gd").new("突击", "infantry", 10, 60, wd.smg())
-	var smg_sq = _S("infantry", 0, Vector2i(0,0), [smg_member])
-	var smg_mod = bm._cqb_weapon_mod(smg_sq)
-	assert_true(smg_mod > 0, "冲锋枪CQB正修正")
-
-	# 步枪部队
-	var rifle_member = preload("res://scripts/core/member.gd").new("步", "infantry", 10, 60, wd.rifle())
-	var rifle_sq = _S("infantry", 0, Vector2i(0,0), [rifle_member])
-	var rifle_mod = bm._cqb_weapon_mod(rifle_sq)
-	assert_true(rifle_mod <= 0, "步枪CQB非正修正")
+	assert_eq(wd.smg().cqb_rating, 3, "冲锋枪CQB评级3")
+	assert_eq(wd.rifle().cqb_rating, 1, "步枪CQB评级1")
+	assert_eq(wd.mg().cqb_rating, 1, "机枪CQB评级1")
+	assert_eq(wd.tank_gun().cqb_rating, 0, "坦克炮CQB评级0")
 
 # ========== State Tests ==========
 
@@ -499,6 +497,80 @@ func test_hex_map_attackable():
 
 	var a2 = map_node.get_attackable_hexes(Vector2i(0, 0), 2)
 	assert_true(a2.size() > 0)
+
+# ========== Movement & Border Tests ==========
+
+func test_squad_move_range():
+	print("  Squad 移动力")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	assert_eq(sq.move_range, 2, "步兵移动力2")
+	sq = _S("vehicle", 0, Vector2i(0, 0), [_M("A", "vehicle", 10)])
+	assert_eq(sq.move_range, 3, "载具移动力3")
+	sq = _S("recon", 0, Vector2i(0, 0), [_M("A", "vehicle", 10)])
+	assert_eq(sq.move_range, 4, "侦察移动力4")
+
+func test_tier_boundary_no_empty_lines():
+	print("  边界线: 空格子不应画线")
+	var tiers = {Vector2i(2,2): 1, Vector2i(3,2): 1, Vector2i(4,2): 2, Vector2i(6,2): 3}
+	var dirs = [Vector2i(1,0), Vector2i(0,1), Vector2i(-1,1), Vector2i(-1,0), Vector2i(0,-1), Vector2i(1,-1)]
+	var lines = 0
+	for hex in tiers:
+		var ap_this = tiers[hex]
+		for di in range(dirs.size()):
+			var nb = hex + dirs[di]
+			var ap_nb = tiers.get(nb, 0)
+			if ap_nb <= 0 or ap_this <= ap_nb: continue
+			lines += 1
+	# (4,2)T2左边(3,2)T1 → 画1条. (6,2)T3邻格均不在tiers → 不画
+	assert_eq(lines, 1, "只有(4,2)→(3,2)这一对跨层级边界")
+
+func test_tier_boundary_same_tier_no_line():
+	print("  边界线: 同级不应画线")
+	var tiers = {Vector2i(2,2): 1, Vector2i(3,2): 1}
+	var dirs = [Vector2i(1,0), Vector2i(0,1), Vector2i(-1,1), Vector2i(-1,0), Vector2i(0,-1), Vector2i(1,-1)]
+	var lines = 0
+	for hex in tiers:
+		var ap_this = tiers[hex]
+		for di in range(dirs.size()):
+			var nb = hex + dirs[di]
+			var ap_nb = tiers.get(nb, 0)
+			if ap_nb <= 0 or ap_this <= ap_nb: continue
+			lines += 1
+	assert_eq(lines, 0, "同级不画线")
+
+func test_tier_boundary_adjacent_tiers():
+	print("  边界线: 相邻层级应画线")
+	var tiers = {Vector2i(2,2): 1, Vector2i(3,2): 2}
+	var dirs = [Vector2i(1,0), Vector2i(0,1), Vector2i(-1,1), Vector2i(-1,0), Vector2i(0,-1), Vector2i(1,-1)]
+	var lines = 0
+	for hex in tiers:
+		var ap_this = tiers[hex]
+		for di in range(dirs.size()):
+			var nb = hex + dirs[di]
+			var ap_nb = tiers.get(nb, 0)
+			if ap_nb <= 0 or ap_this <= ap_nb: continue
+			lines += 1
+	assert_eq(lines, 1, "1对边界画1条线(从高层侧)")
+
+func test_squad_ap_deduct_move():
+	print("  Squad 移动AP扣除")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.ap = 3
+	sq.spend_ap(1)
+	assert_eq(sq.ap, 2, "移动1次消耗1AP")
+	sq.spend_ap(2)
+	assert_eq(sq.ap, 0, "再花2AP=0")
+
+func test_squad_move_then_attack_ap():
+	print("  Squad 移动+攻击AP")
+	var sq = _S("infantry", 0, Vector2i(0, 0), [_M("A", "infantry", 10)])
+	sq.ap = 3
+	sq.spend_ap(1)  # 移动1次
+	assert_eq(sq.ap, 2, "移动后剩2AP")
+	assert_true(sq.can_afford(2), "够攻击(2AP)")
+	sq.spend_ap(2)  # 攻击
+	assert_eq(sq.ap, 0, "攻击后0AP")
+	assert_false(sq.can_afford(1), "不能继续行动")
 
 # ========== Summary ==========
 

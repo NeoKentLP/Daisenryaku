@@ -1,17 +1,5 @@
 [
   {
-    "id": "ger_recce_inf",
-    "name": "侦察步兵",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "infantry"
-    ],
-    "replaces_unit_type": "ger_recce_inf",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
     "id": "ger_sniper_sq",
     "name": "狙击班",
     "rarity": "purple",
@@ -24,52 +12,16 @@
     "source": "market"
   },
   {
-    "id": "ger_assault_eng",
-    "name": "突击工兵",
+    "id": "ger_mountain_inf",
+    "name": "山地猎兵",
     "rarity": "green",
     "nation": "germany",
     "applicable_branches": [
       "infantry"
     ],
-    "replaces_unit_type": "ger_assault_eng",
+    "replaces_unit_type": "ger_mountain_inf",
     "cost_formula": "base × 1.5",
     "source": "market"
-  },
-  {
-    "id": "ger_navy_inf",
-    "name": "海军步兵",
-    "rarity": "purple",
-    "nation": "germany",
-    "applicable_branches": [
-      "infantry"
-    ],
-    "replaces_unit_type": "ger_navy_inf",
-    "cost_formula": "base × 3.0",
-    "source": "market"
-  },
-  {
-    "id": "ger_tractor_militia",
-    "name": "拖拉机民兵",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "infantry"
-    ],
-    "replaces_unit_type": "ger_tractor_militia",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
-    "id": "ger_guard_inf",
-    "name": "近卫步兵",
-    "rarity": "orange",
-    "nation": "germany",
-    "applicable_branches": [
-      "infantry"
-    ],
-    "replaces_unit_type": "ger_guard_inf",
-    "cost_formula": "base × 6.0",
-    "source": "loot"
   },
   {
     "id": "ger_airborne",
@@ -84,28 +36,40 @@
     "source": "market"
   },
   {
-    "id": "ger_recce_cav",
-    "name": "侦察骑兵",
+    "id": "ger_panzerschreck_sq",
+    "name": "坦克杀手班",
     "rarity": "green",
     "nation": "germany",
     "applicable_branches": [
       "infantry"
     ],
-    "replaces_unit_type": "ger_recce_cav",
+    "replaces_unit_type": "ger_panzerschreck_sq",
     "cost_formula": "base × 1.5",
     "source": "market"
   },
   {
-    "id": "ger_marder2",
-    "name": "黄鼠狼II",
+    "id": "ger_stormtrooper",
+    "name": "风暴突击队",
+    "rarity": "purple",
+    "nation": "germany",
+    "applicable_branches": [
+      "infantry"
+    ],
+    "replaces_unit_type": "ger_stormtrooper",
+    "cost_formula": "base × 3.0",
+    "source": "loot"
+  },
+  {
+    "id": "ger_volkssturm",
+    "name": "国民冲锋队",
     "rarity": "green",
     "nation": "germany",
     "applicable_branches": [
-      "vehicle"
+      "infantry"
     ],
-    "replaces_unit_type": "ger_marder2",
+    "replaces_unit_type": "ger_volkssturm",
     "cost_formula": "base × 1.5",
-    "source": "market"
+    "source": "loot"
   },
   {
     "id": "ger_marder3",
@@ -120,14 +84,14 @@
     "source": "market"
   },
   {
-    "id": "ger_grille",
-    "name": "Grille(蟋蟀)",
+    "id": "ger_bison_spg",
+    "name": "野牛自行火炮",
     "rarity": "green",
     "nation": "germany",
     "applicable_branches": [
       "vehicle"
     ],
-    "replaces_unit_type": "ger_grille",
+    "replaces_unit_type": "ger_bison_spg",
     "cost_formula": "base × 1.5",
     "source": "market"
   },
@@ -178,18 +142,6 @@
     "replaces_unit_type": "ger_sturmtiger",
     "cost_formula": "base × 6.0",
     "source": "loot"
-  },
-  {
-    "id": "ger_bergepanther",
-    "name": "豹式回收车",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_bergepanther",
-    "cost_formula": "base × 1.5",
-    "source": "market"
   },
   {
     "id": "ger_jagdtiger",
@@ -252,18 +204,6 @@
     "source": "market"
   },
   {
-    "id": "ger_panzer_iv_70",
-    "name": "四号坦克/70",
-    "rarity": "purple",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_panzer_iv_70",
-    "cost_formula": "base × 3.0",
-    "source": "market"
-  },
-  {
     "id": "ger_brummbar",
     "name": "灰熊突击炮",
     "rarity": "green",
@@ -272,30 +212,6 @@
       "vehicle"
     ],
     "replaces_unit_type": "ger_brummbar",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
-    "id": "ger_stug_iv",
-    "name": "StuG IV",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_stug_iv",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
-    "id": "ger_mobelwagen",
-    "name": "家具货车防空",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_mobelwagen",
     "cost_formula": "base × 1.5",
     "source": "market"
   },
@@ -310,18 +226,6 @@
     "replaces_unit_type": "ger_kugelblitz",
     "cost_formula": "base × 3.0",
     "source": "loot"
-  },
-  {
-    "id": "ger_pz2_luchs",
-    "name": "Luchs侦察车",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_pz2_luchs",
-    "cost_formula": "base × 1.5",
-    "source": "market"
   },
   {
     "id": "ger_hummel",
@@ -381,18 +285,6 @@
     ],
     "replaces_unit_type": "ger_elefant",
     "cost_formula": "base × 6.0",
-    "source": "loot"
-  },
-  {
-    "id": "ger_sturmpanzer4",
-    "name": "四号突击坦克",
-    "rarity": "purple",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_sturmpanzer4",
-    "cost_formula": "base × 3.0",
     "source": "loot"
   },
   {
@@ -456,18 +348,6 @@
     "source": "loot"
   },
   {
-    "id": "ger_sdkfz250_9",
-    "name": "Sd.Kfz 250/9侦察",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "support"
-    ],
-    "replaces_unit_type": "ger_sdkfz250_9",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
     "id": "ger_sdkfz234_4",
     "name": "Sd.Kfz 234/4美洲狮",
     "rarity": "purple",
@@ -480,52 +360,16 @@
     "source": "market"
   },
   {
-    "id": "ger_bridge_eng",
-    "name": "架桥工兵",
+    "id": "ger_heavy_engineer",
+    "name": "重型工兵",
     "rarity": "purple",
     "nation": "germany",
     "applicable_branches": [
       "support"
     ],
-    "replaces_unit_type": "ger_bridge_eng",
+    "replaces_unit_type": "ger_heavy_engineer",
     "cost_formula": "base × 3.0",
-    "source": "market"
-  },
-  {
-    "id": "ger_heavy_bridge_eng",
-    "name": "重型架桥工兵",
-    "rarity": "purple",
-    "nation": "germany",
-    "applicable_branches": [
-      "support"
-    ],
-    "replaces_unit_type": "ger_heavy_bridge_eng",
-    "cost_formula": "base × 3.0",
-    "source": "market"
-  },
-  {
-    "id": "ger_mot_supply",
-    "name": "摩托化补给",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "support"
-    ],
-    "replaces_unit_type": "ger_mot_supply",
-    "cost_formula": "base × 1.5",
-    "source": "market"
-  },
-  {
-    "id": "ger_hetzer_75",
-    "name": "38(t)K型号",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "vehicle"
-    ],
-    "replaces_unit_type": "ger_hetzer_75",
-    "cost_formula": "base × 1.5",
-    "source": "market"
+    "source": "loot"
   },
   {
     "id": "ger_hs123a",
@@ -694,18 +538,6 @@
     "replaces_unit_type": "ger_ju288",
     "cost_formula": "base × 3.0",
     "source": "loot"
-  },
-  {
-    "id": "ger_ju52",
-    "name": "Ju52/3m运输机",
-    "rarity": "green",
-    "nation": "germany",
-    "applicable_branches": [
-      "air"
-    ],
-    "replaces_unit_type": "ger_ju52",
-    "cost_formula": "base × 1.5",
-    "source": "market"
   },
   {
     "id": "ger_fw189a2",

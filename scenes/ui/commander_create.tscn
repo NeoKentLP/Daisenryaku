@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://d1tb5htyny53k"]
+
+[ext_resource type="Script" uid="uid://cjmor16576lok" path="res://scripts/ui/commander_create.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_n"]
+bg_color = Color(1, 1, 1, 0.04)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_h"]
+bg_color = Color(1, 1, 1, 0.1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_confirm_n"]
+bg_color = Color(0.27, 0.67, 0.53, 0.15)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27, 0.67, 0.53, 0.3)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_confirm_h"]
+bg_color = Color(0.27, 0.67, 0.53, 0.25)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.27, 0.67, 0.53, 0.4)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CommanderCreate" type="CanvasLayer" unique_id=128971866]
+script = ExtResource("1")
+
+[node name="Bg" type="ColorRect" parent="." unique_id=1106592756]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0745, 0.0863, 0.1373, 1)
+
+[node name="Header" type="VBoxContainer" parent="." unique_id=1989414920]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 220.0
+offset_right = 200.0
+offset_bottom = 290.0
+grow_horizontal = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Header" unique_id=1159766653]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "创建指挥官"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Header" unique_id=1339622556]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.53, 0.53, 0.53, 1)
+theme_override_font_sizes/font_size = 11
+text = "卡槽1为主角（英雄），卡槽2-4为随机指挥官"
+horizontal_alignment = 1
+
+[node name="CardRow" type="CenterContainer" parent="." unique_id=1015684114]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -470.0
+offset_top = -190.0
+offset_right = 470.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardBox" type="HBoxContainer" parent="CardRow" unique_id=1241101389]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Footer" type="HBoxContainer" parent="." unique_id=1682419835]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -280.0
+offset_right = 160.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BackBtn" type="Button" parent="Footer" unique_id=683307879]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_h")
+text = "← 返回上一步"
+
+[node name="ConfirmBtn" type="Button" parent="Footer" unique_id=499879018]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_confirm_n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_confirm_h")
+text = "确认部署"

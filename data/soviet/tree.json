@@ -1,7 +1,7 @@
 [
   {
     "id": "sov_i16",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 0,
     "unlock_xp": 0,
@@ -11,7 +11,7 @@
   },
   {
     "id": "sov_lagg3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -21,7 +21,7 @@
   },
   {
     "id": "sov_yak9",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 2,
     "unlock_xp": 20,
@@ -31,7 +31,7 @@
   },
   {
     "id": "sov_la7",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 3,
     "unlock_xp": 30,
@@ -41,7 +41,7 @@
   },
   {
     "id": "sov_sb2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 0,
     "unlock_xp": 5,
@@ -51,7 +51,7 @@
   },
   {
     "id": "sov_il2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 2,
     "unlock_xp": 15,
@@ -61,7 +61,7 @@
   },
   {
     "id": "sov_il2m3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 2,
     "unlock_xp": 20,
@@ -71,7 +71,7 @@
   },
   {
     "id": "sov_pe2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -81,7 +81,7 @@
   },
   {
     "id": "sov_pe3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 2,
     "unlock_xp": 20,
@@ -91,7 +91,7 @@
   },
   {
     "id": "sov_r5",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 0,
     "unlock_xp": 0,
@@ -101,7 +101,7 @@
   },
   {
     "id": "sov_u2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 0,
     "unlock_xp": 3,
@@ -110,8 +110,18 @@
     "equipment": false
   },
   {
+    "id": "sov_yak9r",
+    "nation": "soviet",
+    "branch": "air",
+    "tech_tier_required": 2,
+    "unlock_xp": 22,
+    "parent_id": "sov_u2",
+    "unit_type_id": "sov_yak9r",
+    "equipment": false
+  },
+  {
     "id": "sov_tb3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 0,
     "unlock_xp": 5,
@@ -120,18 +130,8 @@
     "equipment": false
   },
   {
-    "id": "sov_yak9r",
-    "nation": "germany",
-    "branch": "air",
-    "tech_tier_required": 2,
-    "unlock_xp": 22,
-    "parent_id": "sov_yak9",
-    "unit_type_id": "sov_yak9r",
-    "equipment": "sov_yak9r"
-  },
-  {
     "id": "sov_i153",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 0,
     "unlock_xp": 5,
@@ -141,7 +141,7 @@
   },
   {
     "id": "sov_mig3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -151,7 +151,7 @@
   },
   {
     "id": "sov_il4",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 2,
     "unlock_xp": 20,
@@ -161,7 +161,7 @@
   },
   {
     "id": "sov_yak1b",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -171,7 +171,7 @@
   },
   {
     "id": "sov_la5fn",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 2,
     "unlock_xp": 25,
@@ -181,7 +181,7 @@
   },
   {
     "id": "sov_tu2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 3,
     "unlock_xp": 35,
@@ -191,7 +191,7 @@
   },
   {
     "id": "sov_yak3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 3,
     "unlock_xp": 35,
@@ -201,7 +201,7 @@
   },
   {
     "id": "sov_la7b",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 3,
     "unlock_xp": 40,
@@ -211,7 +211,7 @@
   },
   {
     "id": "sov_il10",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 3,
     "unlock_xp": 35,
@@ -221,7 +221,7 @@
   },
   {
     "id": "sov_li2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "air",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -231,7 +231,7 @@
   },
   {
     "id": "sov_inf_sq39",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 0,
     "unlock_xp": 0,
@@ -241,7 +241,7 @@
   },
   {
     "id": "sov_inf_sq41",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -251,7 +251,7 @@
   },
   {
     "id": "sov_smg_sq",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -261,7 +261,7 @@
   },
   {
     "id": "sov_mg_sq",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 20,
@@ -271,7 +271,7 @@
   },
   {
     "id": "sov_mobilized_sq",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 0,
     "unlock_xp": 5,
@@ -281,7 +281,7 @@
   },
   {
     "id": "sov_at_sq",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 25,
@@ -291,7 +291,7 @@
   },
   {
     "id": "sov_inf_sq43",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 2,
     "unlock_xp": 30,
@@ -301,7 +301,7 @@
   },
   {
     "id": "sov_mg_sq43",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 2,
     "unlock_xp": 35,
@@ -311,7 +311,7 @@
   },
   {
     "id": "sov_smg_sq44",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 3,
     "unlock_xp": 40,
@@ -321,7 +321,7 @@
   },
   {
     "id": "sov_sniper_sq",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 12,
@@ -331,7 +331,7 @@
   },
   {
     "id": "sov_penal_sq",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 0,
     "unlock_xp": 3,
@@ -341,7 +341,7 @@
   },
   {
     "id": "sov_guard_inf41",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -351,7 +351,7 @@
   },
   {
     "id": "sov_guard_inf43",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 2,
     "unlock_xp": 30,
@@ -361,7 +361,7 @@
   },
   {
     "id": "sov_guard_inf44",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 3,
     "unlock_xp": 45,
@@ -371,7 +371,7 @@
   },
   {
     "id": "sov_marine_inf",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 20,
@@ -381,7 +381,7 @@
   },
   {
     "id": "sov_airborne",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "infantry",
     "tech_tier_required": 1,
     "unlock_xp": 25,
@@ -391,9 +391,9 @@
   },
   {
     "id": "sov_t26",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
-    "tech_tier_required": 1,
+    "tech_tier_required": 0,
     "unlock_xp": 0,
     "parent_id": null,
     "unit_type_id": "sov_t26",
@@ -401,9 +401,9 @@
   },
   {
     "id": "sov_bt5",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
-    "tech_tier_required": 1,
+    "tech_tier_required": 0,
     "unlock_xp": 5,
     "parent_id": "sov_t26",
     "unit_type_id": "sov_bt5",
@@ -411,7 +411,7 @@
   },
   {
     "id": "sov_bt7m",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -421,27 +421,27 @@
   },
   {
     "id": "sov_t34_76_41",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
-    "unlock_xp": 15,
+    "unlock_xp": 14,
     "parent_id": "sov_bt7m",
     "unit_type_id": "sov_t34_76_41",
     "equipment": false
   },
   {
     "id": "sov_kv1_41",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
-    "unlock_xp": 20,
+    "unlock_xp": 18,
     "parent_id": "sov_t34_76_41",
     "unit_type_id": "sov_kv1_41",
     "equipment": false
   },
   {
     "id": "sov_t60",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 8,
@@ -451,7 +451,7 @@
   },
   {
     "id": "sov_t34_76_42",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 25,
@@ -461,7 +461,7 @@
   },
   {
     "id": "sov_kv1s",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 30,
@@ -471,7 +471,7 @@
   },
   {
     "id": "sov_su76m",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 22,
@@ -481,7 +481,7 @@
   },
   {
     "id": "sov_su152",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 35,
@@ -491,7 +491,7 @@
   },
   {
     "id": "sov_t34_85",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 40,
@@ -501,7 +501,7 @@
   },
   {
     "id": "sov_is2",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 45,
@@ -511,7 +511,7 @@
   },
   {
     "id": "sov_su85",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 42,
@@ -521,7 +521,7 @@
   },
   {
     "id": "sov_ot130",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 12,
@@ -531,7 +531,7 @@
   },
   {
     "id": "sov_t28",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -541,7 +541,7 @@
   },
   {
     "id": "sov_t35",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 18,
@@ -551,7 +551,7 @@
   },
   {
     "id": "sov_t70",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -561,7 +561,7 @@
   },
   {
     "id": "sov_kv8",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 1,
     "unlock_xp": 25,
@@ -571,7 +571,7 @@
   },
   {
     "id": "sov_is1",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 35,
@@ -581,7 +581,7 @@
   },
   {
     "id": "sov_isu122",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 50,
@@ -591,7 +591,7 @@
   },
   {
     "id": "sov_su100",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 55,
@@ -601,7 +601,7 @@
   },
   {
     "id": "sov_is3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 60,
@@ -611,7 +611,7 @@
   },
   {
     "id": "sov_isu152",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 65,
@@ -621,7 +621,7 @@
   },
   {
     "id": "sov_su5",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 30,
@@ -631,7 +631,7 @@
   },
   {
     "id": "sov_zsu37",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 28,
@@ -641,7 +641,7 @@
   },
   {
     "id": "sov_t44",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "vehicle",
     "tech_tier_required": 3,
     "unlock_xp": 65,
@@ -651,7 +651,7 @@
   },
   {
     "id": "sov_pm37",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 0,
     "unlock_xp": 0,
@@ -661,7 +661,7 @@
   },
   {
     "id": "sov_zis3",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 0,
     "unlock_xp": 5,
@@ -671,7 +671,7 @@
   },
   {
     "id": "sov_61k",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 0,
     "unlock_xp": 8,
@@ -681,7 +681,7 @@
   },
   {
     "id": "sov_45mm_at",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 1,
     "unlock_xp": 12,
@@ -691,7 +691,7 @@
   },
   {
     "id": "sov_52k",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -701,7 +701,7 @@
   },
   {
     "id": "sov_zis2_57mm",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 2,
     "unlock_xp": 20,
@@ -711,7 +711,7 @@
   },
   {
     "id": "sov_m30",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 2,
     "unlock_xp": 25,
@@ -721,7 +721,7 @@
   },
   {
     "id": "sov_bm13",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 2,
     "unlock_xp": 30,
@@ -731,7 +731,7 @@
   },
   {
     "id": "sov_pm120",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 2,
     "unlock_xp": 22,
@@ -741,7 +741,7 @@
   },
   {
     "id": "sov_100mm_at",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 3,
     "unlock_xp": 35,
@@ -751,7 +751,7 @@
   },
   {
     "id": "sov_d1",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 3,
     "unlock_xp": 40,
@@ -761,7 +761,7 @@
   },
   {
     "id": "sov_quad_maxim",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 1,
     "unlock_xp": 15,
@@ -771,7 +771,7 @@
   },
   {
     "id": "sov_bm31",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 3,
     "unlock_xp": 45,
@@ -781,7 +781,7 @@
   },
   {
     "id": "sov_b4",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "artillery",
     "tech_tier_required": 3,
     "unlock_xp": 50,
@@ -791,7 +791,7 @@
   },
   {
     "id": "sov_ba20",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 0,
     "unlock_xp": 0,
@@ -801,7 +801,7 @@
   },
   {
     "id": "sov_horse_supply",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 0,
     "unlock_xp": 5,
@@ -811,7 +811,7 @@
   },
   {
     "id": "sov_ba10",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 1,
     "unlock_xp": 10,
@@ -821,7 +821,7 @@
   },
   {
     "id": "sov_truck_supply",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 1,
     "unlock_xp": 12,
@@ -831,7 +831,7 @@
   },
   {
     "id": "sov_eng_sq40",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 1,
     "unlock_xp": 8,
@@ -841,7 +841,7 @@
   },
   {
     "id": "sov_ba64",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 15,
@@ -851,7 +851,7 @@
   },
   {
     "id": "sov_eng_sq43",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 16,
@@ -861,7 +861,7 @@
   },
   {
     "id": "sov_halftrack_supply",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 18,
@@ -871,7 +871,7 @@
   },
   {
     "id": "sov_heavy_truck_supply",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 3,
     "unlock_xp": 20,
@@ -881,7 +881,7 @@
   },
   {
     "id": "sov_assault_eng",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 18,
@@ -891,7 +891,7 @@
   },
   {
     "id": "sov_bridge_eng",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 20,
@@ -901,7 +901,7 @@
   },
   {
     "id": "sov_mot_recce",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 22,
@@ -910,28 +910,8 @@
     "equipment": "sov_mot_recce"
   },
   {
-    "id": "sov_heavy_bridge",
-    "nation": "germany",
-    "branch": "support",
-    "tech_tier_required": 3,
-    "unlock_xp": 25,
-    "parent_id": "sov_bridge_eng",
-    "unit_type_id": "sov_heavy_bridge",
-    "equipment": "sov_heavy_bridge"
-  },
-  {
-    "id": "sov_arv_recovery",
-    "nation": "germany",
-    "branch": "support",
-    "tech_tier_required": 2,
-    "unlock_xp": 24,
-    "parent_id": "sov_ba64",
-    "unit_type_id": "sov_arv_recovery",
-    "equipment": "sov_arv_recovery"
-  },
-  {
     "id": "sov_btr40",
-    "nation": "germany",
+    "nation": "soviet",
     "branch": "support",
     "tech_tier_required": 2,
     "unlock_xp": 26,

@@ -1,0 +1,6 @@
+res://scenes/ui/nation_select.tscn
+res://scripts/core/unit_loader.gd
+res://scripts/ui/nation_select.gd
+res://scripts/ui/commander_create.gd
+res://scenes/ui/commander_create.tscn
+res://scenes/ui/commander_card.tscn

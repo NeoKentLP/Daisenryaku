@@ -4,7 +4,6 @@ var _squad = null
 var _scroll_left: ScrollContainer
 var _scroll_right: ScrollContainer
 var _close_btn: Button
-var _content: Node
 
 func _ready():
 	mouse_filter = MOUSE_FILTER_STOP
@@ -70,7 +69,7 @@ func _build_header(parent: VBoxContainer):
 	type_tag.add_theme_stylebox_override("normal", tsb)
 	hdr.add_child(type_tag)
 
-	hdr.add_stretch_ratio(1.0)
+	hdr.add_spacer(true)
 
 	_close_btn = Button.new()
 	_close_btn.text = "✕ 关闭"
@@ -278,7 +277,7 @@ func _make_summary(parent: HBoxContainer, label: String, value: String, color: C
 	c.add_child(val)
 	parent.add_child(c)
 
-func _make_factor(parent: HBoxContainer, name: String, value: String):
+func _make_factor(parent: HBoxContainer, label_text: String, value_text: String):
 	var btn = HBoxContainer.new()
 	var sb = StyleBoxFlat.new()
 	sb.bg_color = Color(1, 1, 1, 0.05)
@@ -287,14 +286,14 @@ func _make_factor(parent: HBoxContainer, name: String, value: String):
 	sb.set_border_color(Color(1, 1, 1, 0.08))
 	btn.add_theme_stylebox_override("panel", sb)
 	var lbl = Label.new()
-	lbl.text = name
+	lbl.text = label_text
 	lbl.add_theme_font_size_override("font_size", 9)
 	lbl.add_theme_color_override("font_color", Color(0.87, 0.87, 0.87))
 	btn.add_child(lbl)
 	var val = Label.new()
-	val.text = value
+	val.text = value_text
 	val.add_theme_font_size_override("font_size", 9)
-	var vc = Color(1, 0.53, 0.53) if value.begins_with("-") else Color(0.53, 1, 0.53) if value.begins_with("+") else Color(0.87, 0.87, 0.87)
+	var vc = Color(1, 0.53, 0.53) if value_text.begins_with("-") else Color(0.53, 1, 0.53) if value_text.begins_with("+") else Color(0.87, 0.87, 0.87)
 	val.add_theme_color_override("font_color", vc)
 	btn.add_child(val)
 	parent.add_child(btn)
@@ -332,11 +331,11 @@ func _build_skills(parent: VBoxContainer):
 			ap.add_theme_font_size_override("font_size", 9)
 			sk.add_child(ap)
 
-			var name = Label.new()
-			name.text = m.skill_name
-			name.add_theme_font_size_override("font_size", 9)
-			name.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
-			sk.add_child(name)
+			var sk_name = Label.new()
+			sk_name.text = m.skill_name
+			sk_name.add_theme_font_size_override("font_size", 9)
+			sk_name.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+			sk.add_child(sk_name)
 
 			grid.add_child(sk)
 
@@ -435,18 +434,18 @@ func _build_weapons(parent: VBoxContainer):
 		gv.add_theme_constant_override("margin_bottom", 5)
 		group.add_child(gv)
 
-		var name = HBoxContainer.new()
-		var n = Label.new()
-		n.text = wn + "  "
-		n.add_theme_font_size_override("font_size", 11)
-		n.add_theme_color_override("font_color", Color(1, 1, 1))
-		name.add_child(n)
+		var name_row = HBoxContainer.new()
+		var n_lbl = Label.new()
+		n_lbl.text = wn + "  "
+		n_lbl.add_theme_font_size_override("font_size", 11)
+		n_lbl.add_theme_color_override("font_color", Color(1, 1, 1))
+		name_row.add_child(n_lbl)
 		var cnt = Label.new()
 		cnt.text = "×" + str(g["count"])
 		cnt.add_theme_font_size_override("font_size", 9)
 		cnt.add_theme_color_override("font_color", Color(0.53, 0.53, 0.53))
-		name.add_child(cnt)
-		gv.add_child(name)
+		name_row.add_child(cnt)
+		gv.add_child(name_row)
 
 		var stats = HBoxContainer.new()
 		stats.add_theme_constant_override("separation", 8)
@@ -530,19 +529,19 @@ func _build_commander(parent: VBoxContainer):
 	portrait_container.add_child(portrait)
 	bv.add_child(portrait_container)
 
-	var name = Label.new()
-	name.text = cmd.commander_name
-	name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name.add_theme_font_size_override("font_size", 11)
-	name.add_theme_color_override("font_color", Color(1, 0.93, 0.53))
-	bv.add_child(name)
+	var name_label = Label.new()
+	name_label.text = cmd.commander_name
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.add_theme_font_size_override("font_size", 11)
+	name_label.add_theme_color_override("font_color", Color(1, 0.93, 0.53))
+	bv.add_child(name_label)
 
 	var lvl = Label.new()
 	var exp_needed = 999
 	var exp_table = [0, 100, 200, 350, 550, 800, 1100, 1500, 2000, 3000]
 	if cmd.level < 10: exp_needed = exp_table[cmd.level]
 	var exp_display = "Lv." + str(cmd.level)
-	if cmd.level < 10: exp_display += " · " + str(cmd._exp) + "/" + str(exp_needed)
+	if cmd.level < 10: exp_display += " · " + str(cmd.xp) + "/" + str(exp_needed)
 	lvl.text = exp_display
 	lvl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lvl.add_theme_font_size_override("font_size", 9)
@@ -580,8 +579,8 @@ func _make_cmd_skill(parent: VBoxContainer, label: String, skill: String, color:
 	lbl.add_theme_color_override("font_color", color)
 	c.add_child(lbl)
 
-	var name = Label.new()
-	name.text = " " + skill
-	name.add_theme_font_size_override("font_size", 9)
-	name.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
-	c.add_child(name)
+	var skill_name = Label.new()
+	skill_name.text = " " + skill
+	skill_name.add_theme_font_size_override("font_size", 9)
+	skill_name.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	c.add_child(skill_name)

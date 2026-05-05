@@ -558,7 +558,7 @@
   {
     "id": "sov_t26",
     "name": "T-26",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 800,
@@ -584,7 +584,7 @@
   {
     "id": "sov_bt5",
     "name": "BT-5",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 850,
@@ -610,7 +610,7 @@
   {
     "id": "sov_bt7m",
     "name": "BT-7M",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 1000,
@@ -636,7 +636,7 @@
   {
     "id": "sov_t34_76_41",
     "name": "T-34/76 M1940",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 1300,
@@ -662,7 +662,7 @@
   {
     "id": "sov_kv1_41",
     "name": "KV-1 M1941",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 1600,
@@ -688,7 +688,7 @@
   {
     "id": "sov_t60",
     "name": "T-60",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 900,
@@ -714,7 +714,7 @@
   {
     "id": "sov_t34_76_42",
     "name": "T-34/76 M1942",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 2,
     "cost": 1600,
@@ -740,7 +740,7 @@
   {
     "id": "sov_kv1s",
     "name": "KV-1S",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 2,
     "cost": 1800,
@@ -766,7 +766,7 @@
   {
     "id": "sov_su76m",
     "name": "SU-76M",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 2,
     "cost": 1200,
@@ -791,7 +791,7 @@
   {
     "id": "sov_su152",
     "name": "SU-152",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 2,
     "cost": 2000,
@@ -816,7 +816,7 @@
   {
     "id": "sov_t34_85",
     "name": "T-34/85",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2000,
@@ -842,7 +842,7 @@
   {
     "id": "sov_is2",
     "name": "IS-2",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2400,
@@ -868,7 +868,7 @@
   {
     "id": "sov_su85",
     "name": "SU-85",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2200,
@@ -944,7 +944,7 @@
   {
     "id": "sov_t28",
     "name": "T-28多炮塔",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 1100,
@@ -970,7 +970,7 @@
   {
     "id": "sov_t35",
     "name": "T-35多炮塔",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 1500,
@@ -996,7 +996,7 @@
   {
     "id": "sov_t70",
     "name": "T-70轻坦",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 1,
     "cost": 900,
@@ -1047,7 +1047,7 @@
   {
     "id": "sov_is1",
     "name": "IS-1",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 2,
     "cost": 2200,
@@ -1073,7 +1073,7 @@
   {
     "id": "sov_isu122",
     "name": "ISU-122",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2300,
@@ -1098,7 +1098,7 @@
   {
     "id": "sov_su100",
     "name": "SU-100",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2400,
@@ -1123,7 +1123,7 @@
   {
     "id": "sov_is3",
     "name": "IS-3",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2800,
@@ -1149,7 +1149,7 @@
   {
     "id": "sov_isu152",
     "name": "ISU-152",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 3,
     "cost": 2500,
@@ -1174,7 +1174,7 @@
   {
     "id": "sov_su5",
     "name": "SU-5自行炮",
-    "nation": "germany",
+    "nation": "soviet",
     "type": "vehicle",
     "tech_tier": 2,
     "cost": 1300,
@@ -1575,8 +1575,8 @@
   {
     "id": "sov_ba20",
     "name": "BA-20装甲车",
-    "nation": "germany",
-    "type": "vehicle",
+    "nation": "soviet",
+    "type": "support",
     "tech_tier": 0,
     "cost": 800,
     "move_type": "track",
@@ -1600,8 +1600,8 @@
   {
     "id": "sov_ba10",
     "name": "BA-10重装甲车",
-    "nation": "germany",
-    "type": "vehicle",
+    "nation": "soviet",
+    "type": "support",
     "tech_tier": 1,
     "cost": 1000,
     "move_type": "track",
@@ -1626,8 +1626,8 @@
   {
     "id": "sov_ba64",
     "name": "BA-64",
-    "nation": "germany",
-    "type": "vehicle",
+    "nation": "soviet",
+    "type": "support",
     "tech_tier": 2,
     "cost": 1200,
     "move_type": "track",

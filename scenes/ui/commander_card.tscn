@@ -1,0 +1,405 @@
+[gd_scene format=3 uid="uid://cfnm8ck3p1rkn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait"]
+bg_color = Color(1, 1, 1, 0.06)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.384, 0.275, 0.149, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tag_protagonist"]
+bg_color = Color(0.247, 0.204, 0.137, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rarity"]
+bg_color = Color(0.384, 0.275, 0.149, 0.2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.384, 0.275, 0.149, 0.3)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skill_slot"]
+bg_color = Color(1, 1, 1, 0.03)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.06)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reroll"]
+bg_color = Color(1, 1, 1, 0.03)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.08)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CommanderCard" type="Panel" unique_id=1001]
+custom_minimum_size = Vector2(240, 400)
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=12735812]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
+theme_override_constants/separation = 6
+
+[node name="PortraitCenter" type="CenterContainer" parent="VBox" unique_id=663998674]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PortraitPanel" type="Panel" parent="VBox/PortraitCenter" unique_id=1349109380]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait")
+
+[node name="PortraitIcon" type="Label" parent="VBox/PortraitCenter/PortraitPanel" unique_id=87513516]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 36
+text = "🎖"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ProtagonistTag" type="Panel" parent="VBox/PortraitCenter/PortraitPanel" unique_id=1615368026]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 44.0
+offset_bottom = 20.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tag_protagonist")
+
+[node name="ProtagonistLabel" type="Label" parent="VBox/PortraitCenter/PortraitPanel/ProtagonistTag" unique_id=315128034]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_color = Color(0.8, 0.65, 0.3, 1)
+theme_override_font_sizes/font_size = 9
+text = "主角"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="VBox" unique_id=165358860]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "这是名称"
+horizontal_alignment = 1
+
+[node name="InfoRow" type="HBoxContainer" parent="VBox" unique_id=1399449376]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="RarityTag" type="Label" parent="VBox/InfoRow" unique_id=616360048]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_rarity")
+text = "稀有度"
+
+[node name="LevelLabel" type="Label" parent="VBox/InfoRow" unique_id=479437870]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+text = "Lv1"
+vertical_alignment = 1
+
+[node name="DescLabel" type="Label" parent="VBox" unique_id=825498419]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.435, 0.459, 0.51, 1)
+theme_override_font_sizes/font_size = 11
+text = "这里是描述内容 "
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Sep" type="ColorRect" parent="VBox" unique_id=1934360853]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.384, 0.275, 0.149, 0.3)
+
+[node name="SkillGrid" type="GridContainer" parent="VBox" unique_id=552039723]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="Slot1" type="Panel" parent="VBox/SkillGrid" unique_id=574303008]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_skill_slot")
+
+[node name="Name1" type="Label" parent="VBox/SkillGrid/Slot1" unique_id=717285872]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 9
+text = "技能"
+vertical_alignment = 1
+
+[node name="Dots1" type="HBoxContainer" parent="VBox/SkillGrid/Slot1" unique_id=1918262119]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="D1A" type="ColorRect" parent="VBox/SkillGrid/Slot1/Dots1" unique_id=1184092516]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D1B" type="ColorRect" parent="VBox/SkillGrid/Slot1/Dots1" unique_id=1849072231]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D1C" type="ColorRect" parent="VBox/SkillGrid/Slot1/Dots1" unique_id=356156008]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="Slot2" type="Panel" parent="VBox/SkillGrid" unique_id=460917298]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_skill_slot")
+
+[node name="Name2" type="Label" parent="VBox/SkillGrid/Slot2" unique_id=507418699]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_right = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 9
+vertical_alignment = 1
+
+[node name="Dots2" type="HBoxContainer" parent="VBox/SkillGrid/Slot2" unique_id=737213481]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="D2A" type="ColorRect" parent="VBox/SkillGrid/Slot2/Dots2" unique_id=426306008]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D2B" type="ColorRect" parent="VBox/SkillGrid/Slot2/Dots2" unique_id=754102135]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D2C" type="ColorRect" parent="VBox/SkillGrid/Slot2/Dots2" unique_id=2110105625]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+color = Color(1, 1, 1, 0.15)
+
+[node name="Slot3" type="Panel" parent="VBox/SkillGrid" unique_id=625374904]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_skill_slot")
+
+[node name="Name3" type="Label" parent="VBox/SkillGrid/Slot3" unique_id=1216198444]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 9
+vertical_alignment = 1
+
+[node name="Dots3" type="HBoxContainer" parent="VBox/SkillGrid/Slot3" unique_id=2083268950]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="D3A" type="ColorRect" parent="VBox/SkillGrid/Slot3/Dots3" unique_id=1701621134]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D3B" type="ColorRect" parent="VBox/SkillGrid/Slot3/Dots3" unique_id=545690948]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D3C" type="ColorRect" parent="VBox/SkillGrid/Slot3/Dots3" unique_id=1999146850]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="Slot4" type="Panel" parent="VBox/SkillGrid" unique_id=583892449]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_skill_slot")
+
+[node name="Name4" type="Label" parent="VBox/SkillGrid/Slot4" unique_id=2060362761]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 9
+vertical_alignment = 1
+
+[node name="Dots4" type="HBoxContainer" parent="VBox/SkillGrid/Slot4" unique_id=1607697883]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="D4A" type="ColorRect" parent="VBox/SkillGrid/Slot4/Dots4" unique_id=1303522129]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D4B" type="ColorRect" parent="VBox/SkillGrid/Slot4/Dots4" unique_id=1484376046]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D4C" type="ColorRect" parent="VBox/SkillGrid/Slot4/Dots4" unique_id=618819008]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="Slot5" type="Panel" parent="VBox/SkillGrid" unique_id=899190640]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_skill_slot")
+
+[node name="Name5" type="Label" parent="VBox/SkillGrid/Slot5" unique_id=554241921]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 9
+vertical_alignment = 1
+
+[node name="Dots5" type="HBoxContainer" parent="VBox/SkillGrid/Slot5" unique_id=677924908]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="D5A" type="ColorRect" parent="VBox/SkillGrid/Slot5/Dots5" unique_id=1375706818]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D5B" type="ColorRect" parent="VBox/SkillGrid/Slot5/Dots5" unique_id=1687570651]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="D5C" type="ColorRect" parent="VBox/SkillGrid/Slot5/Dots5" unique_id=1408441314]
+visible = false
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBox" unique_id=868062184]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="RerollBtn" type="Button" parent="VBox" unique_id=569548662]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_reroll")
+theme_override_styles/hover = SubResource("StyleBoxFlat_portrait")
+text = "  ⟳  重掷"

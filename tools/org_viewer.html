@@ -37,8 +37,9 @@ body{background:#0a0a19;color:#ccc;font-family:sans-serif;font-size:11px;height:
 .search-result:hover{background:rgba(119,170,255,0.08);color:#ccc}
 .search-result .type{color:#555;font-size:9px;margin-left:4px}
 #status{color:#555;font-size:10px;padding:2px 12px}
-#weapon-popup{display:none;position:fixed;background:#0a0a19;border:1px solid #77aaff;padding:10px;z-index:100;max-width:300px;font-size:10px}
-#weapon-popup h4{color:#77aaff;margin-bottom:4px}
+#weapon-popup{display:none;position:fixed;background:#0d0d20;border:1px solid #77aaff;padding:10px;z-index:100;width:280px;font-size:10px;border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+#weapon-popup h4{color:#77aaff;margin-bottom:6px;font-size:11px;border-bottom:1px solid rgba(119,170,255,0.15);padding-bottom:4px}
+#weapon-popup table td{padding:2px 4px}
 </style></head><body>
 <div class="header">
   <span class="title">编制树浏览器</span>
@@ -84,8 +85,7 @@ function reloadTree() {
       var groups = {};
       for (var i = 0; i < allTreeData.length; i++) {
         var item = allTreeData[i];
-        var info = allUnits[item.id] || {};
-        var branch = info.type || '?';
+        var branch = item.branch || '?';
         if (!groups[branch]) groups[branch] = [];
         groups[branch].push(item);
       }
@@ -190,15 +190,28 @@ function loadDetail(id) {
           html += '<div class="role">' + m.role + ' x' + m.count + '</div>';
           html += '<div class="stat">HP:<span>' + m.hp + '</span> BS:<span>' + m.bs + '</span>' + extra + '</div>';
           if (m.weapon_details && m.weapon_details.length > 0) {
-            html += '<div class="stat">武器: ';
             for (var j = 0; j < m.weapon_details.length; j++) {
               var w = m.weapon_details[j];
-              var pen = w.penetration !== undefined ? ' PEN:' + w.penetration : '';
-              var dmg = w.base_damage !== undefined ? ' DMG:' + w.base_damage : '';
-              var aa = w.anti_air ? ' AA' : '';
-              html += '<span class="weapon-link" onclick="showWeapon(\'' + currentNation + '\',\'' + w.id + '\')">' + w.name + '</span>' + pen + dmg + aa + ' ';
+              var hasData = w.base_damage !== undefined;
+              var parts = [];
+              if (hasData) {
+                parts.push('伤害' + w.base_damage + ' 穿透' + w.penetration);
+                parts.push('射程' + w.range_min + '-' + w.range_max);
+                parts.push('命中' + (w.bs_bonus >= 0 ? '+' : '') + w.bs_bonus);
+                parts.push('压制' + w.suppression);
+                parts.push('近战' + w.cqb_rating);
+                parts.push('弹药' + w.ammo + ' 补给' + w.supply_cost);
+                if (w.anti_air) {
+                  parts.push('对空伤害' + w.aa_damage);
+                  parts.push('对空射程' + w.aa_range_max);
+                  parts.push('对空命中' + (w.aa_bs_bonus >= 0 ? '+' : '') + w.aa_bs_bonus);
+                }
+              }
+              html += '<div class="stat" style="padding-left:8px">';
+              html += '<span class="weapon-link" onclick="showWeapon(\'' + currentNation + '\',\'' + w.id + '\')">' + w.name + '</span>';
+              html += ' <span style="color:#888;font-size:9px">' + parts.join(' | ') + '</span>';
+              html += '</div>';
             }
-            html += '</div>';
           }
           html += '</div>';
         }
@@ -217,12 +230,25 @@ function showWeapon(nation, wid) {
     .then(function(w) {
       if (w.error) return;
       var popup = document.getElementById('weapon-popup');
-      var html = '<h4>' + w.name + ' <span style="color:#888;font-size:9px">' + w.type + '</span></h4>';
-      html += '<div>DMG: ' + w.base_damage + ' | PEN: ' + w.penetration + '</div>';
-      html += '<div>射程: ' + w.range_min + '-' + w.range_max + ' | BS: ' + w.bs_bonus + '</div>';
-      html += '<div>压制: ' + w.suppression + ' | CQB: ' + w.cqb_rating + '</div>';
-      html += '<div>弹药: ' + w.ammo + ' | 补给: ' + w.supply_cost + '</div>';
-      if (w.anti_air) html += '<div style="color:#44aa88">可对空: DMG' + w.aa_damage + ' RNG' + w.aa_range_max + ' BS' + w.aa_bs_bonus + '</div>';
+      var typeNames = {'rifle':'步枪','smg':'冲锋枪','assault_rifle':'突击步枪','mg':'机枪','at_rifle':'反坦克枪','tank_gun':'坦克炮','artillery':'榴弹炮','mortar':'迫击炮','rocket':'火箭炮','flamethrower':'喷火器','aa_gun':'防空炮'};
+      var html = '<h4>' + w.name + ' <span style="color:#888;font-size:9px">' + (typeNames[w.type] || w.type) + '</span></h4>';
+      html += '<table style="width:100%;font-size:10px;border-collapse:collapse">';
+      html += '<tr><td style="color:#888;width:70px">ID</td><td>' + w.id + '</td></tr>';
+      html += '<tr><td style="color:#888">类型</td><td>' + w.type + '</td></tr>';
+      html += '<tr><td style="color:#888">伤害</td><td>' + w.base_damage + '</td></tr>';
+      html += '<tr><td style="color:#888">穿透</td><td>' + w.penetration + '</td></tr>';
+      html += '<tr><td style="color:#888">射程</td><td>' + w.range_min + '-' + w.range_max + '</td></tr>';
+      html += '<tr><td style="color:#888">命中修正</td><td>' + (w.bs_bonus >= 0 ? '+' : '') + w.bs_bonus + '</td></tr>';
+      html += '<tr><td style="color:#888">压制</td><td>' + w.suppression + '</td></tr>';
+      html += '<tr><td style="color:#888">近战评级</td><td>' + w.cqb_rating + '</td></tr>';
+      html += '<tr><td style="color:#888">弹药量</td><td>' + w.ammo + '</td></tr>';
+      html += '<tr><td style="color:#888">补给消耗</td><td>' + w.supply_cost + '</td></tr>';
+      if (w.anti_air) {
+        html += '<tr style="color:#44aa88"><td>对空伤害</td><td>' + w.aa_damage + '</td></tr>';
+        html += '<tr style="color:#44aa88"><td>对空射程</td><td>' + w.aa_range_max + '</td></tr>';
+        html += '<tr style="color:#44aa88"><td>对空命中</td><td>' + (w.aa_bs_bonus >= 0 ? '+' : '') + w.aa_bs_bonus + '</td></tr>';
+      }
+      html += '</table>';
       popup.innerHTML = html;
       popup.style.display = 'block';
     });
@@ -230,8 +256,19 @@ function showWeapon(nation, wid) {
 
 document.addEventListener('click', function(e) {
   var popup = document.getElementById('weapon-popup');
-  if (popup.style.display !== 'none' && !e.target.closest('.weapon-link')) {
+  if (popup.style.display !== 'none' && !e.target.closest('.weapon-link') && !e.target.closest('#weapon-popup')) {
     popup.style.display = 'none';
+  }
+});
+
+// Position popup near clicked weapon link
+document.addEventListener('mouseup', function(e) {
+  var popup = document.getElementById('weapon-popup');
+  if (popup.style.display !== 'none' && e.target.closest('.weapon-link')) {
+    var x = Math.min(e.clientX, window.innerWidth - 320);
+    var y = Math.min(e.clientY, window.innerHeight - 280);
+    popup.style.left = Math.max(5, x) + 'px';
+    popup.style.top = Math.max(5, y) + 'px';
   }
 });
 

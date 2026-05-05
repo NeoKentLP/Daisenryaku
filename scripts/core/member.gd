@@ -33,7 +33,7 @@ func take_damage(amount: int) -> int:
 		is_alive = false
 	return hp
 
-func has_weapon(atype: String) -> bool:
+func has_weapon(_atype: String) -> bool:
 	for w in weapons:
 		if w.get("ammo", 0) > 0:
 			return true

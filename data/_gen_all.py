@@ -37,8 +37,8 @@ def mem(role, count, hp, bs, arm, eva, conc, weps):
         "armor":arm,"evasion":eva,"conceal":conc,
         "weapons":list(weps) if isinstance(weps,(list,tuple)) else [weps]}
 
-def mv(id, name, tier, cost, init, vis, armor, eva, crew_hp, crew_bs, weps, nation="germany", mtype="track"):
-    u(id,name,"vehicle",nation,tier,cost,mtype,init,vis,[
+def mv(id, name, tier, cost, init, vis, armor, eva, crew_hp, crew_bs, weps, nation="germany", mtype="track", utype="vehicle"):
+    u(id,name,utype,nation,tier,cost,mtype,init,vis,[
         mem("车组",3,crew_hp,crew_bs,armor,eva,0,weps)])
 
 def tn(branch, tier, xp, puid, uid, equip=False):
@@ -57,7 +57,7 @@ def eq(id, name, rarity, nation, branches, replaces, formula, source):
         "replaces_unit_type":replaces,"cost_formula":formula,"source":source
     })
 
-def output(out_dir):
+def output(out_dir, nation="germany"):
     os.makedirs(out_dir, exist_ok=True)
     # Build tree nodes
     nodes = []
@@ -67,7 +67,7 @@ def output(out_dir):
     for (branch,tier,xp,puid,uid,equip) in RAW_NODES:
         parent = puid if puid in all_uids else None
         nodes.append({
-            "id":uid,"nation":"germany","branch":branch,
+            "id":uid,"nation":nation,"branch":branch,
             "tech_tier_required":tier,"unlock_xp":xp,
             "parent_id":parent,"unit_type_id":uid,"equipment":equip
         })
@@ -185,8 +185,10 @@ w("kwk43_88mm","8.8cm KwK43","tank_gun","germany",55,13,0,1,0,12,0,20,3,tier=3)
 
 w("flammenwerfer35","Flammenwerfer 35","flamethrower","germany",20,0,0,0,10,30,3,5,3,tier=0)
 w("mg34_coaxial","MG34(同轴)","mg","germany",18,2,0,1,-5,20,1,50,2,tier=0)
+w("panzerschreck","Panzerschreck","at_rifle","germany",35,6,0,0,-10,18,0,3,3,tier=2)
+w("panzerfaust","Panzerfaust","at_rifle","germany",30,5,0,0,0,10,0,1,1,tier=3)
 
-# ---- Infantry units (12+8) ----
+# ---- Infantry units (12+6) ----
 u("ger_inf_sq39","步兵班39型","infantry","germany",0,150,"foot",4,2,[
     mem("步枪手",5,10,60,0,0,0,"kar98k"),mem("机枪手",1,10,60,0,0,0,"mg34")])
 u("ger_inf_sq41","步兵班41型","infantry","germany",1,200,"foot",4,2,[
@@ -211,22 +213,18 @@ u("ger_inf_sq44","步兵班44型","infantry","germany",3,250,"foot",5,2,[
     mem("突击手",3,10,65,0,0,0,"stg44"),mem("步枪手",2,10,60,0,0,0,"g43"),mem("机枪手",1,10,60,0,0,0,"mg42")])
 u("ger_smg_sq44","冲锋枪班44型","infantry","germany",3,280,"foot",5,2,[
     mem("冲锋枪手",5,10,60,0,0,0,"mp40"),mem("机枪手",1,10,60,0,0,0,"mg42")])
-u("ger_recce_inf","侦察步兵","infantry","germany",1,250,"foot",6,4,[
-    mem("侦察兵",2,10,65,0,0,2,"kar98k"),mem("步枪手",2,10,60,0,0,0,"kar98k")])
 u("ger_sniper_sq","狙击班","infantry","germany",1,300,"foot",5,4,[
     mem("狙击手",2,10,75,0,0,3,"kar98k"),mem("观察员",2,10,60,0,0,2,"mp40")])
-u("ger_assault_eng","突击工兵","infantry","germany",2,350,"foot",5,2,[
-    mem("突击工兵",5,10,65,0,0,0,"mp40"),mem("喷火兵",1,12,60,0,0,0,"flammenwerfer35")])
-u("ger_navy_inf","海军步兵","infantry","germany",1,220,"foot",4,2,[
-    mem("步兵",6,10,60,0,0,0,"kar98k")])
-u("ger_tractor_militia","拖拉机民兵","infantry","germany",0,80,"foot",2,1,[
-    mem("民兵",6,8,40,0,0,0,"gewehr98")])
-u("ger_guard_inf","近卫步兵","infantry","germany",3,320,"foot",5,2,[
-    mem("警卫",4,12,70,0,0,0,"stg44"),mem("机枪手",1,12,65,0,0,0,"mg42")])
+u("ger_mountain_inf","山地猎兵","infantry","germany",1,300,"foot",5,2,[
+    mem("山地步兵",6,10,65,0,0,1,"g43")])
 u("ger_airborne","空降猎兵","infantry","germany",2,300,"foot",5,2,[
     mem("伞兵",5,10,65,0,0,0,"g43"),mem("机枪手",1,10,60,0,0,0,"mg42")])
-u("ger_recce_cav","侦察骑兵","infantry","germany",2,280,"foot",6,5,[
-    mem("骑兵侦察",2,10,65,0,0,2,"kar98k"),mem("步枪手",2,10,60,0,0,0,"kar98k")])
+u("ger_panzerschreck_sq","坦克杀手班","infantry","germany",2,300,"foot",3,2,[
+    mem("反坦克手",3,10,60,0,0,0,"panzerschreck"),mem("护卫",2,10,60,0,0,0,"mp40")])
+u("ger_stormtrooper","风暴突击队","infantry","germany",3,350,"foot",6,2,[
+    mem("突击兵",4,12,70,0,0,0,"stg44"),mem("冲锋枪手",2,12,65,0,0,0,"mp40")])
+u("ger_volkssturm","国民冲锋队","infantry","germany",3,60,"foot",2,1,[
+    mem("民兵(铁拳)",4,7,35,0,0,0,["gewehr98","panzerfaust"]),mem("民兵",4,7,35,0,0,0,"gewehr98")])
 
 # ---- Vehicle base units (15) ----
 mv("ger_pz1a","一号坦克A型",1,800,4,2,3,6,20,60,"mg34_coaxial")
@@ -244,36 +242,29 @@ mv("ger_jagdpanther","猎豹",3,2000,6,2,12,3,30,75,["kwk42_75mm_L70","mg34_coax
 mv("ger_pz6b","虎王",3,2400,6,2,14,2,35,75,["kwk43_88mm","mg34_coaxial"])
 mv("ger_pz6e","虎式E型",2,2000,6,2,12,2,35,75,["kwk36_88mm","mg34_coaxial"])
 mv("ger_ostwind","东风37mm",2,1500,5,2,7,3,25,65,["flak37_37mm","mg34_coaxial"])
+mv("ger_grille","Grille(蟋蟀)",1,1100,4,2,4,4,20,60,["sfh18"])
 
-# ---- Vehicle equipment variants (12 key types) ----
-mv("ger_marder2","黄鼠狼II",2,900,5,2,4,5,15,65,["kwk40_75mm_L43"])
-mv("ger_marder3","黄鼠狼III",2,950,5,2,4,5,15,65,["kwk40_75mm_L43"])
-mv("ger_grille","Grille(蟋蟀)",2,1100,4,2,4,4,20,60,["sfh18"])
+# ---- Vehicle equipment variants ----
+mv("ger_marder3","黄鼠狼III",1,950,5,2,4,5,15,65,["kwk40_75mm_L43"])
 mv("ger_flammpz3","喷火坦克III",2,1000,5,2,6,4,25,60,["flammenwerfer35"])
-mv("ger_wirbelwind","东风四联20mm",2,1400,5,2,7,3,25,65,["flak38_20mm","mg34_coaxial"])
-mv("ger_nashorn","犀牛88mm",3,1700,5,2,5,3,20,70,["flak36_88mm"])
-mv("ger_sturmtiger","突击虎380mm",3,2200,3,2,12,1,30,60,["sfh18"])
-mv("ger_bergepanther","豹式回收车",3,1200,4,2,8,3,20,60,"mg34_coaxial")
+mv("ger_nashorn","犀牛88mm",2,1700,5,2,5,3,20,70,["flak36_88mm"])
 mv("ger_jagdtiger","猎虎128mm",3,2600,5,2,14,2,35,75,["kwk43_88mm"])
 mv("ger_stuh42","StuH 42",2,1300,5,2,7,3,25,65,"lefh18")
 mv("ger_maus","鼠式",3,3000,5,2,16,1,40,80,["kwk43_88mm","mg34_coaxial"])
+mv("ger_wirbelwind","东风四联20mm",2,1400,5,2,7,3,25,65,["flak38_20mm","mg34_coaxial"])
+mv("ger_sturmtiger","突击虎380mm",3,2200,3,2,12,1,30,60,["sfh18"])
+mv("ger_bison_spg","野牛自行火炮",1,1000,3,2,2,5,15,55,"sfh18")
 
-# ---- Additional vehicle equipment (16) ----
+# ---- Additional vehicle equipment ----
 mv("ger_jagdpanzer38t","追猎者38(t)",2,1100,5,2,5,4,20,65,"kwk40_75mm_L43")
 mv("ger_jagdpanzer_iv","Jagdpanzer IV",2,1300,5,2,8,3,25,70,"kwk40_75mm_L48")
-mv("ger_panzer_iv_70","四号坦克/70",3,1600,6,2,10,3,25,75,["kwk42_75mm_L70","mg34_coaxial"])
 mv("ger_brummbar","灰熊突击炮",2,1400,4,2,8,3,25,65,"sfh18")
-mv("ger_stug_iv","StuG IV",2,1200,5,2,8,3,25,65,"stuk40_75mm")
-mv("ger_mobelwagen","家具货车防空",2,1200,5,2,7,3,25,65,["flak37_37mm"])
 mv("ger_kugelblitz","球形闪电",3,1500,5,2,7,3,25,70,["flak38_20mm","mg34_coaxial"])
-mv("ger_pz2_luchs","Luchs侦察车",2,1100,7,5,4,6,20,65,["kwk30_2cm","mg34_coaxial"])
 mv("ger_hummel","胡蜂150mm自行炮",2,1300,4,2,5,3,20,60,"sfh18")
 mv("ger_wespe","黄蜂105mm自行炮",2,1100,4,2,4,4,20,60,"lefh18")
 mv("ger_panther_ii","豹II原型车",3,2200,6,2,12,4,30,80,["kwk42_75mm_L70","mg34_coaxial"])
 mv("ger_tiger_p","虎(P)式",2,2100,5,2,12,2,35,70,["kwk36_88mm","mg34_coaxial"])
 mv("ger_elefant","象式重坦歼",3,2400,5,2,14,2,30,75,["flak36_88mm"])
-mv("ger_hetzer_75","38(t)K型号",3,1200,5,2,5,4,20,70,["kwk40_75mm_L48"])
-mv("ger_sturmpanzer4","四号突击坦克",2,1500,4,2,8,3,30,65,"sfh18")
 
 # ---- Artillery (10+5) ----
 u("ger_mortar81","81mm迫击炮班","artillery","germany",0,350,"foot",2,2,[
@@ -308,9 +299,9 @@ u("ger_pak44_128mm","128mm Pak44","artillery","germany",3,800,"foot",2,2,[
     mem("炮组",4,10,55,0,0,0,"kwk43_88mm")])
 
 # ---- Support (7) ----
-mv("ger_sdkfz221","Sd.Kfz 221侦察车",0,850,6,4,3,6,15,60,"mg34_coaxial")
-mv("ger_sdkfz222","Sd.Kfz 222",1,1000,6,4,4,6,15,60,["kwk30_2cm","mg34_coaxial"])
-mv("ger_sdkfz234_2","Sd.Kfz 234/2美洲狮",2,1700,7,4,6,5,20,70,["kwk39_50mm","mg34_coaxial"])
+mv("ger_sdkfz221","Sd.Kfz 221侦察车",0,850,6,4,3,6,15,60,"mg34_coaxial",utype="support")
+mv("ger_sdkfz222","Sd.Kfz 222",1,1000,6,4,4,6,15,60,["kwk30_2cm","mg34_coaxial"],utype="support")
+mv("ger_sdkfz234_2","Sd.Kfz 234/2美洲狮",2,1700,7,4,6,5,20,70,["kwk39_50mm","mg34_coaxial"],utype="support")
 u("ger_horse_supply","骡马补给","support","germany",0,120,"foot",2,2,[mem("后勤",2,10,50,0,0,0,"kar98k")])
 u("ger_truck_supply","卡车补给","support","germany",1,250,"wheel",2,2,[mem("后勤",3,10,50,0,0,0,"kar98k")])
 u("ger_halftrack_supply","半履带补给","support","germany",2,400,"track",2,2,[mem("后勤",3,10,50,0,0,0,"kar98k")])
@@ -366,37 +357,39 @@ air("ger_he162","He162",3,650,10,2,12,70,3,9,["mg151_20mm","mg151_20mm"], fuel=1
 air("ger_ar234b","Ar234B",3,750,6,2,18,70,3,6,["sc500_bomb"], fuel=18)
 air("ger_ju288","Ju288",3,700,4,2,22,65,4,4,["mg81z","mg81z","sc500_bomb","sc500_bomb"])
 air("ger_ju52","Ju52/3m运输机",1,300,2,2,16,50,2,3,["mg81z","mg81z","mg81z"], fuel=30)
-mv("ger_sdkfz250_9","Sd.Kfz 250/9侦察",2,900,7,5,4,6,15,65,["kwk30_2cm","mg34_coaxial"])
-mv("ger_sdkfz234_4","Sd.Kfz 234/4美洲狮",2,1600,6,5,6,5,20,70,["kwk40_75mm_L43"])
+mv("ger_sdkfz250_9","Sd.Kfz 250/9侦察",2,900,7,5,4,6,15,65,["kwk30_2cm","mg34_coaxial"],utype="support")
+mv("ger_sdkfz234_4","Sd.Kfz 234/4美洲狮",2,1600,6,5,6,5,20,70,["kwk40_75mm_L43"],utype="support")
 u("ger_bridge_eng","架桥工兵","infantry","germany",2,300,"foot",4,2,[mem("工兵",6,10,60,0,0,0,"kar98k")])
 u("ger_heavy_bridge_eng","重型架桥工兵","infantry","germany",3,400,"foot",4,2,[mem("工兵",6,10,60,0,0,0,"kar98k")])
-u("ger_mot_supply","摩托化补给","support","germany",1,200,"wheel",2,2,[mem("后勤",2,10,50,0,0,0,"kar98k")])
+u("ger_heavy_engineer","重型工兵","infantry","germany",3,400,"foot",5,3,[
+    mem("重工兵",6,12,65,0,0,0,"g43")])
 
 # ---- German Tree ----
 tnb("infantry",0,0,None,"ger_inf_sq39")
 tnb("infantry",1,10,"ger_inf_sq39","ger_inf_sq41")
 tnb("infantry",1,15,"ger_inf_sq39","ger_smg_sq")
 tnb("infantry",1,20,"ger_inf_sq39","ger_mg_sq")
-tnb("infantry",1,25,"ger_inf_sq39","ger_eng_sq")
-tnb("infantry",1,30,"ger_inf_sq39","ger_at_sq")
-tnb("infantry",2,35,"ger_inf_sq41","ger_inf_sq42")
-tnb("infantry",2,40,"ger_mg_sq","ger_mg_sq43")
-tnb("infantry",2,45,"ger_eng_sq","ger_eng_sq43")
-tnb("infantry",2,50,"ger_at_sq","ger_at_sq43")
-tnb("infantry",3,55,"ger_inf_sq42","ger_inf_sq44")
-tnb("infantry",3,60,"ger_smg_sq","ger_smg_sq44")
-tne("infantry",1,10,"ger_inf_sq39","ger_recce_inf")
-tne("infantry",1,15,"ger_inf_sq39","ger_sniper_sq")
-tne("infantry",2,30,"ger_eng_sq","ger_assault_eng")
-tne("infantry",1,20,"ger_inf_sq39","ger_navy_inf")
-tne("infantry",0,5,"ger_inf_sq39","ger_tractor_militia")
-tne("infantry",3,65,"ger_inf_sq44","ger_guard_inf")
-tne("infantry",2,40,"ger_eng_sq","ger_airborne")
-tne("infantry",2,35,"ger_recce_inf","ger_recce_cav")
+tnb("infantry",1,25,"ger_inf_sq39","ger_at_sq")
+tnb("infantry",2,30,"ger_inf_sq41","ger_inf_sq42")
+tnb("infantry",2,35,"ger_mg_sq","ger_mg_sq43")
+tnb("infantry",2,40,"ger_at_sq","ger_at_sq43")
+tnb("infantry",3,45,"ger_inf_sq42","ger_inf_sq44")
+tnb("infantry",3,50,"ger_smg_sq","ger_smg_sq44")
+tne("infantry",1,15,"ger_inf_sq39","ger_sniper_sq")       # 狙击班
+tne("infantry",1,18,"ger_inf_sq39","ger_mountain_inf")    # 山地猎兵
+tne("infantry",2,40,"ger_inf_sq39","ger_airborne")        # 空降猎兵
+tne("infantry",2,55,"ger_at_sq43","ger_panzerschreck_sq") # 坦克杀手班
+tne("infantry",3,65,"ger_inf_sq44","ger_stormtrooper")    # 风暴突击队
+tne("infantry",3,70,"ger_inf_sq44","ger_volkssturm")      # 国民冲锋队
 
-tnb("vehicle",1,0,None,"ger_pz1a")
-for i,vid in enumerate(["ger_pz35t","ger_pz2f","ger_pz38t","ger_pz3e","ger_pz4d","ger_stug3b"]):
-    tnb("vehicle",1,5+i*5,"ger_pz1a",vid)
+tnb("vehicle",0,0,None,"ger_pz1a")              # T0: 一号坦克A型
+tnb("vehicle",0,5,"ger_pz1a","ger_pz35t")        # T0: 35t
+tnb("vehicle",1,10,"ger_pz1a","ger_pz2f")        # T1: 二号F型
+tnb("vehicle",1,12,"ger_pz35t","ger_pz38t")      # T1: 38t
+tnb("vehicle",1,14,"ger_pz35t","ger_pz3e")       # T1: 三号E型
+tnb("vehicle",1,16,"ger_pz2f","ger_pz4d")        # T1: 四号D型
+tnb("vehicle",1,18,"ger_pz2f","ger_stug3b")      # T1: StuG III B(短)
+tnb("vehicle",1,20,"ger_pz2f","ger_grille")        # T1: Grille蟋蟀
 tnb("vehicle",2,30,"ger_pz3e","ger_pz3j")
 tnb("vehicle",2,35,"ger_pz4d","ger_pz4g")
 tnb("vehicle",2,40,"ger_stug3b","ger_stug3g")
@@ -406,33 +399,24 @@ tnb("vehicle",3,55,"ger_pz4g","ger_jagdpanther")
 tnb("vehicle",2,60,"ger_pz4g","ger_pz6e")
 tnb("vehicle",3,70,"ger_pz6e","ger_pz6b")
 # Vehicle equipment nodes
-tne("vehicle",2,25,"ger_pz2f","ger_marder2")
-tne("vehicle",2,30,"ger_pz38t","ger_marder3")
-tne("vehicle",2,35,"ger_pz3e","ger_flammpz3")
-tne("vehicle",2,40,"ger_pz4d","ger_grille")
-tne("vehicle",2,45,"ger_stug3b","ger_stuh42")
-tne("vehicle",2,50,"ger_pz4d","ger_wirbelwind")
-tne("vehicle",3,55,"ger_pz4g","ger_nashorn")
-tne("vehicle",3,60,"ger_pz5d","ger_bergepanther")
-tne("vehicle",3,65,"ger_pz5d","ger_jagdtiger")
-tne("vehicle",3,70,"ger_pz6e","ger_sturmtiger")
-tne("vehicle",3,80,"ger_pz6b","ger_maus")
-# Additional equipment nodes
-tne("vehicle",2,30,"ger_pz38t","ger_jagdpanzer38t")
-tne("vehicle",2,45,"ger_pz4d","ger_jagdpanzer_iv")
-tne("vehicle",3,55,"ger_pz4g","ger_panzer_iv_70")
-tne("vehicle",2,50,"ger_pz4d","ger_brummbar")
-tne("vehicle",2,45,"ger_stug3b","ger_stug_iv")
-tne("vehicle",2,50,"ger_pz4d","ger_mobelwagen")
-tne("vehicle",3,65,"ger_ostwind","ger_kugelblitz")
-tne("vehicle",2,25,"ger_pz2f","ger_pz2_luchs")
-tne("vehicle",2,40,"ger_pz4d","ger_hummel")
-tne("vehicle",2,35,"ger_pz2f","ger_wespe")
-tne("vehicle",3,70,"ger_pz5d","ger_panther_ii")
-tne("vehicle",2,65,"ger_pz6e","ger_tiger_p")
-tne("vehicle",3,75,"ger_pz6e","ger_elefant")
-tne("vehicle",2,55,"ger_pz4d","ger_sturmpanzer4")
-tne("vehicle",3,70,"ger_pz38t","ger_hetzer_75")
+tne("vehicle",1,25,"ger_pz38t","ger_marder3")          # 黄鼠狼III T1道具
+tne("vehicle",1,28,"ger_pz1a","ger_bison_spg")         # 野牛自行火炮 T1道具
+tne("vehicle",2,30,"ger_pz38t","ger_jagdpanzer38t")     # 追猎者38(t)
+tne("vehicle",2,35,"ger_pz3e","ger_flammpz3")           # 喷火坦克III
+tne("vehicle",2,40,"ger_pz4d","ger_hummel")             # 胡蜂150mm
+tne("vehicle",2,40,"ger_pz2f","ger_wespe")              # 黄蜂105mm
+tne("vehicle",2,45,"ger_stug3b","ger_stuh42")           # StuH 42
+tne("vehicle",2,45,"ger_pz4d","ger_jagdpanzer_iv")      # Jagdpanzer IV
+tne("vehicle",2,50,"ger_pz4d","ger_brummbar")           # 灰熊突击炮
+tne("vehicle",2,50,"ger_pz4d","ger_wirbelwind")         # 东风四联20mm
+tne("vehicle",2,55,"ger_pz4g","ger_nashorn")            # 犀牛88mm T2道具
+tne("vehicle",2,65,"ger_pz6e","ger_tiger_p")            # 虎(P)式
+tne("vehicle",3,65,"ger_ostwind","ger_kugelblitz")      # 球形闪电
+tne("vehicle",3,65,"ger_pz5d","ger_jagdtiger")          # 猎虎128mm
+tne("vehicle",3,70,"ger_pz6e","ger_sturmtiger")         # 突击虎380mm
+tne("vehicle",3,70,"ger_pz5d","ger_panther_ii")         # 豹II原型车
+tne("vehicle",3,75,"ger_pz6e","ger_elefant")            # 象式重坦歼
+tne("vehicle",3,80,"ger_pz6b","ger_maus")               # 鼠式
 
 tnb("artillery",0,0,None,"ger_mortar81")
 tnb("artillery",0,5,"ger_mortar81","ger_lefh18")
@@ -455,59 +439,45 @@ tnb("support",0,5,"ger_sdkfz221","ger_horse_supply")
 tnb("support",1,10,"ger_sdkfz221","ger_sdkfz222")
 tnb("support",1,15,"ger_horse_supply","ger_truck_supply")
 tnb("support",2,20,"ger_sdkfz222","ger_sdkfz234_2")
-tnb("support",2,25,"ger_truck_supply","ger_halftrack_supply")
-tnb("support",3,30,"ger_halftrack_supply","ger_heavy_truck_supply")
-tne("support",2,20,"ger_sdkfz222","ger_sdkfz250_9")
+tnb("support",1,12,"ger_sdkfz221","ger_eng_sq")          # 工兵班(自步兵系移入)
+tnb("support",2,18,"ger_truck_supply","ger_halftrack_supply")
+tnb("support",2,22,"ger_eng_sq","ger_eng_sq43")           # 工兵班43型(自步兵系移入)
+tnb("support",3,25,"ger_halftrack_supply","ger_heavy_truck_supply")
 tne("support",2,28,"ger_sdkfz222","ger_sdkfz234_4")
-tne("support",2,22,"ger_eng_sq","ger_bridge_eng")
-tne("support",3,28,"ger_bridge_eng","ger_heavy_bridge_eng")
-tne("support",1,18,"ger_truck_supply","ger_mot_supply")
+tne("support",3,35,"ger_eng_sq43","ger_heavy_engineer")    # 重型工兵
 
 # ---- German Equipment items (21: 8 infantry + 13 vehicle) ----
-eq("ger_recce_inf","侦察步兵","green","germany",["infantry"],"ger_recce_inf","base × 1.5","market")
 eq("ger_sniper_sq","狙击班","purple","germany",["infantry"],"ger_sniper_sq","base × 3.0","market")
-eq("ger_assault_eng","突击工兵","green","germany",["infantry"],"ger_assault_eng","base × 1.5","market")
-eq("ger_navy_inf","海军步兵","purple","germany",["infantry"],"ger_navy_inf","base × 3.0","market")
-eq("ger_tractor_militia","拖拉机民兵","green","germany",["infantry"],"ger_tractor_militia","base × 1.5","market")
-eq("ger_guard_inf","近卫步兵","orange","germany",["infantry"],"ger_guard_inf","base × 6.0","loot")
+eq("ger_mountain_inf","山地猎兵","green","germany",["infantry"],"ger_mountain_inf","base × 1.5","market")
 eq("ger_airborne","空降猎兵","purple","germany",["infantry"],"ger_airborne","base × 3.0","market")
-eq("ger_recce_cav","侦察骑兵","green","germany",["infantry"],"ger_recce_cav","base × 1.5","market")
-eq("ger_marder2","黄鼠狼II","green","germany",["vehicle"],"ger_marder2","base × 1.5","market")
+eq("ger_panzerschreck_sq","坦克杀手班","green","germany",["infantry"],"ger_panzerschreck_sq","base × 1.5","market")
+eq("ger_stormtrooper","风暴突击队","purple","germany",["infantry"],"ger_stormtrooper","base × 3.0","loot")
+eq("ger_volkssturm","国民冲锋队","green","germany",["infantry"],"ger_volkssturm","base × 1.5","loot")
 eq("ger_marder3","黄鼠狼III","green","germany",["vehicle"],"ger_marder3","base × 1.5","market")
-eq("ger_grille","Grille(蟋蟀)","green","germany",["vehicle"],"ger_grille","base × 1.5","market")
+eq("ger_bison_spg","野牛自行火炮","green","germany",["vehicle"],"ger_bison_spg","base × 1.5","market")
 eq("ger_flammpz3","喷火坦克III","purple","germany",["vehicle"],"ger_flammpz3","base × 3.0","loot")
 eq("ger_wirbelwind","东风四联20mm","purple","germany",["vehicle"],"ger_wirbelwind","base × 3.0","market")
 eq("ger_nashorn","犀牛88mm","purple","germany",["vehicle"],"ger_nashorn","base × 3.0","market")
 eq("ger_sturmtiger","突击虎380mm","orange","germany",["vehicle"],"ger_sturmtiger","base × 6.0","loot")
-eq("ger_bergepanther","豹式回收车","green","germany",["vehicle"],"ger_bergepanther","base × 1.5","market")
 eq("ger_jagdtiger","猎虎128mm","orange","germany",["vehicle"],"ger_jagdtiger","base × 6.0","loot")
 eq("ger_stuh42","StuH 42","green","germany",["vehicle"],"ger_stuh42","base × 1.5","market")
 eq("ger_maus","鼠式","orange","germany",["vehicle"],"ger_maus","base × 6.0","loot")
 eq("ger_jagdpanzer38t","追猎者38(t)","green","germany",["vehicle"],"ger_jagdpanzer38t","base × 1.5","market")
 eq("ger_jagdpanzer_iv","Jagdpanzer IV","green","germany",["vehicle"],"ger_jagdpanzer_iv","base × 1.5","market")
-eq("ger_panzer_iv_70","四号坦克/70","purple","germany",["vehicle"],"ger_panzer_iv_70","base × 3.0","market")
 eq("ger_brummbar","灰熊突击炮","green","germany",["vehicle"],"ger_brummbar","base × 1.5","market")
-eq("ger_stug_iv","StuG IV","green","germany",["vehicle"],"ger_stug_iv","base × 1.5","market")
-eq("ger_mobelwagen","家具货车防空","green","germany",["vehicle"],"ger_mobelwagen","base × 1.5","market")
 eq("ger_kugelblitz","球形闪电","purple","germany",["vehicle"],"ger_kugelblitz","base × 3.0","loot")
-eq("ger_pz2_luchs","Luchs侦察车","green","germany",["vehicle"],"ger_pz2_luchs","base × 1.5","market")
 eq("ger_hummel","胡蜂150mm自行炮","green","germany",["vehicle"],"ger_hummel","base × 1.5","market")
 eq("ger_wespe","黄蜂105mm自行炮","green","germany",["vehicle"],"ger_wespe","base × 1.5","market")
 eq("ger_panther_ii","豹II原型车","purple","germany",["vehicle"],"ger_panther_ii","base × 3.0","loot")
 eq("ger_tiger_p","虎(P)式","purple","germany",["vehicle"],"ger_tiger_p","base × 3.0","loot")
 eq("ger_elefant","象式重坦歼","orange","germany",["vehicle"],"ger_elefant","base × 6.0","loot")
-eq("ger_sturmpanzer4","四号突击坦克","purple","germany",["vehicle"],"ger_sturmpanzer4","base × 3.0","loot")
 eq("ger_quad20mm","四联20mm防空","purple","germany",["artillery"],"ger_quad20mm","base × 3.0","loot")
 eq("ger_nw42_210mm","Nebelwerfer 42 210mm","green","germany",["artillery"],"ger_nw42_210mm","base × 1.5","market")
 eq("ger_pak43_88mm","88mm Pak43","orange","germany",["artillery"],"ger_pak43_88mm","base × 6.0","loot")
 eq("ger_mrs18_210mm","210mm Mrs18","purple","germany",["artillery"],"ger_mrs18_210mm","base × 3.0","market")
 eq("ger_pak44_128mm","128mm Pak44","orange","germany",["artillery"],"ger_pak44_128mm","base × 6.0","loot")
-eq("ger_sdkfz250_9","Sd.Kfz 250/9侦察","green","germany",["support"],"ger_sdkfz250_9","base × 1.5","market")
 eq("ger_sdkfz234_4","Sd.Kfz 234/4美洲狮","purple","germany",["support"],"ger_sdkfz234_4","base × 3.0","market")
-eq("ger_bridge_eng","架桥工兵","purple","germany",["support"],"ger_bridge_eng","base × 3.0","market")
-eq("ger_heavy_bridge_eng","重型架桥工兵","purple","germany",["support"],"ger_heavy_bridge_eng","base × 3.0","market")
-eq("ger_mot_supply","摩托化补给","green","germany",["support"],"ger_mot_supply","base × 1.5","market")
-eq("ger_hetzer_75","38(t)K型号","green","germany",["vehicle"],"ger_hetzer_75","base × 1.5","market")
+eq("ger_heavy_engineer","重型工兵","purple","germany",["support"],"ger_heavy_engineer","base × 3.0","loot")
 
 # ---- German Air Tree ----
 tnb("air",1,0,None,"ger_bf109e3")
@@ -524,6 +494,7 @@ tnb("air",3,40,"ger_bf110g2","ger_me410a1")
 tnb("air",0,0,None,"ger_fi156")
 tnb("air",1,5,"ger_fi156","ger_fw189a1")
 tnb("air",2,10,"ger_fw189a1","ger_fw189a2")
+tnb("air",1,12,None,"ger_ju52")                       # 运输机线(自道具移入)
 # Air equipment
 tne("air",0,3,"ger_fi156","ger_hs123a")
 tne("air",1,8,"ger_ju87b2","ger_do17z")
@@ -539,8 +510,6 @@ tne("air",3,60,"ger_me262","ger_me163")
 tne("air",3,50,"ger_me262","ger_he162")
 tne("air",3,45,"ger_he177a5","ger_ar234b")
 tne("air",3,45,"ger_he177a5","ger_ju288")
-tne("air",1,8,"ger_ju87b2","ger_ju52")
-
 # ---- German Air Equipment items ----
 eq("ger_hs123a","Hs123A","green","germany",["air"],"ger_hs123a","base × 1.5","market")
 eq("ger_do17z","Do17Z","green","germany",["air"],"ger_do17z","base × 1.5","market")
@@ -556,10 +525,9 @@ eq("ger_me163","Me163彗星","orange","germany",["air"],"ger_me163","base × 6.0
 eq("ger_he162","He162","purple","germany",["air"],"ger_he162","base × 3.0","market")
 eq("ger_ar234b","Ar234B","purple","germany",["air"],"ger_ar234b","base × 3.0","loot")
 eq("ger_ju288","Ju288","purple","germany",["air"],"ger_ju288","base × 3.0","loot")
-eq("ger_ju52","Ju52/3m运输机","green","germany",["air"],"ger_ju52","base × 1.5","market")
 eq("ger_fw189a2","Fw189A-2","green","germany",["air"],"ger_fw189a2","base × 1.5","market")
 
-output(r'D:\项目\godot\大战略01\data\germany')
+output(r'D:\项目\godot\大战略01\data\germany', nation="germany")
 
 # ============================================================
 # SOVIET UNION
@@ -640,33 +608,33 @@ u("sov_airborne","空降兵","infantry","soviet",1,280,"foot",5,2,[
     mem("伞兵",5,10,65,0,0,0,"svt40"),mem("冲锋枪手",1,10,60,0,0,0,"ppsh41")])
 
 # ---- Vehicle base (14+13) ----
-mv("sov_t26","T-26",1,800,4,2,4,5,20,60,["l11_76mm","dt_coaxial"])
-mv("sov_bt5","BT-5",1,850,6,2,3,6,20,60,["l11_76mm","dt_coaxial"])
-mv("sov_bt7m","BT-7M",1,1000,6,2,4,6,20,60,["l11_76mm","dt_coaxial"])
-mv("sov_t34_76_41","T-34/76 M1940",1,1300,6,2,8,4,25,65,["f34_76mm","dt_coaxial"])
-mv("sov_kv1_41","KV-1 M1941",1,1600,5,2,11,2,30,65,["zis5_76mm","dt_coaxial"])
-mv("sov_t60","T-60",1,900,5,2,4,5,15,55,["f34_76mm","dt_coaxial"])
-mv("sov_t34_76_42","T-34/76 M1942",2,1600,6,2,9,4,25,70,["f34_76mm","dt_coaxial"])
-mv("sov_kv1s","KV-1S",2,1800,5,2,11,3,30,70,["zis5_76mm","dt_coaxial"])
-mv("sov_su76m","SU-76M",2,1200,4,2,4,5,20,60,["zis5_76mm"])
-mv("sov_su152","SU-152",2,2000,4,2,11,2,30,70,["ml20s_152mm"])
-mv("sov_t34_85","T-34/85",3,2000,6,2,10,4,25,75,["zis_s53_85mm","dt_coaxial"])
-mv("sov_is2","IS-2",3,2400,5,2,13,2,35,75,["d25t_122mm","dt_coaxial"])
-mv("sov_su85","SU-85",3,2200,5,2,8,4,25,70,["d5t_85mm"])
+mv("sov_t26","T-26",1,800,4,2,4,5,20,60,["l11_76mm","dt_coaxial"], nation="soviet")
+mv("sov_bt5","BT-5",1,850,6,2,3,6,20,60,["l11_76mm","dt_coaxial"], nation="soviet")
+mv("sov_bt7m","BT-7M",1,1000,6,2,4,6,20,60,["l11_76mm","dt_coaxial"], nation="soviet")
+mv("sov_t34_76_41","T-34/76 M1940",1,1300,6,2,8,4,25,65,["f34_76mm","dt_coaxial"], nation="soviet")
+mv("sov_kv1_41","KV-1 M1941",1,1600,5,2,11,2,30,65,["zis5_76mm","dt_coaxial"], nation="soviet")
+mv("sov_t60","T-60",1,900,5,2,4,5,15,55,["f34_76mm","dt_coaxial"], nation="soviet")
+mv("sov_t34_76_42","T-34/76 M1942",2,1600,6,2,9,4,25,70,["f34_76mm","dt_coaxial"], nation="soviet")
+mv("sov_kv1s","KV-1S",2,1800,5,2,11,3,30,70,["zis5_76mm","dt_coaxial"], nation="soviet")
+mv("sov_su76m","SU-76M",2,1200,4,2,4,5,20,60,["zis5_76mm"], nation="soviet")
+mv("sov_su152","SU-152",2,2000,4,2,11,2,30,70,["ml20s_152mm"], nation="soviet")
+mv("sov_t34_85","T-34/85",3,2000,6,2,10,4,25,75,["zis_s53_85mm","dt_coaxial"], nation="soviet")
+mv("sov_is2","IS-2",3,2400,5,2,13,2,35,75,["d25t_122mm","dt_coaxial"], nation="soviet")
+mv("sov_su85","SU-85",3,2200,5,2,8,4,25,70,["d5t_85mm"], nation="soviet")
 mv("sov_t44","T-44(道具)",3,2200,6,2,11,4,30,75,["zis_s53_85mm","dt_coaxial"], nation="soviet")
 
 # ---- Soviet vehicle equipment (13) ----
 mv("sov_ot130","OT-130喷火",1,950,4,2,4,5,20,55,["roks3"], nation="soviet")
-mv("sov_t28","T-28多炮塔",1,1100,4,2,5,4,25,60,["l11_76mm","dt_coaxial"])
-mv("sov_t35","T-35多炮塔",1,1500,3,2,5,3,30,60,["l11_76mm","dt_coaxial"])
-mv("sov_t70","T-70轻坦",1,900,5,2,4,5,20,60,["l11_76mm","dt_coaxial"])
+mv("sov_t28","T-28多炮塔",1,1100,4,2,5,4,25,60,["l11_76mm","dt_coaxial"], nation="soviet")
+mv("sov_t35","T-35多炮塔",1,1500,3,2,5,3,30,60,["l11_76mm","dt_coaxial"], nation="soviet")
+mv("sov_t70","T-70轻坦",1,900,5,2,4,5,20,60,["l11_76mm","dt_coaxial"], nation="soviet")
 mv("sov_kv8","KV-8喷火",1,1700,5,2,11,2,30,65,["roks3"], nation="soviet")
-mv("sov_is1","IS-1",2,2200,5,2,12,2,35,70,["d5t_85mm","dt_coaxial"])
-mv("sov_isu122","ISU-122",3,2300,5,2,13,2,30,70,["d25t_122mm"])
-mv("sov_su100","SU-100",3,2400,5,2,8,4,25,75,["d10_100mm"])
-mv("sov_is3","IS-3",3,2800,5,2,15,2,35,80,["d25t_122mm","dt_coaxial"])
-mv("sov_isu152","ISU-152",3,2500,4,2,13,2,30,70,["ml20s_152mm"])
-mv("sov_su5","SU-5自行炮",2,1300,3,2,3,5,15,55,"m30_122mm")
+mv("sov_is1","IS-1",2,2200,5,2,12,2,35,70,["d5t_85mm","dt_coaxial"], nation="soviet")
+mv("sov_isu122","ISU-122",3,2300,5,2,13,2,30,70,["d25t_122mm"], nation="soviet")
+mv("sov_su100","SU-100",3,2400,5,2,8,4,25,75,["d10_100mm"], nation="soviet")
+mv("sov_is3","IS-3",3,2800,5,2,15,2,35,80,["d25t_122mm","dt_coaxial"], nation="soviet")
+mv("sov_isu152","ISU-152",3,2500,4,2,13,2,30,70,["ml20s_152mm"], nation="soviet")
+mv("sov_su5","SU-5自行炮",2,1300,3,2,3,5,15,55,"m30_122mm", nation="soviet")
 mv("sov_zsu37","ZSU-37",2,1100,5,2,4,5,20,60,["61k_37mm","dt_coaxial"], nation="soviet")
 
 # ---- Artillery (11+3) ----
@@ -687,9 +655,9 @@ u("sov_bm31","BM-31","artillery","soviet",3,900,"foot",2,2,[mem("炮组",5,10,55
 u("sov_b4","203mm B-4","artillery","soviet",3,1500,"foot",2,2,[mem("炮组",6,10,55,0,0,0,"ml20s_152mm")])
 
 # ---- Support (9+6) ----
-mv("sov_ba20","BA-20装甲车",0,800,6,4,3,6,15,60,["dt_coaxial"])
-mv("sov_ba10","BA-10重装甲车",1,1000,6,4,5,5,20,60,["l11_76mm","dt_coaxial"])
-mv("sov_ba64","BA-64",2,1200,7,4,4,6,15,60,["dt_coaxial"])
+mv("sov_ba20","BA-20装甲车",0,800,6,4,3,6,15,60,["dt_coaxial"], nation="soviet", utype="support")
+mv("sov_ba10","BA-10重装甲车",1,1000,6,4,5,5,20,60,["l11_76mm","dt_coaxial"], nation="soviet", utype="support")
+mv("sov_ba64","BA-64",2,1200,7,4,4,6,15,60,["dt_coaxial"], nation="soviet", utype="support")
 u("sov_horse_supply","骡马补给","support","soviet",0,120,"foot",2,2,[mem("后勤",2,10,50,0,0,0,"mosin_nagant")])
 u("sov_truck_supply","卡车补给","support","soviet",1,250,"wheel",2,2,[mem("后勤",3,10,50,0,0,0,"mosin_nagant")])
 u("sov_halftrack_supply","半履带补给","support","soviet",2,400,"track",2,2,[mem("后勤",3,10,50,0,0,0,"mosin_nagant")])
@@ -761,8 +729,8 @@ tnb("air",1,10,None,"sov_pe2")
 tnb("air",2,20,"sov_pe2","sov_pe3")
 tnb("air",0,0,None,"sov_r5")
 tnb("air",0,3,"sov_r5","sov_u2")
+tnb("air",2,22,"sov_u2","sov_yak9r")
 tnb("air",0,5,None,"sov_tb3")
-tne("air",2,22,"sov_yak9","sov_yak9r")
 # Air equipment
 tne("air",0,5,"sov_i16","sov_i153")
 tne("air",1,15,"sov_lagg3","sov_mig3")
@@ -786,7 +754,6 @@ eq("sov_yak3","Yak-3","purple","soviet",["air"],"sov_yak3","base × 3.0","market
 eq("sov_la7b","La-7B","purple","soviet",["air"],"sov_la7b","base × 3.0","market")
 eq("sov_il10","IL-10","purple","soviet",["air"],"sov_il10","base × 3.0","market")
 eq("sov_li2","Li-2运输机","green","soviet",["air"],"sov_li2","base × 1.5","market")
-eq("sov_yak9r","Yak-9R侦察型","green","soviet",["air"],"sov_yak9r","base × 1.5","market")
 
 # ---- Soviet Tree ----
 # Infantry
@@ -808,12 +775,12 @@ tne("infantry",1,20,"sov_inf_sq39","sov_marine_inf")
 tne("infantry",1,25,"sov_inf_sq39","sov_airborne")
 
 # Vehicle
-tnb("vehicle",1,0,None,"sov_t26")
-tnb("vehicle",1,5,"sov_t26","sov_bt5")
-tnb("vehicle",1,10,"sov_bt5","sov_bt7m")
-tnb("vehicle",1,15,"sov_bt7m","sov_t34_76_41")
-tnb("vehicle",1,20,"sov_t34_76_41","sov_kv1_41")
-tnb("vehicle",1,8,"sov_t26","sov_t60")
+tnb("vehicle",0,0,None,"sov_t26")                    # T0: T-26
+tnb("vehicle",0,5,"sov_t26","sov_bt5")                # T0: BT-5
+tnb("vehicle",1,10,"sov_bt5","sov_bt7m")              # T1: BT-7M
+tnb("vehicle",1,14,"sov_bt7m","sov_t34_76_41")        # T1: T-34/76 M1940
+tnb("vehicle",1,18,"sov_t34_76_41","sov_kv1_41")      # T1: KV-1 M1941
+tnb("vehicle",1,8,"sov_t26","sov_t60")                # T1: T-60
 tnb("vehicle",2,25,"sov_t34_76_41","sov_t34_76_42")
 tnb("vehicle",2,30,"sov_kv1_41","sov_kv1s")
 tnb("vehicle",2,22,"sov_t60","sov_su76m")
@@ -864,8 +831,6 @@ tnb("support",3,20,"sov_halftrack_supply","sov_heavy_truck_supply")
 tne("support",2,18,"sov_eng_sq43","sov_assault_eng")
 tne("support",2,20,"sov_eng_sq43","sov_bridge_eng")
 tne("support",2,22,"sov_ba64","sov_mot_recce")
-tne("support",3,25,"sov_bridge_eng","sov_heavy_bridge")
-tne("support",2,24,"sov_ba64","sov_arv_recovery")
 tne("support",2,26,"sov_ba64","sov_btr40")
 
 # ---- Soviet Equipment items ----
@@ -894,10 +859,8 @@ eq("sov_b4","203mm B-4","orange","soviet",["artillery"],"sov_b4","base × 6.0","
 eq("sov_assault_eng","突击工兵","green","soviet",["support","infantry"],"sov_assault_eng","base × 1.5","market")
 eq("sov_bridge_eng","架桥工兵","purple","soviet",["support"],"sov_bridge_eng","base × 3.0","market")
 eq("sov_mot_recce","摩托化侦察队","green","soviet",["support"],"sov_mot_recce","base × 1.5","market")
-eq("sov_heavy_bridge","重型架桥工兵","purple","soviet",["support"],"sov_heavy_bridge","base × 3.0","market")
-eq("sov_arv_recovery","ARV回收","purple","soviet",["support"],"sov_arv_recovery","base × 3.0","market")
 eq("sov_btr40","BTR-40","purple","soviet",["support"],"sov_btr40","base × 3.0","market")
 eq("sov_t44","T-44(道具)","purple","soviet",["vehicle"],"sov_t44","base × 3.0","market")
 
-output(r'D:\项目\godot\大战略01\data\soviet')
+output(r'D:\项目\godot\大战略01\data\soviet', nation="soviet")
 print("=== Generation Complete ===")

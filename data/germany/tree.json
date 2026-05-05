@@ -40,21 +40,11 @@
     "equipment": false
   },
   {
-    "id": "ger_eng_sq",
-    "nation": "germany",
-    "branch": "infantry",
-    "tech_tier_required": 1,
-    "unlock_xp": 25,
-    "parent_id": "ger_inf_sq39",
-    "unit_type_id": "ger_eng_sq",
-    "equipment": false
-  },
-  {
     "id": "ger_at_sq",
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 1,
-    "unlock_xp": 30,
+    "unlock_xp": 25,
     "parent_id": "ger_inf_sq39",
     "unit_type_id": "ger_at_sq",
     "equipment": false
@@ -64,7 +54,7 @@
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 2,
-    "unlock_xp": 35,
+    "unlock_xp": 30,
     "parent_id": "ger_inf_sq41",
     "unit_type_id": "ger_inf_sq42",
     "equipment": false
@@ -74,19 +64,9 @@
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 2,
-    "unlock_xp": 40,
+    "unlock_xp": 35,
     "parent_id": "ger_mg_sq",
     "unit_type_id": "ger_mg_sq43",
-    "equipment": false
-  },
-  {
-    "id": "ger_eng_sq43",
-    "nation": "germany",
-    "branch": "infantry",
-    "tech_tier_required": 2,
-    "unlock_xp": 45,
-    "parent_id": "ger_eng_sq",
-    "unit_type_id": "ger_eng_sq43",
     "equipment": false
   },
   {
@@ -94,7 +74,7 @@
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 2,
-    "unlock_xp": 50,
+    "unlock_xp": 40,
     "parent_id": "ger_at_sq",
     "unit_type_id": "ger_at_sq43",
     "equipment": false
@@ -104,7 +84,7 @@
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 3,
-    "unlock_xp": 55,
+    "unlock_xp": 45,
     "parent_id": "ger_inf_sq42",
     "unit_type_id": "ger_inf_sq44",
     "equipment": false
@@ -114,20 +94,10 @@
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 3,
-    "unlock_xp": 60,
+    "unlock_xp": 50,
     "parent_id": "ger_smg_sq",
     "unit_type_id": "ger_smg_sq44",
     "equipment": false
-  },
-  {
-    "id": "ger_recce_inf",
-    "nation": "germany",
-    "branch": "infantry",
-    "tech_tier_required": 1,
-    "unlock_xp": 10,
-    "parent_id": "ger_inf_sq39",
-    "unit_type_id": "ger_recce_inf",
-    "equipment": "ger_recce_inf"
   },
   {
     "id": "ger_sniper_sq",
@@ -140,44 +110,14 @@
     "equipment": "ger_sniper_sq"
   },
   {
-    "id": "ger_assault_eng",
-    "nation": "germany",
-    "branch": "infantry",
-    "tech_tier_required": 2,
-    "unlock_xp": 30,
-    "parent_id": "ger_eng_sq",
-    "unit_type_id": "ger_assault_eng",
-    "equipment": "ger_assault_eng"
-  },
-  {
-    "id": "ger_navy_inf",
+    "id": "ger_mountain_inf",
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 1,
-    "unlock_xp": 20,
+    "unlock_xp": 18,
     "parent_id": "ger_inf_sq39",
-    "unit_type_id": "ger_navy_inf",
-    "equipment": "ger_navy_inf"
-  },
-  {
-    "id": "ger_tractor_militia",
-    "nation": "germany",
-    "branch": "infantry",
-    "tech_tier_required": 0,
-    "unlock_xp": 5,
-    "parent_id": "ger_inf_sq39",
-    "unit_type_id": "ger_tractor_militia",
-    "equipment": "ger_tractor_militia"
-  },
-  {
-    "id": "ger_guard_inf",
-    "nation": "germany",
-    "branch": "infantry",
-    "tech_tier_required": 3,
-    "unlock_xp": 65,
-    "parent_id": "ger_inf_sq44",
-    "unit_type_id": "ger_guard_inf",
-    "equipment": "ger_guard_inf"
+    "unit_type_id": "ger_mountain_inf",
+    "equipment": "ger_mountain_inf"
   },
   {
     "id": "ger_airborne",
@@ -185,25 +125,45 @@
     "branch": "infantry",
     "tech_tier_required": 2,
     "unlock_xp": 40,
-    "parent_id": "ger_eng_sq",
+    "parent_id": "ger_inf_sq39",
     "unit_type_id": "ger_airborne",
     "equipment": "ger_airborne"
   },
   {
-    "id": "ger_recce_cav",
+    "id": "ger_panzerschreck_sq",
     "nation": "germany",
     "branch": "infantry",
     "tech_tier_required": 2,
-    "unlock_xp": 35,
-    "parent_id": "ger_recce_inf",
-    "unit_type_id": "ger_recce_cav",
-    "equipment": "ger_recce_cav"
+    "unlock_xp": 55,
+    "parent_id": "ger_at_sq43",
+    "unit_type_id": "ger_panzerschreck_sq",
+    "equipment": "ger_panzerschreck_sq"
+  },
+  {
+    "id": "ger_stormtrooper",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 3,
+    "unlock_xp": 65,
+    "parent_id": "ger_inf_sq44",
+    "unit_type_id": "ger_stormtrooper",
+    "equipment": "ger_stormtrooper"
+  },
+  {
+    "id": "ger_volkssturm",
+    "nation": "germany",
+    "branch": "infantry",
+    "tech_tier_required": 3,
+    "unlock_xp": 70,
+    "parent_id": "ger_inf_sq44",
+    "unit_type_id": "ger_volkssturm",
+    "equipment": "ger_volkssturm"
   },
   {
     "id": "ger_pz1a",
     "nation": "germany",
     "branch": "vehicle",
-    "tech_tier_required": 1,
+    "tech_tier_required": 0,
     "unlock_xp": 0,
     "parent_id": null,
     "unit_type_id": "ger_pz1a",
@@ -213,7 +173,7 @@
     "id": "ger_pz35t",
     "nation": "germany",
     "branch": "vehicle",
-    "tech_tier_required": 1,
+    "tech_tier_required": 0,
     "unlock_xp": 5,
     "parent_id": "ger_pz1a",
     "unit_type_id": "ger_pz35t",
@@ -234,8 +194,8 @@
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 1,
-    "unlock_xp": 15,
-    "parent_id": "ger_pz1a",
+    "unlock_xp": 12,
+    "parent_id": "ger_pz35t",
     "unit_type_id": "ger_pz38t",
     "equipment": false
   },
@@ -244,8 +204,8 @@
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 1,
-    "unlock_xp": 20,
-    "parent_id": "ger_pz1a",
+    "unlock_xp": 14,
+    "parent_id": "ger_pz35t",
     "unit_type_id": "ger_pz3e",
     "equipment": false
   },
@@ -254,8 +214,8 @@
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 1,
-    "unlock_xp": 25,
-    "parent_id": "ger_pz1a",
+    "unlock_xp": 16,
+    "parent_id": "ger_pz2f",
     "unit_type_id": "ger_pz4d",
     "equipment": false
   },
@@ -264,9 +224,19 @@
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 1,
-    "unlock_xp": 30,
-    "parent_id": "ger_pz1a",
+    "unlock_xp": 18,
+    "parent_id": "ger_pz2f",
     "unit_type_id": "ger_stug3b",
+    "equipment": false
+  },
+  {
+    "id": "ger_grille",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 20,
+    "parent_id": "ger_pz2f",
+    "unit_type_id": "ger_grille",
     "equipment": false
   },
   {
@@ -350,24 +320,34 @@
     "equipment": false
   },
   {
-    "id": "ger_marder2",
+    "id": "ger_marder3",
     "nation": "germany",
     "branch": "vehicle",
-    "tech_tier_required": 2,
+    "tech_tier_required": 1,
     "unlock_xp": 25,
-    "parent_id": "ger_pz2f",
-    "unit_type_id": "ger_marder2",
-    "equipment": "ger_marder2"
+    "parent_id": "ger_pz38t",
+    "unit_type_id": "ger_marder3",
+    "equipment": "ger_marder3"
   },
   {
-    "id": "ger_marder3",
+    "id": "ger_bison_spg",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 1,
+    "unlock_xp": 28,
+    "parent_id": "ger_pz1a",
+    "unit_type_id": "ger_bison_spg",
+    "equipment": "ger_bison_spg"
+  },
+  {
+    "id": "ger_jagdpanzer38t",
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 30,
     "parent_id": "ger_pz38t",
-    "unit_type_id": "ger_marder3",
-    "equipment": "ger_marder3"
+    "unit_type_id": "ger_jagdpanzer38t",
+    "equipment": "ger_jagdpanzer38t"
   },
   {
     "id": "ger_flammpz3",
@@ -380,14 +360,24 @@
     "equipment": "ger_flammpz3"
   },
   {
-    "id": "ger_grille",
+    "id": "ger_hummel",
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 2,
     "unlock_xp": 40,
     "parent_id": "ger_pz4d",
-    "unit_type_id": "ger_grille",
-    "equipment": "ger_grille"
+    "unit_type_id": "ger_hummel",
+    "equipment": "ger_hummel"
+  },
+  {
+    "id": "ger_wespe",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 40,
+    "parent_id": "ger_pz2f",
+    "unit_type_id": "ger_wespe",
+    "equipment": "ger_wespe"
   },
   {
     "id": "ger_stuh42",
@@ -398,6 +388,26 @@
     "parent_id": "ger_stug3b",
     "unit_type_id": "ger_stuh42",
     "equipment": "ger_stuh42"
+  },
+  {
+    "id": "ger_jagdpanzer_iv",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 45,
+    "parent_id": "ger_pz4d",
+    "unit_type_id": "ger_jagdpanzer_iv",
+    "equipment": "ger_jagdpanzer_iv"
+  },
+  {
+    "id": "ger_brummbar",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 50,
+    "parent_id": "ger_pz4d",
+    "unit_type_id": "ger_brummbar",
+    "equipment": "ger_brummbar"
   },
   {
     "id": "ger_wirbelwind",
@@ -413,21 +423,31 @@
     "id": "ger_nashorn",
     "nation": "germany",
     "branch": "vehicle",
-    "tech_tier_required": 3,
+    "tech_tier_required": 2,
     "unlock_xp": 55,
     "parent_id": "ger_pz4g",
     "unit_type_id": "ger_nashorn",
     "equipment": "ger_nashorn"
   },
   {
-    "id": "ger_bergepanther",
+    "id": "ger_tiger_p",
+    "nation": "germany",
+    "branch": "vehicle",
+    "tech_tier_required": 2,
+    "unlock_xp": 65,
+    "parent_id": "ger_pz6e",
+    "unit_type_id": "ger_tiger_p",
+    "equipment": "ger_tiger_p"
+  },
+  {
+    "id": "ger_kugelblitz",
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 3,
-    "unlock_xp": 60,
-    "parent_id": "ger_pz5d",
-    "unit_type_id": "ger_bergepanther",
-    "equipment": "ger_bergepanther"
+    "unlock_xp": 65,
+    "parent_id": "ger_ostwind",
+    "unit_type_id": "ger_kugelblitz",
+    "equipment": "ger_kugelblitz"
   },
   {
     "id": "ger_jagdtiger",
@@ -450,116 +470,6 @@
     "equipment": "ger_sturmtiger"
   },
   {
-    "id": "ger_maus",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 3,
-    "unlock_xp": 80,
-    "parent_id": "ger_pz6b",
-    "unit_type_id": "ger_maus",
-    "equipment": "ger_maus"
-  },
-  {
-    "id": "ger_jagdpanzer38t",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 30,
-    "parent_id": "ger_pz38t",
-    "unit_type_id": "ger_jagdpanzer38t",
-    "equipment": "ger_jagdpanzer38t"
-  },
-  {
-    "id": "ger_jagdpanzer_iv",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 45,
-    "parent_id": "ger_pz4d",
-    "unit_type_id": "ger_jagdpanzer_iv",
-    "equipment": "ger_jagdpanzer_iv"
-  },
-  {
-    "id": "ger_panzer_iv_70",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 3,
-    "unlock_xp": 55,
-    "parent_id": "ger_pz4g",
-    "unit_type_id": "ger_panzer_iv_70",
-    "equipment": "ger_panzer_iv_70"
-  },
-  {
-    "id": "ger_brummbar",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 50,
-    "parent_id": "ger_pz4d",
-    "unit_type_id": "ger_brummbar",
-    "equipment": "ger_brummbar"
-  },
-  {
-    "id": "ger_stug_iv",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 45,
-    "parent_id": "ger_stug3b",
-    "unit_type_id": "ger_stug_iv",
-    "equipment": "ger_stug_iv"
-  },
-  {
-    "id": "ger_mobelwagen",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 50,
-    "parent_id": "ger_pz4d",
-    "unit_type_id": "ger_mobelwagen",
-    "equipment": "ger_mobelwagen"
-  },
-  {
-    "id": "ger_kugelblitz",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 3,
-    "unlock_xp": 65,
-    "parent_id": "ger_ostwind",
-    "unit_type_id": "ger_kugelblitz",
-    "equipment": "ger_kugelblitz"
-  },
-  {
-    "id": "ger_pz2_luchs",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 25,
-    "parent_id": "ger_pz2f",
-    "unit_type_id": "ger_pz2_luchs",
-    "equipment": "ger_pz2_luchs"
-  },
-  {
-    "id": "ger_hummel",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 40,
-    "parent_id": "ger_pz4d",
-    "unit_type_id": "ger_hummel",
-    "equipment": "ger_hummel"
-  },
-  {
-    "id": "ger_wespe",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 35,
-    "parent_id": "ger_pz2f",
-    "unit_type_id": "ger_wespe",
-    "equipment": "ger_wespe"
-  },
-  {
     "id": "ger_panther_ii",
     "nation": "germany",
     "branch": "vehicle",
@@ -568,16 +478,6 @@
     "parent_id": "ger_pz5d",
     "unit_type_id": "ger_panther_ii",
     "equipment": "ger_panther_ii"
-  },
-  {
-    "id": "ger_tiger_p",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 65,
-    "parent_id": "ger_pz6e",
-    "unit_type_id": "ger_tiger_p",
-    "equipment": "ger_tiger_p"
   },
   {
     "id": "ger_elefant",
@@ -590,24 +490,14 @@
     "equipment": "ger_elefant"
   },
   {
-    "id": "ger_sturmpanzer4",
-    "nation": "germany",
-    "branch": "vehicle",
-    "tech_tier_required": 2,
-    "unlock_xp": 55,
-    "parent_id": "ger_pz4d",
-    "unit_type_id": "ger_sturmpanzer4",
-    "equipment": "ger_sturmpanzer4"
-  },
-  {
-    "id": "ger_hetzer_75",
+    "id": "ger_maus",
     "nation": "germany",
     "branch": "vehicle",
     "tech_tier_required": 3,
-    "unlock_xp": 70,
-    "parent_id": "ger_pz38t",
-    "unit_type_id": "ger_hetzer_75",
-    "equipment": "ger_hetzer_75"
+    "unlock_xp": 80,
+    "parent_id": "ger_pz6b",
+    "unit_type_id": "ger_maus",
+    "equipment": "ger_maus"
   },
   {
     "id": "ger_mortar81",
@@ -810,13 +700,33 @@
     "equipment": false
   },
   {
+    "id": "ger_eng_sq",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 1,
+    "unlock_xp": 12,
+    "parent_id": "ger_sdkfz221",
+    "unit_type_id": "ger_eng_sq",
+    "equipment": false
+  },
+  {
     "id": "ger_halftrack_supply",
     "nation": "germany",
     "branch": "support",
     "tech_tier_required": 2,
-    "unlock_xp": 25,
+    "unlock_xp": 18,
     "parent_id": "ger_truck_supply",
     "unit_type_id": "ger_halftrack_supply",
+    "equipment": false
+  },
+  {
+    "id": "ger_eng_sq43",
+    "nation": "germany",
+    "branch": "support",
+    "tech_tier_required": 2,
+    "unlock_xp": 22,
+    "parent_id": "ger_eng_sq",
+    "unit_type_id": "ger_eng_sq43",
     "equipment": false
   },
   {
@@ -824,20 +734,10 @@
     "nation": "germany",
     "branch": "support",
     "tech_tier_required": 3,
-    "unlock_xp": 30,
+    "unlock_xp": 25,
     "parent_id": "ger_halftrack_supply",
     "unit_type_id": "ger_heavy_truck_supply",
     "equipment": false
-  },
-  {
-    "id": "ger_sdkfz250_9",
-    "nation": "germany",
-    "branch": "support",
-    "tech_tier_required": 2,
-    "unlock_xp": 20,
-    "parent_id": "ger_sdkfz222",
-    "unit_type_id": "ger_sdkfz250_9",
-    "equipment": "ger_sdkfz250_9"
   },
   {
     "id": "ger_sdkfz234_4",
@@ -850,34 +750,14 @@
     "equipment": "ger_sdkfz234_4"
   },
   {
-    "id": "ger_bridge_eng",
-    "nation": "germany",
-    "branch": "support",
-    "tech_tier_required": 2,
-    "unlock_xp": 22,
-    "parent_id": "ger_eng_sq",
-    "unit_type_id": "ger_bridge_eng",
-    "equipment": "ger_bridge_eng"
-  },
-  {
-    "id": "ger_heavy_bridge_eng",
+    "id": "ger_heavy_engineer",
     "nation": "germany",
     "branch": "support",
     "tech_tier_required": 3,
-    "unlock_xp": 28,
-    "parent_id": "ger_bridge_eng",
-    "unit_type_id": "ger_heavy_bridge_eng",
-    "equipment": "ger_heavy_bridge_eng"
-  },
-  {
-    "id": "ger_mot_supply",
-    "nation": "germany",
-    "branch": "support",
-    "tech_tier_required": 1,
-    "unlock_xp": 18,
-    "parent_id": "ger_truck_supply",
-    "unit_type_id": "ger_mot_supply",
-    "equipment": "ger_mot_supply"
+    "unlock_xp": 35,
+    "parent_id": "ger_eng_sq43",
+    "unit_type_id": "ger_heavy_engineer",
+    "equipment": "ger_heavy_engineer"
   },
   {
     "id": "ger_bf109e3",
@@ -1020,6 +900,16 @@
     "equipment": false
   },
   {
+    "id": "ger_ju52",
+    "nation": "germany",
+    "branch": "air",
+    "tech_tier_required": 1,
+    "unlock_xp": 12,
+    "parent_id": null,
+    "unit_type_id": "ger_ju52",
+    "equipment": false
+  },
+  {
     "id": "ger_hs123a",
     "nation": "germany",
     "branch": "air",
@@ -1158,15 +1048,5 @@
     "parent_id": "ger_he177a5",
     "unit_type_id": "ger_ju288",
     "equipment": "ger_ju288"
-  },
-  {
-    "id": "ger_ju52",
-    "nation": "germany",
-    "branch": "air",
-    "tech_tier_required": 1,
-    "unlock_xp": 8,
-    "parent_id": "ger_ju87b2",
-    "unit_type_id": "ger_ju52",
-    "equipment": "ger_ju52"
   }
 ]

@@ -56,9 +56,8 @@ func _process_ai(sq, players, mn):
 		if d < best_d: best_d = d; best = h
 
 	if best != sq.hex_coord:
-		var move_dist = HexUtil.hex_distance(sq.hex_coord, best)
 		sq.move_to(best)
-		sq.spend_ap(move_dist)
+		sq.spend_ap(1)  # §3.1: 1次移动消耗1AP
 		# 如果进入ZOC，触发借机攻击(玩家触发, AI同样处理)
 		if mn.has_enemy_zoc(sq.hex_coord, sq.team):
 			var b = GameManager.battle_manager

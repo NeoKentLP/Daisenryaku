@@ -24,9 +24,9 @@ static func create_defaults() -> Dictionary:
 	db["transport"] = _make("transport", "运输车", 6, 6, 0, 1, 5, 0, false, 40, Color(0.6, 0.6, 0.5), "C")
 	return db
 
-static func _make(id: String, name: String, utype: int, hp: int, atk: int, def: int, mv: int, atk_range: int, can_move_atk: bool, cost: int, col: Color, icon: String):
+static func _make(_id: String, name: String, utype: int, hp: int, atk: int, def: int, mv: int, atk_range: int, can_move_atk: bool, _cost: int, col: Color, icon: String):
 	var d := new()
-	d.id = id
+	d.id = _id
 	d.display_name = name
 	d.unit_type = utype
 	d.max_hp = hp
@@ -35,7 +35,7 @@ static func _make(id: String, name: String, utype: int, hp: int, atk: int, def: 
 	d.move_range = mv
 	d.attack_range = atk_range
 	d.can_attack_after_move = can_move_atk
-	d.cost = cost
+	d.cost = _cost
 	d.color = col
 	d.icon_char = icon
 	return d

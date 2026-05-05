@@ -20,10 +20,22 @@ print("数据目录:", DATA_DIR)
 print("HTML文件:", HTML_FILE, "存在:", os.path.isfile(HTML_FILE))
 
 _cache = {}
+_CACHE_KEY = {}
+
+def _cache_key(nation):
+    base = os.path.join(DATA_DIR, nation)
+    ts = 0
+    for fname in ["weapons.json","units.json","tree.json","equipment.json"]:
+        fpath = os.path.join(base, fname)
+        if os.path.isfile(fpath):
+            ts += os.path.getmtime(fpath)
+    return ts
 
 def load_nation(nation):
-    if nation in _cache:
+    key = _cache_key(nation)
+    if nation in _cache and _CACHE_KEY.get(nation) == key:
         return _cache[nation]
+    _CACHE_KEY[nation] = key
     base = os.path.join(DATA_DIR, nation)
     try:
         weapons = json.load(open(os.path.join(base, "weapons.json"), encoding="utf-8"))
@@ -149,15 +161,18 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self._json({"error": "bad api path"})
 
     def _build_subtree(self, nodes, children, indent=0):
-        result = []
-        for n in sorted(nodes, key=lambda x: (x.get("tech_tier_required", 0), x.get("unlock_xp", 0), x["id"])):
-            equip = n.get("equipment")
-            result.append({"id": n["id"], "tier": n.get("tech_tier_required", 0),
-                           "equip": bool(equip and equip is not False), "depth": indent})
-            kids = children.get(n["id"], [])
-            if kids:
-                result.extend(self._build_subtree(kids, children, indent + 1))
-        return result
+        def _recurse(items, depth):
+            out = []
+            for n in sorted(items, key=lambda x: (x.get("tech_tier_required", 0), x.get("unlock_xp", 0), x["id"])):
+                equip = n.get("equipment")
+                out.append({"id": n["id"], "tier": n.get("tech_tier_required", 0),
+                            "equip": bool(equip and equip is not False), "depth": depth,
+                            "branch": n.get("branch", "?")})
+                kids = children.get(n["id"], [])
+                if kids:
+                    out.extend(_recurse(kids, depth + 1))
+            return out
+        return _recurse(nodes, indent)
 
     def _json(self, obj):
         self.send_response(200)

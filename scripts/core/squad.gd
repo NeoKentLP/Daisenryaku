@@ -14,6 +14,10 @@ var max_morale: int = 100
 var suppression: int = 0
 var ap: int = 3
 var max_ap: int = 3
+var move_range: int = 2  # §3.1: foot=2, track=3, wheel=4, flight=6
+var initiative: int = 4  # §2.5: 步兵默认4, 坦克6, 火炮2
+var reactions: int = 1
+var max_reactions: int = 1
 
 const STATE_BROKEN = 0
 const STATE_CONFUSED = 1
@@ -31,6 +35,20 @@ func setup(type_id: String, team_id: int, hex: Vector2i, squad_members: Array):
 	hex_coord = hex
 	members = squad_members
 	squad_name = _auto_name()
+	# §2.5 主动性默认值
+	match type_id:
+		"recon": initiative = 8
+		"vehicle": initiative = 6
+		"infantry": initiative = 4
+		"artillery": initiative = 2
+		_: initiative = 4
+	# §3.1 移动力
+	match type_id:
+		"infantry", "command": move_range = 2
+		"vehicle": move_range = 3
+		"recon": move_range = 4
+		"artillery": move_range = 2
+		_: move_range = 2
 	_ensure_visual()
 
 func _auto_name() -> String:
@@ -108,7 +126,7 @@ func get_total_count() -> int:
 func get_move_range() -> int:
 	if has_acted: return 0
 	if get_state() == STATE_BROKEN: return 0
-	return ap
+	return move_range
 
 func can_afford(cost: int) -> bool:
 	return ap >= cost
@@ -119,8 +137,11 @@ func spend_ap(cost: int) -> void:
 func reset_ap() -> void:
 	ap = max_ap
 
+func reset_reactions() -> void:
+	reactions = max_reactions
+
 func get_remaining_movement_ap() -> int:
-	return ap
+	return move_range
 
 func get_weapon_summary() -> String:
 	var c = {}
@@ -274,8 +295,9 @@ func is_near_supply_source() -> bool:
 		var nt = mn.terrain_grid.get(nb, "plain")
 		if nt == "hq" or nt == "factory": return true
 		var sq = GameManager.get_squad_at(nb)
-		if sq and sq.team == team and sq.is_alive and sq.unit_type_id == "transport":
-			return true
+		if sq and sq.team == team and sq.is_alive:
+			if sq.unit_type_id == "command" or sq.unit_type_id == "transport":
+				return true
 	return false
 
 func can_attack(target) -> bool:

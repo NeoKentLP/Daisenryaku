@@ -6,11 +6,10 @@ extends Node2D
 
 var terrain_grid: Dictionary = {}  # Vector2i -> terrain_id string
 var tile_nodes: Dictionary = {}    # Vector2i -> Polygon2D
-var highlight_nodes: Dictionary = {}  # Vector2i -> Polygon2D overlay
+var highlight_nodes: Dictionary = {}    # Vector2i -> Polygon2D
 var overlay_nodes: Dictionary = {}    # Vector2i -> Polygon2D (trench/minefield)
 
 var _terrain_db: Dictionary = {}
-var _selected_unit = null
 
 func _ready():
 	_terrain_db = GameManager.TERRAIN_DB
@@ -34,7 +33,7 @@ func _pick_terrain(q: int, r: int) -> String:
 		return "hq"
 	if q == 0 or q == map_width - 1 or r == 0 or r == map_height - 1:
 		return "river"
-	if q > map_width / 2 - 2 and q < map_width / 2 + 2 and r > map_height / 2 - 2 and r < map_height / 2 + 2:
+	if q > map_width / 2.0 - 2 and q < map_width / 2.0 + 2 and r > map_height / 2.0 - 2 and r < map_height / 2.0 + 2:
 		return "city" if (q + r) % 3 != 0 else "plain"
 	if q > 2 and q < 6 and r > 2 and r < 5:
 		return "forest"
@@ -73,7 +72,6 @@ func add_highlight(hex: Vector2i, color: Color):
 	_add_highlight(hex, color)
 
 func _add_highlight(hex: Vector2i, color: Color):
-	# 如果已有高亮，移除重建（允许覆盖颜色）
 	if highlight_nodes.has(hex):
 		highlight_nodes[hex].queue_free()
 		highlight_nodes.erase(hex)
@@ -85,6 +83,19 @@ func _add_highlight(hex: Vector2i, color: Color):
 	poly.z_index = 1
 	add_child(poly)
 	highlight_nodes[hex] = poly
+
+func highlight_hexes_tiered(tiers: Dictionary):
+	# tiers: { hex -> ap_cost (1/2/3) }
+	# 绿色从浅到深: 1AP最亮, 3AP最深
+	var colors = {
+		1: Color(0.35, 0.85, 0.35, 0.40),
+		2: Color(0.30, 0.75, 0.30, 0.38),
+		3: Color(0.25, 0.65, 0.25, 0.36),
+	}
+	_clear_highlights()
+	for hex in tiers:
+		var ap = tiers[hex]
+		_add_highlight(hex, colors.get(ap, Color(0.3, 0.8, 0.3, 0.4)))
 
 func _clear_highlights():
 	for n in highlight_nodes.values():
@@ -200,7 +211,12 @@ func get_zoc_units_at(hex: Vector2i) -> Array:
 
 func is_supply_station(hex: Vector2i) -> bool:
 	var tid = terrain_grid.get(hex, "plain")
-	return tid == "hq" or tid == "factory"
+	if tid == "hq" or tid == "factory": return true
+	# Check for HQ squad
+	var sq = GameManager.get_squad_at(hex)
+	if sq and sq.unit_type_id == "command":
+		return true
+	return false
 
 func hex_to_pixel(hex: Vector2i) -> Vector2:
 	return HexUtil.axial_to_pixel(hex.x, hex.y, hex_size)

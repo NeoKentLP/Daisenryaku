@@ -41,11 +41,11 @@ func hex_neighbors(hex: Vector2i) -> Array:
 		result.append(hex + d)
 	return result
 
-func hexes_in_range(center: Vector2i, range: int) -> Array:
+func hexes_in_range(center: Vector2i, radius: int) -> Array:
 	var result = []
-	for dq in range(-range, range + 1):
-		var dr_min = max(-range, -dq - range)
-		var dr_max = min(range, -dq + range)
+	for dq in range(-radius, radius + 1):
+		var dr_min = max(-radius, -dq - radius)
+		var dr_max = min(radius, -dq + radius)
 		for dr in range(dr_min, dr_max + 1):
 			result.append(Vector2i(center.x + dq, center.y + dr))
 	return result

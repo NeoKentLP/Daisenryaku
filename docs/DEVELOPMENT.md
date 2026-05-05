@@ -678,6 +678,12 @@ $p = Start-Process -FilePath $godot -ArgumentList "--headless --path <project> r
 | 2026-04-28 | 功能 | 胜利提示改为居中大字 | ui_manager.gd, main_controller.gd |
 | 2026-04-28 | 步1 | 三层结构重构: Squad+Member+UnitType | 新建 squad/member/unit_type_data，重写 game_manager/main_controller/ui_manager/battle_manager/ai_controller |
 | 2026-05-05 | 文档 | 完整重写 DEVELOPMENT.md: 新增UI方案/美术资源工作流/第一阶段计划/项目结构更新 | 全部 docs/ |
+| 2026-05-05 | 修复 | AP默认值4→3; resolve_cqb()补attacker_destroyed; static func+preload修复 | squad.gd, battle_manager.gd, test_smoke.gd, test_full.gd |
+| 2026-05-05 | 功能 | 主菜单场景 + SceneManager autoload + 场景路由框架 | 新建 scene_manager.gd, main_menu.gd, main_menu.tscn; 更新 project.godot |
+| 2026-05-05 | 修复 | test_scene.tscn重指向test_smoke.gd (旧test_runner.gd废弃) | test_scene.tscn |
+| 2026-05-05 | 修复 | SystemFont.bold → font_weight=700 (Steam版兼容) | main_menu.gd, ui_manager.gd |
+| 2026-05-05 | 功能 | commander.gd 重写: 按国家/背景池/稀有度/天赋等级生成 | commander.gd |
+| 2026-05-05 | 功能 | 国家选择+指挥官创建场景(完整UI + 重掷/改名) | nation_select.gd/tscn, commander_create.gd/tscn |
 
 ### 变更记录规范
 

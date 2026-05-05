@@ -44,6 +44,13 @@ var world_selected_squads: Array = []
 var commander_pool: Array = []
 var squad_commanders: Dictionary = {}  # squad -> commander
 
+# 新游戏状态
+var selected_nation: String = "germany"
+var initial_commanders: Array = []
+var mission_placed_squads: Dictionary = {}  # hex -> {idx, name, type, members}
+var mission_new_game: bool = false  # true = from new game flow, false = from world map
+var mission_debug_mode: bool = false  # false = use placed squads, true = test squads
+
 func add_commander_to_pool(cmd) -> void:
 	commander_pool.append(cmd)
 

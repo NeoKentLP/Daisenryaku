@@ -372,6 +372,87 @@ func hex_distance(a: Vector2i, b: Vector2i) -> int:
 
 ---
 
+## 11. Bug 模式记录
+
+> 每次修复 Bug 后在此记录根因和修复模式，防止同类问题反复出现。
+
+### 11.1 模式: close() 提前置空回调引用
+
+| 字段 | 值 |
+|------|-----|
+| **现象** | 战后回调不执行，导致 `_deselect_squad`、`_check_win_condition` 永不被调用，攻击者可重复攻击 |
+| **根因** | `close()` 函数在执行回调前先将 `close_callback = null`，然后 `_on_close()` 检查 null 后跳过回调 |
+| **修复方案** | 在 `close()` 执行前保存回调引用：`var cb = close_callback; close(); if cb: cb.call()` |
+| **涉及文件** | `combat_flow.gd`, `combat_preview.gd` |
+| **预防** | 所有带回调的弹窗类，`close()` 函数不应销毁回调引用；或者调用者先存引用 |
+
+### 11.2 模式: Godot 4 API 变更 (vs Godot 3)
+
+| 问题 | 旧写法 | 新写法 |
+|------|--------|--------|
+| HBoxContainer 拉伸 | `hdr.add_stretch_ratio(1.0)` | `hdr.add_spacer(true)` |
+| ScrollContainer 水平滚动 | `scroll.scroll_horizontal_enabled = false` | `scroll.horizontal_scroll_mode = SCROLL_MODE_DISABLED` |
+| SystemFont 粗体 | `f.bold = true` | `f.font_weight = 700` |
+
+### 11.3 模式: CanvasLayer 缺少 Node2D 方法
+
+| 现象 | 根因 | 修复 |
+|------|------|------|
+| 部署界面 Hex 点击不触发 | `_unhandled_input` 在 CanvasLayer 上不可靠 | 改用 `gui_input` + 透明 ColorRect overlay |
+| `get_global_mouse_position()` 报错 | CanvasLayer 无此方法 | 用 `get_viewport().get_mouse_position()` |
+
+### 11.4 模式: 变量作用域泄漏
+
+| 现象 | 根因 | 修复 |
+|------|------|------|
+| 确认部署后崩溃 "ms not declared" | 敌 HQ 创建代码混在 `_get_enemy_squads()` 后，引用了上层函数的局部变量 `ms` | 保持代码在正确的函数作用域内，不在函数间插入散落代码 |
+
+### 11.5 模式: ensure_loaded 无限递归
+
+| 现象 | 根因 | 修复 |
+|------|------|------|
+| 部署崩溃，堆栈溢出 | `ensure_loaded()` 末尾才设 `_loaded = true`，但 `_load_units` 调用 `get_weapon` → 再次调用 `ensure_loaded` | `_loaded = true` 移至函数开头，防止重入 |
+
+### 11.6 模式: 移动后不重新选择
+
+| 现象 | 根因 | 修复 |
+|------|------|------|
+| 分次移动后不显示剩余范围 | `_select_squad(sq)` 首行检查 `selected_squad == squad` 直接返回 | 移动后先 `_deselect_squad()` 清空再 `_select_squad(sq)` |
+
+### 11.7 模式: 重叠节点无法清理
+
+| 现象 | 根因 | 修复 |
+|------|------|------|
+| 移动后高亮边框不消失 | Tiered highlights 创建了多个节点但只存了一个引用 | 用父子节点关系管理（父 freed → 子自动 freed）或用独立数组全量跟踪 |
+
+### 10.1 已知差异汇总
+
+| 特性 | 标准版 | Steam 版 (4.6.2) |
+|------|-------|-----------------|
+| class_name 注册 | 正常 | 不工作 |
+| 静态方法调用 | 支持 | 不支持 |
+| 字符串 `*` 运算符 | 支持 | 不支持 |
+| `var x := func()` | 支持 | 不支持 |
+| `--quit` CLI | 正常 | 部分工作 |
+| `--help` CLI | 正常 | 超时 |
+| UTF-8 BOM 处理 | 可能正常 | 报错 |
+| 输出重定向 | 正常 | 需特殊处理 |
+
+### 10.2 步1常见问题（2026-04-28）
+
+| 问题 | 原因 | 解决方案 |
+|------|------|---------|
+| `get_unit_at` 残留引用导致运行时错误 | hex_map.gd中有一处引用未更新 | 改为`get_squad_at` |
+| 测试文件引用旧`player_units`属性 | GameManager重构为`player_squads` | 测试同步更新 |
+| `assert_eq`调用缺少desc参数 | GDScript不支持可选参数的默认值方式 | 改为`func assert_eq(got, expected, desc: String = "")` | 建议
+
+- 脚本编写时遵循**最保守的 GDScript 语法**
+- 避免使用高级类型特性 (class_name, 类型注解, 静态方法, 类型推导)
+- 优先使用 autoload 代替 class_name
+- 测试时用 `Start-Process -NoNewWindow` 而非重定向 stdout
+
+---
+
 ## 附录: 文件清单
 
 ```

@@ -242,7 +242,7 @@ func _make_top_btn(text: String) -> Button:
 
 func _bold_font():
 	var f = SystemFont.new()
-	f.bold = true
+	f.font_weight = 700
 	return f
 
 # ===== Bottom Strip =====
@@ -663,7 +663,7 @@ func hide_terrain_tooltip():
 		_terrain_tooltip.hide()
 
 # ===== Commander Detail =====
-func _build_commander_detail(screen: Vector2):
+func _build_commander_detail(_screen: Vector2):
 	_cmd_detail = Panel.new()
 	_cmd_detail.position = Vector2(260, 10)
 	_cmd_detail.size = Vector2(300, 250)
@@ -732,7 +732,6 @@ func show_squad_info(squad):
 
 	# Stats
 	var mn = GameManager.hex_map
-	var terrain_id = mn.terrain_grid.get(squad.hex_coord, "plain") if mn else "plain"
 	var move_type = "步行"
 	var concealment = 0
 	var armor = 0
